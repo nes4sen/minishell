@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:42:31 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/05/24 12:28:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/05/25 19:06:02 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void	*creat_node(size_t size, void *content)
+t_node	*creat_node(void *content)
 {
-	void	*node;
-
-	node = malloc(size);
+	t_node *node;
+	
+	node = malloc(node);
 	if (!node)
 	{
 		// free
@@ -26,10 +26,11 @@ void	*creat_node(size_t size, void *content)
 	node->next = NULL;
 	return (node);
 }
+
 void	add_back(t_node **head, void *content)
 {
 	t_node *tmp;
-	
+
 	tmp = *head;
 	if (!*head)
 	{
@@ -43,6 +44,20 @@ void	add_back(t_node **head, void *content)
 		}
 		tmp = creat_node(content);
 	}
+}
+
+t_token	*creat_token(char *str, t_type type)
+{
+	t_token *token;
+
+	token = malloc(sizeof(t_token));
+	if (!token)
+	{
+		//free;
+	}
+	token->str = str;
+	token->type = type;
+	return (token);
 }
 
 char *ft_substr(int start, int end, char *str)
@@ -64,7 +79,12 @@ char *ft_substr(int start, int end, char *str)
 	s[i] = '\0';
 	return (s);
 }
-
+int is_space(char c)
+{
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
+}
 t_token *tokenizer(char *str)
 {
 	t_token *token;
@@ -79,12 +99,17 @@ t_token *tokenizer(char *str)
 	{
 		if (str[i] == '\"' || str[i] == '\'')
 			quote = str[i];
-		while(str[i] == ' ' || (str[i] >= 9 && str[i] <= 13) && !quote)
+		while(is_spacce(str[i]) && !quote)
 			i++;
-		// token = malloc(sizeof(t_token));
-		// 	if ()
-		add_back(&node, )
+		j = 0;
+		while(!is_space(str[i + j]))
+		{
+			if ();//$home/fgdfgd!
+			j++;
+		
+		add_back(&node, creat_token(str, ));
 	}
 	
 	
 }
+
