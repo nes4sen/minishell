@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/05/25 17:05:01 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/01 19:03:13 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
-
-typedef struct s_node
-{
-	void			*content;
-	struct s_node	*next;
-}t_node;
 
 typedef enum e_type
 {
@@ -40,6 +35,7 @@ typedef struct s_token
 {
 	char			*str;
 	t_type			type;
+	struct	s_token	*next;
 }t_token;
 
 typedef struct s_cmd

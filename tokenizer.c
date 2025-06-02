@@ -6,58 +6,42 @@
 /*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:42:31 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/05/25 19:06:02 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/01 19:12:47 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-t_node	*creat_node(void *content)
+t_token *creat_token(char *token, t_type type)
 {
-	t_node *node;
-	
-	node = malloc(node);
-	if (!node)
+	t_token *p;
+
+	p = malloc(sizeof(t_token));
+	if (!p)
 	{
-		// free
+	 //free
 	}
-	node->content = content;
-	node->next = NULL;
-	return (node);
+	p->str = token;
+	p->type = type;
+	p->next = NULL;
+	return (p);
 }
-
-void	add_back(t_node **head, void *content)
+void token_add_back(t_token **head, char *token, t_type type)
 {
-	t_node *tmp;
+	t_token *ptr;
 
-	tmp = *head;
+	ptr = *head;
 	if (!*head)
 	{
-		*head = creat_node(content);
+		*head = creat_token(token, type);
+		
 	}
 	else
 	{
-		while(tmp->next)
-		{
-			tmp = tmp->next;
-		}
-		tmp = creat_node(content);
+		while (ptr->next)
+			ptr = ptr->next;
+		ptr = creat_token(token, type);
 	}
-}
-
-t_token	*creat_token(char *str, t_type type)
-{
-	t_token *token;
-
-	token = malloc(sizeof(t_token));
-	if (!token)
-	{
-		//free;
-	}
-	token->str = str;
-	token->type = type;
-	return (token);
 }
 
 char *ft_substr(int start, int end, char *str)
@@ -88,7 +72,7 @@ int is_space(char c)
 t_token *tokenizer(char *str)
 {
 	t_token *token;
-	t_node	*node;
+
 	int		i;
 	int		j;
 	int		quote;
@@ -108,6 +92,7 @@ t_token *tokenizer(char *str)
 			j++;
 		
 		add_back(&node, creat_token(str, ));
+		}
 	}
 	
 	

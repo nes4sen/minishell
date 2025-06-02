@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_helper.c                                   :+:      :+:    :+:   */
+/*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/05/23 10:51:29 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/01 19:04:05 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,14 @@ int		syntax_error(char *str)
 {
 	int len;
 	
-	len = 99999999;
+	len = INT_MAX;
 	if (is_valid_quotes(str) != -1 && len > is_valid_quotes(str))
 		len = is_valid_quotes(str);
 	if (is_valid_arrows(str) != -1 && len > is_valid_arrows(str))
 		len = is_valid_arrows(str);
 	if (is_valid_pipe(str) != -1 && len > is_valid_pipe(str) )
 		len = is_valid_pipe(str);
-	if (len >= 99999999)
+	if (len >= INT_MAX)
 		len = -1;
 	return (len);
 }
