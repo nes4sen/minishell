@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/01 19:03:13 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/03 11:06:12 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int		syntax_error(char *str);
 int		is_valid_quotes(char *str);
 int		is_valid_arrows(char *str);
 int		is_valid_pipe(char *str);
+int		is_symbole(char c);
+
 
 t_token *tokenizer(char *str);
 #endif
