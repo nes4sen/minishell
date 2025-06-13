@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:42:31 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/03 12:01:05 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/08 20:30:07 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_strlen(char *str)
 		i++;
 	return (i);
 }
-char ft_strjoin(char *s1, char *s2)
+char *ft_strjoin(char *s1, char *s2)
 {
 	int len1;
 	int len2;
@@ -104,7 +104,9 @@ char ft_strjoin(char *s1, char *s2)
 		p[len1 + i] = s2[i];
 		i++;
 	}
-	p[len1 + len2] = '\0';
+	p[len1 + i] = '\0';
+	// free(s1);
+	//free(s2);
 	return (p);
 }
 char	*get_expand(char *str)
@@ -113,13 +115,42 @@ char	*get_expand(char *str)
 	int		j;
 	char	*s1;
 	char 	*s2;
+	char 	*s3;
 	
 	i = 0;
 	j = 0;
-	while (str[i])
+	while (str[i] != '$')
+		i++;
+	s1 = malloc(i + 1);
+	if (!s1)
 	{
-		
+		//free
 	}
+	while (str[j] != '$')
+	{
+		s1[j] = str[j];
+		j++;
+	}
+	s1[j] = '\0';
+	i = j + 1;
+	while (str[i] && str[i] != '\"')
+		i++;
+	s2 = malloc((i - j) + 1);
+	if (!s2)
+	{
+		//free
+	}
+	i = j + 1;
+	j = 0;
+	while(str[i] && str[i] != '\"')
+	{
+		s2[j] = str[i];
+		i++;
+		j++;
+	}
+	s2[j] = '\0';
+	s3 = getenv(s2);
+	return(ft_strjoin(s1, s3));
 }
 
 char *get_token(char *str, int *quote)
@@ -127,6 +158,7 @@ char *get_token(char *str, int *quote)
 	int i;
 	
 	i = 0;
+
 	while(str[i])
 	{
 		if (is_symbole(str[i]))
@@ -141,24 +173,40 @@ char *get_token(char *str, int *quote)
 	}
 	return(ft_substr(0, i, str));
 }
+int	get_type()
+{
+	
+}
 t_token *tokenizer(char *str)
 {
 	t_token *token;
+	char	*token_str;
 	int		quote;
 
 
 	quote = 0;
+	token = NULL;
 
 	// str = echo hello"echo" 
 	while (*str)
 	{
-		if (*str == '\"' || *str == '\'')
-			quote = *str;
 		while(is_space(*str) && !quote)
+		{
+			if (*str == '\"' || *str == '\'')
+				quote = *str;
 			str++;
-		token->str = get_token(str, &quote)
+		}
+		token_str = get_token(str, &quote);
+		token_add_back(&token, token_str, 1); // echo hello toto etc"$HOME"
+		printf("token %s\n", token->str);
+		str++;
 	}
 	
 	
+}
+int main()
+{
+	char str[] = " hello world\"$HOME\"hh";
+	t_token *tok = tokenizer(str);
 }
 

@@ -1,36 +1,16 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
 
-typedef struct l
-{
-    int a;
-    int b;
-    struct l *next;
-}list;
 
-void *creat()
-{
-    void *p = malloc(size);
-    if (!p)
-    {
-        return (NULL);
-    }
-    return (p);
-}
-void *fill_last(void *head)
-{
-    while (head->next)
-    {
-        head = head->next;
-    }
-    return (head);
-}
-void add_back(void **head, )
-{
-
-}
 
 int main()
 {
+ char *str = getenv("HOMEf");
+ if (str)
+    printf("%s\n", str);
+else 
+printf("tt");
+
 
 }
