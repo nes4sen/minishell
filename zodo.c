@@ -7,4 +7,6 @@
 //	
 // 
 //
+//--> is the exec  the only way to execut a programe ?
+//
 //

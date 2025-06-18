@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:42:31 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/08 20:30:07 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:48:24 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,57 +109,62 @@ char *ft_strjoin(char *s1, char *s2)
 	//free(s2);
 	return (p);
 }
-char	*get_expand(char *str)
-{
-	int		i;
-	int		j;
-	char	*s1;
-	char 	*s2;
-	char 	*s3;
+// char	*get_expan(char *str)
+// {
+// 	int		i;
+// 	int		j;
+// 	char	*s1;
+// 	char 	*s2;
+// 	char 	*s3;
 	
-	i = 0;
-	j = 0;
-	while (str[i] != '$')
-		i++;
-	s1 = malloc(i + 1);
-	if (!s1)
-	{
-		//free
-	}
-	while (str[j] != '$')
-	{
-		s1[j] = str[j];
-		j++;
-	}
-	s1[j] = '\0';
-	i = j + 1;
-	while (str[i] && str[i] != '\"')
-		i++;
-	s2 = malloc((i - j) + 1);
-	if (!s2)
-	{
-		//free
-	}
-	i = j + 1;
-	j = 0;
-	while(str[i] && str[i] != '\"')
-	{
-		s2[j] = str[i];
-		i++;
-		j++;
-	}
-	s2[j] = '\0';
-	s3 = getenv(s2);
-	return(ft_strjoin(s1, s3));
+// 	i = 0;
+// 	j = 0;
+// 	while (str[i] != '$')
+// 		i++;
+// 	s1 = malloc(i + 1);
+// 	if (!s1)
+// 	{
+// 		//free
+// 	}
+// 	while (str[j] != '$')
+// 	{
+// 		s1[j] = str[j];
+// 		j++;
+// 	}
+// 	s1[j] = '\0';
+// 	i = j + 1;
+// 	while (str[i] && str[i] != '\"')
+// 		i++;
+// 	s2 = malloc((i - j) + 1);
+// 	if (!s2)
+// 	{
+// 		//free
+// 	}
+// 	i = j + 1;
+// 	j = 0;
+// 	while(str[i] && str[i] != '\"')
+// 	{
+// 		s2[j] = str[i];
+// 		i++;
+// 		j++;
+// 	}
+// 	s2[j] = '\0';
+// 	s3 = getenv(s2);
+// 	return(ft_strjoin(s1, s3));
+// }
+
+char *get_expand(char *str, t_env *env)
+{
+	
 }
 
-char *get_token(char *str, int *quote)
+char *get_token(char *str,int *index, int *quote, t_env *env)
 {
 	int i;
 	
 	i = 0;
 
-	while(str[i])
+	while(str[i] && str[i] != quote)
 	{
 		if (is_symbole(str[i]))
 		{
@@ -168,41 +173,66 @@ char *get_token(char *str, int *quote)
 			break;
 		}
 		if (str[i] == '$')
-			return (get_expand(str));
+			return (get_expand(str, env));
 		i++;
 	}
+	*index = i; 
 	return(ft_substr(0, i, str));
 }
-int	get_type()
+int	get_type(char *str)
+{
+	// return the type of token
+	return (0);
+}
+
+t_token *get_quoted_token(char *str, int quote)
 {
 	
+ // echo 'hello $world'
+	int i;
+	int literal_mode;
+
+	i = 0;
+	if (quote == '\'')
+		literal_mode = 1;
+	literal_mode = 0;
+	i++;
+	while (str[i] && str[i] != quote)
+	{
+		
+	}
 }
 t_token *tokenizer(char *str)
 {
+	
 	t_token *token;
 	char	*token_str;
 	int		quote;
-
+	int		index;
+	// int		lex_mode;
 
 	quote = 0;
+	index = 0;
 	token = NULL;
-
-	// str = echo hello"echo" 
 	while (*str)
 	{
 		while(is_space(*str) && !quote)
 		{
+			str++;
 			if (*str == '\"' || *str == '\'')
 				quote = *str;
-			str++;
 		}
-		token_str = get_token(str, &quote);
-		token_add_back(&token, token_str, 1); // echo hello toto etc"$HOME"
-		printf("token %s\n", token->str);
+		if(*str)
+		{
+			
+		}
+			// get_quoted_token();
+		// token_str = get_token(str,&index, &quote);
+		str += index;
+		token_add_back(&token, token_str, get_type(token_str)); // echo hello toto etc"$HOME"
+		// printf("token %s\n", token->str);
 		str++;
 	}
-	
-	
 }
 int main()
 {
@@ -210,3 +240,6 @@ int main()
 	t_token *tok = tokenizer(str);
 }
 
+/*
+echo hello " '"
+*/

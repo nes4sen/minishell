@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/03 11:06:12 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:12:51 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+#define VOID_MODE 0
+#define SINGLE_MODE 1
+#define DOUBLE_MODE 2
 
 typedef enum e_type
 {
@@ -44,11 +47,19 @@ typedef struct s_cmd
 
 } t_cmd;
 
+typedef struct s_env
+{
+	char			*str;
+	struct s_env	*next;
+}t_env;
+
 typedef struct s_trash
 {
 	void *ptr;
 	struct s_trash *next;
 }t_trash;
+
+int	ft_strlen(char *str);
 
 // t_cmd	*parsing(line);
 int		syntax_error(char *str);
@@ -59,4 +70,9 @@ int		is_symbole(char c);
 
 
 t_token *tokenizer(char *str);
+
+void	add_back_env(t_env **head, char *str);
+t_env	*creat_node_env(char *str);
+t_env	*get_env(char **envp);
+
 #endif

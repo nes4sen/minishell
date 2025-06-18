@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/01 19:04:05 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/18 11:51:53 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int is_valid_pipe(char *str)
 		return(i);
 	return (-1);
 }
-
 
 int		syntax_error(char *str)
 {

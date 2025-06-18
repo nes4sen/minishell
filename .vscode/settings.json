@@ -1,6 +1,11 @@
 {
 	"files.associations": {
 		"minishell.h": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"stdio.h": "c",
+		"unistd.h": "c",
+		"limits.h": "c",
+		"readline.h": "c",
+		"history.h": "c"
 	}
 }
