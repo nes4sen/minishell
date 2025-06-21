@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:42:31 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/18 11:48:24 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/21 16:27:33 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,27 +158,26 @@ char *get_expand(char *str, t_env *env)
 	
 }
 
-char *get_token(char *str,int *index, int *quote, t_env *env)
-{
-	int i;
+// char *get_token(char *str,int *index, int *quote, t_env *env)
+// {
+// 	int i;
 	
-	i = 0;
-
-	while(str[i] && str[i] != quote)
-	{
-		if (is_symbole(str[i]))
-		{
-			if (is_symbole(str[i++]))
-				break;
-			break;
-		}
-		if (str[i] == '$')
-			return (get_expand(str, env));
-		i++;
-	}
-	*index = i; 
-	return(ft_substr(0, i, str));
-}
+// 	i = 0;
+// 	while(str[i] && str[i] != quote)
+// 	{
+// 		if (is_symbole(str[i]))
+// 		{
+// 			if (is_symbole(str[i++]))
+// 				break;
+// 			break;
+// 		}
+// 		if (str[i] == '$')
+// 			return (get_expand(str, env));
+// 		i++;
+// 	}
+// 	*index = i; 
+// 	return(ft_substr(0, i, str));
+// }
 int	get_type(char *str)
 {
 	// return the type of token
@@ -202,37 +201,72 @@ t_token *get_quoted_token(char *str, int quote)
 		
 	}
 }
+
+int white_space(char c)
+{
+	if (c == ' ' || c == '\n' || c == '\t')
+		return (c);
+	return (0);
+}
+
+t_token *split_tokens(char *str)
+{
+	int		i;
+	int		quote;
+	t_token	*head;
+	int		j;
+	
+	i = 0;
+	j = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			quote = str[i];
+		if (white_space(str[i]) && quote)
+			i++;
+		
+		if (str[i] == quote)
+			quote = 0;  
+		i++;
+	}
+}
+
 t_token *tokenizer(char *str)
 {
 	
 	t_token *token;
-	char	*token_str;
-	int		quote;
-	int		index;
-	// int		lex_mode;
+	t_token *splited;
 
-	quote = 0;
-	index = 0;
-	token = NULL;
-	while (*str)
-	{
-		while(is_space(*str) && !quote)
-		{
-			str++;
-			if (*str == '\"' || *str == '\'')
-				quote = *str;
-		}
-		if(*str)
-		{
+	splited = split_tokens(str);
+	
+	
+	// char	*token_str;
+	// int		quote;
+	// int		index;
+	// // int		lex_mode;
+
+	// quote = 0;
+	// index = 0;
+	// token = NULL;
+	// while (*str)
+	// {
+	// 	while(is_space(*str) && !quote)
+	// 	{
+	// 		str++;
+	// 		if (*str == '\"' || *str == '\'')
+	// 			quote = *str;
+	// 	}
+	// 	if(*str)
+	// 	{
 			
-		}
-			// get_quoted_token();
-		// token_str = get_token(str,&index, &quote);
-		str += index;
-		token_add_back(&token, token_str, get_type(token_str)); // echo hello toto etc"$HOME"
-		// printf("token %s\n", token->str);
-		str++;
-	}
+	// 	}
+	// 		// get_quoted_token();
+	// 	// token_str = get_token(str,&index, &quote);
+	// 	str += index;
+	// 	token_add_back(&token, token_str, get_type(token_str)); // echo hello toto etc"$HOME"
+	// 	// printf("token %s\n", token->str);
+	// 	str++;
+	// }
 }
 int main()
 {
