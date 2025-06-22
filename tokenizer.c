@@ -6,63 +6,63 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 10:42:31 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/21 16:27:33 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/22 11:02:00 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *creat_token(char *token, t_type type)
-{
-	t_token *p;
+// t_token *creat_token(char *token, t_type type)
+// {
+// 	t_token *p;
 
-	p = malloc(sizeof(t_token));
-	if (!p)
-	{
-	 //free
-	}
-	p->str = token;
-	p->type = type;
-	p->next = NULL;
-	return (p);
-}
-void token_add_back(t_token **head, char *token, t_type type)
-{
-	t_token *ptr;
+// 	p = malloc(sizeof(t_token));
+// 	if (!p)
+// 	{
+// 	 //free
+// 	}
+// 	p->str = token;
+// 	p->type = type;
+// 	p->next = NULL;
+// 	return (p);
+// }
+// void token_add_back(t_token **head, char *token, t_type type)
+// {
+// 	t_token *ptr;
 
-	ptr = *head;
-	if (!*head)
-	{
-		*head = creat_token(token, type);
+// 	ptr = *head;
+// 	if (!*head)
+// 	{
+// 		*head = creat_token(token, type);
 		
-	}
-	else
-	{
-		while (ptr->next)
-			ptr = ptr->next;
-		ptr = creat_token(token, type);
-	}
-}
+// 	}
+// 	else
+// 	{
+// 		while (ptr->next)
+// 			ptr = ptr->next;
+// 		ptr = creat_token(token, type);
+// 	}
+// }
 
-char *ft_substr(int start, int end, char *str)
-{
-	int 	len;
-	char	*s;
-	int		i;
-	len = (end - start);
-	s = malloc(len + 1);
-	if (!s)
-		return NULL;
-	i = 0;
-	while (start < end)
-	{
-		s[i] = str[start];
-		i++;
-		start++;
-	}
-	s[i] = '\0';
-	return (s);
-}
+// char *ft_substr(int start, int end, char *str)
+// {
+// 	int 	len;
+// 	char	*s;
+// 	int		i;
+// 	len = (end - start);
+// 	s = malloc(len + 1);
+// 	if (!s)
+// 		return NULL;
+// 	i = 0;
+// 	while (start < end)
+// 	{
+// 		s[i] = str[start];
+// 		i++;
+// 		start++;
+// 	}
+// 	s[i] = '\0';
+// 	return (s);
+// }
 int is_space(char c)
 {
 	if (c == ' ' || (c >= 9 && c <= 13))

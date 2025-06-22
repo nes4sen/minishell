@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/17 17:12:51 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/22 18:40:29 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_token
 {
 	char			*str;
 	t_type			type;
+	int				join;
 	struct	s_token	*next;
 }t_token;
 
@@ -75,4 +76,4 @@ void	add_back_env(t_env **head, char *str);
 t_env	*creat_node_env(char *str);
 t_env	*get_env(char **envp);
 
-#endif
+#endif  
