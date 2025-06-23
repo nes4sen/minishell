@@ -6,11 +6,17 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/22 20:27:43 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/23 17:59:00 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int *global_quote(void)
+{
+	static int quote = 0;
+	return (&quote);
+}
 
 t_token *creat_token(char *token, t_type type)
 {
@@ -35,13 +41,12 @@ void token_add_back(t_token **head, char *token, t_type type)
 	if (!*head)
 	{
 		*head = creat_token(token, type);
-		
 	}
 	else
 	{
 		while (ptr->next)
 			ptr = ptr->next;
-		ptr = creat_token(token, type);
+		ptr->next = creat_token(token, type);
 	}
 }
 
@@ -81,22 +86,26 @@ int	is_symbole(char c)
 }
 char	*get_token(char **str)
 {
+	int		*quote;
 	char 	*s;
 	int		i;
-	int		quote;
 	
-	i = 0;
+	quote = global_quote();
 	s = *str;
-	// if (s[i] == quote) //to skip the quote that passed from the func
-	// 	i++;
-	while (s[i])
+	i = 0;
+	while (s[i] && !(white_space(s[i]) && !*quote)) // means not seperator
 	{
-		if (is_symbole(s[i++]))
+		if (s[i] == '\'' || s[i] == '\"')
+			*quote = s[i];
+		if (is_symbole(s[i]))
 		{
-			if(is_symbole(s[i++]))
+			i++;
+			if(is_symbole(s[i]))
 				break;
 			break;
 		}
+		if (s[i] == *quote)
+			*quote = 0;
 		i++;
 	}
 	*str = (s + i);
@@ -115,37 +124,51 @@ int ft_strcmp(char *s1, char *s2)
 int	get_type(char *str)
 {
 	if (!ft_strcmp(str, "|"))
-		retrun (1);
+		return (1);
 	if (!ft_strcmp(str, "<"))
 		return (2);
 	if (!ft_strcmp(str, ">"))
-		retrun (3);
+		return (3);
 	if (!ft_strcmp(str, "<<"))
 		return (4);
 	if (!ft_strcmp(str, ">>"))
 		return (5);
 	return (0);
 }
+
 t_token *tokenizer(char *str)
 {
 	t_token	*head;
-	int		quote;
-	char	token;
-	int		i;
+	char	*token;
 
-	i = 0;
 	head = NULL;
-	quote = 0;
-	while (str[i])
+	while (*str)
 	{
-		if(str[i] == '\'' || str[i] == '\"')
-			quote = str[i];
-		while(white_space(str[i]))
-			i++;
+		while (white_space(*str))
+			str++;
 		token = get_token(&str);
 		token_add_back(&head, token, get_type(token));
-		i++;
-		if (str[i] == quote)
-			quote = 0;
 	}
+	return (head);
+}
+// t_token *get_expand(t_token *tokenizer)
+// {
+// 	t_token *ptr;
+	
+	
+// }
+
+int main()
+{
+	char str[] = " echo \"hello_world\"\'world\'   _toto";
+
+	t_token *token = tokenizer(str);
+	// t_token *tmp;
+
+	while (token)
+	{
+		printf("[str -> %s\n type -> %d]\n", token->str, token->type);
+		token= token->next;
+	}
+	
 }
