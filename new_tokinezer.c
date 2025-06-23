@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/23 17:59:00 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/23 19:03:44 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,29 @@ t_token *tokenizer(char *str)
 	}
 	return (head);
 }
-// t_token *get_expand(t_token *tokenizer)
-// {
-// 	t_token *ptr;
+t_token *get_expand(t_token *tokens_list)
+{
+	t_token *ptr;
+	char 	*str;
+	int		i;
+	
+	ptr = tokens_list;
+	while (ptr)
+	{
+		str = ptr->str;
+		i = 0;
+		while (str[i])
+		{
+			if (str[i] == '$')
+			{
+				
+			}
+		}
+		ptr = ptr->next;
+	}
 	
 	
-// }
+}
 
 int main()
 {
