@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 16:19:56 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/24 16:51:46 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,15 @@ int		is_valid_pipe(char *str);
 int		is_symbole(char c);
 
 
-/*-------|>---list utils---<|--------*/
+/*-------|>---env list---<|--------*/
 void	add_back_env(t_env **head, char *str);
 t_env	*creat_node_env(char *str);
 t_env	*get_env(char **envp);
+
+
+/*-------|>---token list---<|--------*/
 void 	token_add_back(t_token **head, char *token, t_type type);
 t_token	*creat_token(char *token, t_type type);
-
 
 
 /*-------|>---toke nizer---<|--------*/
@@ -92,7 +94,7 @@ int		white_space(char c);
 /*-------|>---variable expand---<|--------*/
 void	get_expand(t_token *ptr);
 t_token *find_expand(t_token *tokens_list);
-char *catch_var(char );
+char 	*catch_var(char );
 
 
 

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 16:42:16 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:35:38 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,15 @@ t_token *tokenizer(char *str)
 	return (head);
 }
 
-
 int main()
 {
-	char str[] = " ee \"eho hel\"    >|   \" > hel \"\' w \'";
-
+	char str[] = " ee \"eho hel\"    > |   \" > hel \"\' w \'";
 	t_token *token = tokenizer(str);
 	// t_token *tmp;
-
+	
 	while (token)
 	{
 		printf("[str -> %s			| type -> %d]\n", token->str, token->type);
 		token= token->next;
 	}
-	
 }
