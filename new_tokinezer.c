@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/23 19:03:44 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/24 11:52:50 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,15 @@ char	*get_token(char **str)
 	{
 		if (s[i] == '\'' || s[i] == '\"')
 			*quote = s[i];
-		if (is_symbole(s[i]))
+		if (is_symbole(s[i]) && !*quote)
 		{
 			i++;
 			if(is_symbole(s[i]))
 				break;
 			break;
 		}
-		if (s[i] == *quote)
+		if (s[++i] == *quote)
 			*quote = 0;
-		i++;
 	}
 	*str = (s + i);
 	return (ft_substr(0, i, s));
@@ -151,7 +150,36 @@ t_token *tokenizer(char *str)
 	}
 	return (head);
 }
-t_token *get_expand(t_token *tokens_list)
+char *catch_var(char )
+{
+	
+}
+
+void	get_expand(t_token *ptr)
+{
+	int		i;
+	char	*str;
+	int		*quote;
+	
+	
+	i = 0;
+	quote = global_quote();
+	*quote = 0;
+	str = ptr->str;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			quote = str[i];
+		if (str[i] == '$')
+		{
+			
+		}
+			
+		i++;	
+	}	
+}
+
+t_token *find_expand(t_token *tokens_list)
 {
 	t_token *ptr;
 	char 	*str;
@@ -166,25 +194,24 @@ t_token *get_expand(t_token *tokens_list)
 		{
 			if (str[i] == '$')
 			{
-				
+				get_expand(ptr);
 			}
+			i++;
 		}
 		ptr = ptr->next;
-	}
-	
-	
+	}	
 }
 
 int main()
 {
-	char str[] = " echo \"hello_world\"\'world\'   _toto";
+	char str[] = " echo \" > hel \"\' w \'";
 
 	t_token *token = tokenizer(str);
 	// t_token *tmp;
 
 	while (token)
 	{
-		printf("[str -> %s\n type -> %d]\n", token->str, token->type);
+		printf("[str -> %s			| type -> %d]\n", token->str, token->type);
 		token= token->next;
 	}
 	
