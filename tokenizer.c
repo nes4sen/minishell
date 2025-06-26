@@ -6,35 +6,34 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/26 11:47:16 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:49:42 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int *global_quote(void)
-{
-	static int quote = 0;
-	return (&quote);
-}
+// int *global_quote(void)
+// {
+// 	static int quote = 0;
+// 	return (&quote);
+// }
 
 char	*get_token(char **str)
 {
-	int		*quote;
+	int		quote;
 	char 	*s;
 	int		i;
 
-	quote = global_quote();
-	*quote  = 0;
+	quote  = 0;
 	s = *str;
 	i = 0;
 	while (s[i]) // means not seperator
 	{			
-		if (!*quote && (s[i] == '\'' || s[i] == '\"'))
-			*quote = s[i];
-		else if (s[i] == *quote)
-			*quote = 0;
-		if ((white_space(s[i]) || is_symbole(s[i])) && !*quote)
+		if (!quote && (s[i] == '\'' || s[i] == '\"'))
+			quote = s[i];
+		else if (s[i] == quote)
+			quote = 0;
+		if ((white_space(s[i]) || is_symbole(s[i])) && !quote)
 			break;
 		i++;
 	}
