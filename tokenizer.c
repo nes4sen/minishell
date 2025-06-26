@@ -6,13 +6,13 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 18:35:38 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/26 11:47:16 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int *global_quote(void)
+int *global_quote(void)
 {
 	static int quote = 0;
 	return (&quote);
@@ -23,30 +23,41 @@ char	*get_token(char **str)
 	int		*quote;
 	char 	*s;
 	int		i;
-	
+
 	quote = global_quote();
+	*quote  = 0;
 	s = *str;
 	i = 0;
-	while (s[i] && !(white_space(s[i]) && !*quote)) // means not seperator
-	{
-		if (s[i] == '\'' || s[i] == '\"')
+	while (s[i]) // means not seperator
+	{			
+		if (!*quote && (s[i] == '\'' || s[i] == '\"'))
 			*quote = s[i];
-		if (is_symbole(s[++i]) && !*quote)
-		{
-			if(is_symbole(s[i]))
-				break;
-			break;
-		}
-		if (s[++i] == *quote)
-		{
+		else if (s[i] == *quote)
 			*quote = 0;
-			i++;
-		}
+		if ((white_space(s[i]) || is_symbole(s[i])) && !*quote)
+			break;
+		i++;
 	}
 	*str = (s + i);
 	return (ft_substr(0, i, s));
 }
 
+char *get_token_symbole(char **str)
+{
+	int		i;
+	char	*s;
+	
+	i = 0;
+	s = *str;
+	if (is_symbole(s[i]))
+	{
+		if (is_symbole(s[i + 1]))
+			i++;
+		i++;
+	}
+	*str = (s + i);
+	return (ft_substr(0, i, s));
+}
 t_token *tokenizer(char *str)
 {
 	t_token	*head;
@@ -57,15 +68,17 @@ t_token *tokenizer(char *str)
 	{
 		while (white_space(*str))
 			str++;
-		token = get_token(&str);
+		if (is_symbole(*str))
+			token = get_token_symbole(&str);
+		else
+			token = get_token(&str);
 		token_add_back(&head, token, get_type(token));
 	}
 	return (head);
 }
-
 int main()
 {
-	char str[] = " ee \"eho hel\"    > |   \" > hel \"\' w \'";
+	char str[] = " one  >\"t wo\">>   <<  \" > three \"\' for \'";
 	t_token *token = tokenizer(str);
 	// t_token *tmp;
 	

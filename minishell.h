@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 16:51:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/24 18:43:21 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ t_token	*creat_token(char *token, t_type type);
 t_token *tokenizer(char *str);
 char	*get_token(char **str);
 int		get_type(char *str);
+int *global_quote(void);
 
 
 /*-------|>---token utils---<|--------*/

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 18:35:20 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/25 22:34:25 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 	2_ $var		-->	this type should treated the same as the prompt,
 					 it shold be tokenized and added to the tokenizer list 
 	3_ '$var'	--> this is not a variable
+	
  
 */
 
