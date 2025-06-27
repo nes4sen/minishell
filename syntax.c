@@ -6,12 +6,15 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/18 11:51:53 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:30:53 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+// fix the pipe in the end of the string 
+//
 int		is_valid_quotes(char *str)
 {
 	int	quote;
@@ -94,7 +97,7 @@ int		syntax_error(char *str)
 }
 // int main()
 // {
-// 	char str[] = " >> hello >> | toto ";
+// 	char str[] = " >> hello >> | toto  |";
 // 	int res = syntax_error(str);
 // 	printf("%d\n", res);
 // 	if (res > -1)

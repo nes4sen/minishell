@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/25 22:34:25 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/26 12:00:24 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	there is 3 types of $var :
 
 	1_ "$var"	-->	this type gonna expanded with no seperator, the string is literal.	
-	2_ $var		-->	this type should treated the same as the prompt,
+	2_  $var	-->	this type should treated the same as the prompt,
 					 it shold be tokenized and added to the tokenizer list 
 	3_ '$var'	--> this is not a variable
 	
@@ -45,7 +45,7 @@ void	get_expand(t_token *ptr)
 			quote = str[i];
 		if (str[i] == '$')
 		{
-			catch_var()
+			catch_var();
 		}
 		i++;	
 	}	

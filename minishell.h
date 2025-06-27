@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 18:43:21 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:26:37 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ typedef struct s_cmd
 
 typedef struct s_env
 {
-	char			*str;
+	// char			*str;
+	char			*name;
+	char			*value;
+	int				index;
 	struct s_env	*next;
 }t_env;
 
@@ -70,9 +73,12 @@ int		is_symbole(char c);
 
 
 /*-------|>---env list---<|--------*/
-void	add_back_env(t_env **head, char *str);
-t_env	*creat_node_env(char *str);
+void 	add_back_env(t_env **head, char *name,char *value, int i);
+t_env	*creat_node_env(char *name, char *value, int i);
 t_env	*get_env(char **envp);
+char 	*get_env_name(char *str);
+char	*get_env_value(char *str);
+
 
 
 /*-------|>---token list---<|--------*/

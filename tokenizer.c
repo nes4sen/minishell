@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/26 11:49:42 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/26 16:42:57 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_token *tokenizer(char *str)
 }
 int main()
 {
-	char str[] = " one  >\"t wo\">>   <<  \" > three \"\' for \'";
+	char str[] = " one  >\"$var\">>   <<  \" > three \"\' for \'";
 	t_token *token = tokenizer(str);
 	// t_token *tmp;
 	
