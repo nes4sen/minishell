@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/01 17:15:53 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:58:15 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_rdr *get_rdr(t_token *tokens)
 	head = NULL;
 	while (tokens && tokens->type != 1)
 	{
-		if (tokens->type > 2)
+		if (tokens->type > 2 && tokens)
 			add_back_rdr(&head, tokens->str, tokens->type);
 		tokens = tokens->next;
 	}
