@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/01 12:45:22 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:16:22 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,20 @@ void	get_expand(t_token *ptr);
 t_token *find_expand(t_token *tokens_list);
 // char 	*catch_var(char );
 
+/*-------|>---rdr list---<|--------*/
+t_rdr	*create_node_rdr(char *file, int type);
+void	add_back_rdr(t_rdr **head, char *file, int type);
+
+
 
 /*-------|>---command list---<|--------*/
-t_cmd *build_cmd_list(t_token *tokens);
+t_cmd 	*build_cmd_list(t_token *tokens);
 void	into_next_cmd(t_token **start);
-char **get_cmd_arg(t_token *tokens);
-int	count_words(t_token *tokens);
-t_rdr *get_rdr(t_token *tokens);
+char 	**get_cmd_arg(t_token *tokens);
+int		count_words(t_token *tokens);
+t_rdr 	*get_rdr(t_token *tokens);
 void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
-t_cmd *create_node_cmd(char **cmd, t_rdr *rdr);
+t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
 
 
 

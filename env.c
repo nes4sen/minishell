@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:54:23 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/27 11:35:19 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:18:43 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,15 @@ t_env *get_env(char **envp)
 }
 
 
-int main(int ac, char **av, char **en)
-{
-	t_env *env;
-
-	env = get_env(en);
-	while (env)
-	{
-		printf("name = [%s]\nvakue = [%s]\nindex = [%d]\n",env->name, env->value, env->index);
-		env = env->next;
-	}
-}
+// int main()
+// {
+// 	t_env *env;
+	
+	
+// 	env = get_env(__environ);
+// 	while (env)
+// 	{
+// 		printf("name = [%s]\nvakue = [%s]\nindex = [%d]\n",env->name, env->value, env->index);
+// 		env = env->next;
+// 	}
+// }

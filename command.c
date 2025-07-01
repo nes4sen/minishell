@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/01 12:44:53 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:15:53 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_rdr *get_rdr(t_token *tokens)
 	while (tokens && tokens->type != 1)
 	{
 		if (tokens->type > 2)
-			add_back_rdr(&head, tokens, tokens->str, tokens->type);
+			add_back_rdr(&head, tokens->str, tokens->type);
 		tokens = tokens->next;
 	}
 	return (head);
@@ -104,7 +104,7 @@ void	into_next_cmd(t_token **start)
 t_cmd *build_cmd_list(t_token *tokens)
 {
 	t_cmd	*cmd;
-	t_cmd	**arg;
+	char	**arg;
 	t_token *ptr;
 	t_rdr	*rdr;
 	
