@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/26 17:30:53 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/27 11:36:23 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		is_valid_arrows(char *str)
 	}
 	return (-1);
 }
-
+// fix this function 
 int is_valid_pipe(char *str)
 {
 	int i;

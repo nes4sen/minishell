@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/27 11:26:37 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/01 12:45:22 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,38 @@ typedef enum e_type
 {
 	CMD,
 	PIPE,
+	HEREDOC,
 	RDRIN,
 	RDROUT,
-	HEREDOC,
 	APPND
 }t_type;
+
+// typedef enum e_rtype
+// {
+	
+// }t_rtype;
 
 typedef struct s_token
 {
 	char			*str;
 	t_type			type;
-	struct	s_token	*next;
+	// int				index;
+	struct s_token	*next;
 }t_token;
+
+typedef struct s_rdr
+{
+	char			*file;
+	t_type			type;
+	struct s_rdr	*next;
+		
+}t_rdr;
 
 typedef struct s_cmd
 {
-	char *cmd;
-
+	char			**arg;
+	t_rdr			*rdr;
+	struct s_cmd	*next;
 } t_cmd;
 
 typedef struct s_env
@@ -63,6 +78,7 @@ typedef struct s_trash
 }t_trash;
 
 int	ft_strlen(char *str);
+void	ft_strcpy(char *dst, char *src);
 
 /*-------|>---syntax error---<|--------*/
 int		syntax_error(char *str);
@@ -90,7 +106,7 @@ t_token	*creat_token(char *token, t_type type);
 t_token *tokenizer(char *str);
 char	*get_token(char **str);
 int		get_type(char *str);
-int *global_quote(void);
+// int *global_quote(void);
 
 
 /*-------|>---token utils---<|--------*/
@@ -101,14 +117,17 @@ int		white_space(char c);
 /*-------|>---variable expand---<|--------*/
 void	get_expand(t_token *ptr);
 t_token *find_expand(t_token *tokens_list);
-char 	*catch_var(char );
+// char 	*catch_var(char );
 
 
-
-
-
-
-
+/*-------|>---command list---<|--------*/
+t_cmd *build_cmd_list(t_token *tokens);
+void	into_next_cmd(t_token **start);
+char **get_cmd_arg(t_token *tokens);
+int	count_words(t_token *tokens);
+t_rdr *get_rdr(t_token *tokens);
+void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
+t_cmd *create_node_cmd(char **cmd, t_rdr *rdr);
 
 
 

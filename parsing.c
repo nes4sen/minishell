@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 18:10:49 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/06/30 16:27:01 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_cmd *parsing(char *line)
 {
 	int		err;
 	t_token	*token;
+	t_cmd	cmd;
 		
 	err = syntax_error(line);
 	if (err)
@@ -29,4 +30,5 @@ t_cmd *parsing(char *line)
 		//free and exit
 	}
 	token = tokenizer(line);
+	cmd = build_cmd_list(token):
 }

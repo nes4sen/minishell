@@ -2,23 +2,19 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-int *glob(void)
-{
-	static int var = 0;
-	printf("[%d]\n", var);
-	return (&var);
-}
+typedef struct s{
+
+char arr[9];
+char a;
+char arr2[9];
+}p;
 
 
 int main()
 {
-	int *a = glob();
+	size_t a;
+	p st;
 
-	*a = 4;
-	printf("--> %d\n", *a);
-	glob();
-	*a = 4;
-	printf("--> %d\n", *a);
-	glob();
+	printf("%p\n%p%p\n%zu\n",&st, &st.arr, &st.a, sizeof(st));
 
 }

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 16:51:44 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/01 10:51:02 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@ int	get_type(char *str)
 {
 	if (!ft_strcmp(str, "|"))
 		return (1);
-	if (!ft_strcmp(str, "<"))
+	if (!ft_strcmp(str, "<<"))
 		return (2);
 	if (!ft_strcmp(str, ">"))
 		return (3);
-	if (!ft_strcmp(str, "<<"))
+	if (!ft_strcmp(str, "<"))
 		return (4);
 	if (!ft_strcmp(str, ">>"))
 		return (5);
