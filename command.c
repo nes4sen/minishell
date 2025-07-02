@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/02 12:49:17 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:58:31 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,23 @@ char **get_cmd_arg(t_token *tokens)
 	b_alloc[i] = NULL;
 	return (b_alloc);
 }
+void  print_token( t_token *t)
+{
+	while (t)
+	{
+		printf("%s	|	%d\n", t->str, t->type);
+		t = t->next;
+	}
+}
 void	into_next_cmd(t_token **start)
 {
-	while(*start && (*start)->type == 1)
-		*start = (*start)->next;	
+	while(*start && (*start)->type != 1)
+		*start = (*start)->next;
+	if (*start && (*start)->type == 1)
+		*start = (*start)->next;
 }
+
+
 t_cmd *build_cmd_list(t_token *tokens)
 {
 	t_cmd	*cmd;
@@ -136,15 +148,13 @@ t_cmd *build_cmd_list(t_token *tokens)
 	
 	cmd = NULL;
 	ptr = tokens;
-	while(ptr)
+	while(tokens)
 	{
-		rdr = get_rdr(tokens);
 		arg = get_cmd_arg(tokens);
+		rdr = get_rdr(tokens);
 		add_back_cmd(&cmd, arg,rdr);
 		into_next_cmd(&tokens);
-		ptr = ptr->next;
 	}
-	
 	return cmd;
 }
 
@@ -161,14 +171,17 @@ void print_rdr(t_rdr *rdr)
 
 int main()
 {
-	char str[] = " one  >\"$var\">>   |  <<  \" > three \"\' for \'";
+	char str[] = " one  >\"$var\">>  |   <<  \" > two\"\' three \'";
 	t_token *token = tokenizer(str);
 	// t_token *tmp;
 	t_cmd *cmd = build_cmd_list(token);
+	int i = 0;
 	while (cmd)
 	{
 		print_arg(cmd->arg);
 		print_rdr(cmd->rdr);
+		
+		printf("%d\n", i++);
 		cmd = cmd->next;
 	}
 }
