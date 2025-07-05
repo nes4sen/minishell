@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/05 11:58:57 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:20:22 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ char *get_token_symbole(char **str)
 	*str = (s + i);
 	return (ft_substr(0, i, s));
 }
+
+char *encounter_str(char **str, char *token)
+{
+	if (is_symbole(**str))
+		token = get_token_symbole(str);
+	else
+		token = get_token(str);
+	return (token);
+}
+
 t_token *tokenizer(char *str)
 {
 	t_token	*head;
@@ -64,10 +74,7 @@ t_token *tokenizer(char *str)
 	{
 		while (white_space(*str))
 			str++;
-		if (is_symbole(*str))
-			token = get_token_symbole(&str);
-		else
-			token = get_token(&str);
+		token = encounter_str(&str, token);
 		if (type < 3)
 		{
 			type = get_type(token);
