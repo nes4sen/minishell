@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/05 10:46:40 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:31:01 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,6 @@ int main()
 		printf("\n\n%d\n\n", i++);
 		print_arg(cmd->arg);
 		print_rdr(cmd->rdr);
-		
 		cmd = cmd->next;
 	}
 }

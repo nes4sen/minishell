@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/04 15:53:58 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/05 14:30:17 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ t_cmd *parsing(char *line)
 		//free and exit
 	}
 	token = tokenizer(line);
-	
 	cmd = build_cmd_list(token);
 }
