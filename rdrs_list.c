@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:18:47 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/02 11:56:05 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/02 17:12:36 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ t_rdr *create_node_rdr( char *str, int type)
 	ptr->next = NULL;
 	ptr->file = file;
 	ptr->type = type;
-	// printf("[ptr->file %s	|	ptr->type = %d]\n",ptr->file, ptr->type);
 	return (ptr);
 }
 
@@ -48,9 +47,8 @@ void	add_back_rdr(t_rdr **head, char *file, int type)
 		ptr = *head;
 		while (ptr->next)
 		{
-			// printf("[ptr->file = %s\n]",ptr->file);
 			ptr = ptr->next;
 		}
-		ptr->next = create_node_rdr(file, type); // --> the segv from here 
+		ptr->next = create_node_rdr(file, type); 
 	}
 }

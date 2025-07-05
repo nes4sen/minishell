@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/27 11:36:23 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/04 15:57:08 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		syntax_error(char *str)
 		len = is_valid_quotes(str);
 	if (is_valid_arrows(str) != -1 && len > is_valid_arrows(str))
 		len = is_valid_arrows(str);
-	if (is_valid_pipe(str) != -1 && len > is_valid_pipe(str) )
+	if (is_valid_pipe(str) != -1 && len > is_valid_pipe(str)) //<-- not complete 
 		len = is_valid_pipe(str);
 	if (len >= INT_MAX)
 		len = -1;

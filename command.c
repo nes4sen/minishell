@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/02 16:58:31 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/05 10:46:40 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,12 @@ t_rdr *get_rdr(t_token *tokens)
 	while (tokens && tokens->type != 1)
 	{
 		if (tokens->type > 2 )
+		{
 			add_back_rdr(&head, tokens->str, tokens->type);
-// printf("[tokens->str = %s]\n",tokens->str);
+			// tokens->next->type = tokens->type;
+			// if (tokens->next)
+            // 	tokens->next->type = tokens->type;
+		}
 		tokens = tokens->next;
 	}
 	return (head);
@@ -84,7 +88,6 @@ int	count_words(t_token *tokens)
 			i++;
 		tokens = tokens->next;
 	}
-	// printf("b_len %d\n", i);
 	return (i);
 }
 char **get_cmd_arg(t_token *tokens)
@@ -102,7 +105,6 @@ char **get_cmd_arg(t_token *tokens)
 	}
 	while(i < b_len)
 	{
-		
 		while (tokens)
 		{
 			if(!tokens->type)
@@ -122,14 +124,8 @@ char **get_cmd_arg(t_token *tokens)
 	b_alloc[i] = NULL;
 	return (b_alloc);
 }
-void  print_token( t_token *t)
-{
-	while (t)
-	{
-		printf("%s	|	%d\n", t->str, t->type);
-		t = t->next;
-	}
-}
+
+
 void	into_next_cmd(t_token **start)
 {
 	while(*start && (*start)->type != 1)
@@ -143,21 +139,21 @@ t_cmd *build_cmd_list(t_token *tokens)
 {
 	t_cmd	*cmd;
 	char	**arg;
-	t_token *ptr;
 	t_rdr	*rdr;
 	
 	cmd = NULL;
-	ptr = tokens;
 	while(tokens)
 	{
-		arg = get_cmd_arg(tokens);
 		rdr = get_rdr(tokens);
+		arg = get_cmd_arg(tokens);
 		add_back_cmd(&cmd, arg,rdr);
 		into_next_cmd(&tokens);
 	}
 	return cmd;
 }
 
+
+/*--------------------------------------------------------------------------*/
 void print_rdr(t_rdr *rdr)
 {
 	
@@ -168,39 +164,30 @@ void print_rdr(t_rdr *rdr)
 	}	
 
 }
+void  print_token( t_token *t)
+{
+	while (t)
+	{
+		printf("%s	|	%d\n", t->str, t->type);
+		t = t->next;
+	}
+}
 
 int main()
 {
-	char str[] = " one  >\"$var\">>  |   <<  \" > two\"\' three \'";
+	char str[] = " one  >\"$var\" > hee tt  |  \" > two\"\' three \'";
 	t_token *token = tokenizer(str);
-	// t_token *tmp;
+
 	t_cmd *cmd = build_cmd_list(token);
 	int i = 0;
 	while (cmd)
 	{
+		printf("\n\n%d\n\n", i++);
 		print_arg(cmd->arg);
 		print_rdr(cmd->rdr);
 		
-		printf("%d\n", i++);
 		cmd = cmd->next;
 	}
 }
 
 
-/*
-
-t_cmd *build_cmd_list(t_token *tokens)
-{
-	t_cmd *cmd = NULL;
-	t_token *ptr = tokens;
-
-	while (ptr)
-	{
-		t_rdr *rdr = get_rdr(&ptr);      // update ptr internally
-		char **arg = get_cmd_arg(&ptr);  // also update ptr inside
-		add_back_cmd(&cmd, arg, rdr);
-	}
-	return cmd;
-}
-
-*/

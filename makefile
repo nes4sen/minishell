@@ -3,7 +3,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 # -lreadline
 
 CFILES= command.c env.c  \
-		list_utils.c  minishell.c \
+		token_list.c  minishell.c \
 		 rdrs_list.c \
 		syntax.c tokenizer.c utils.c
 

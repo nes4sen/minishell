@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/01 16:35:51 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:29:20 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ this is the start of everything and here is the steps of everything :abort
 // 		} 
 // 		free(line);
 // 		rl_clear_history();
-		
 // 	}
 // 	// line = read_line();
 // 	// head = parsing(line);

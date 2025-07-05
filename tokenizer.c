@@ -6,17 +6,12 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/01 12:33:51 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/05 11:58:57 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int *global_quote(void)
-// {
-// 	static int quote = 0;
-// 	return (&quote);
-// }
 
 char	*get_token(char **str)
 {
@@ -27,7 +22,7 @@ char	*get_token(char **str)
 	quote  = 0;
 	s = *str;
 	i = 0;
-	while (s[i]) // means not seperator
+	while (s[i]) 
 	{			
 		if (!quote && (s[i] == '\'' || s[i] == '\"'))
 			quote = s[i];
@@ -61,8 +56,10 @@ t_token *tokenizer(char *str)
 {
 	t_token	*head;
 	char	*token;
+	int 	type;
 
 	head = NULL;
+	type = 0;
 	while (*str)
 	{
 		while (white_space(*str))
@@ -71,7 +68,16 @@ t_token *tokenizer(char *str)
 			token = get_token_symbole(&str);
 		else
 			token = get_token(&str);
-		token_add_back(&head, token, get_type(token));
+		if (type < 3)
+		{
+			type = get_type(token);
+			token_add_back(&head, token, type);
+		}
+		else
+		{
+			token_add_back(&head, token, 6);
+			type = 0;
+		}
 	}
 	return (head);
 }

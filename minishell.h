@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/02 15:57:58 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/05 11:39:21 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ typedef enum e_type
 	HEREDOC,
 	RDRIN,
 	RDROUT,
-	APPND
+	APPND,
+	FiLE
 }t_type;
 
 // typedef enum e_rtype
@@ -77,8 +78,11 @@ typedef struct s_trash
 	struct s_trash *next;
 }t_trash;
 
-int	ft_strlen(char *str);
+
+
+int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
+
 
 /*-------|>---syntax error---<|--------*/
 int		syntax_error(char *str);
@@ -102,7 +106,7 @@ void 	token_add_back(t_token **head, char *token, t_type type);
 t_token	*creat_token(char *token, t_type type);
 
 
-/*-------|>---toke nizer---<|--------*/
+/*-------|>---tokenizer---<|--------*/
 t_token *tokenizer(char *str);
 char	*get_token(char **str);
 int		get_type(char *str);
@@ -122,7 +126,6 @@ t_token *find_expand(t_token *tokens_list);
 /*-------|>---rdr list---<|--------*/
 t_rdr	*create_node_rdr(char *file, int type);
 void	add_back_rdr(t_rdr **head, char *file, int type);
-
 
 
 /*-------|>---command list---<|--------*/

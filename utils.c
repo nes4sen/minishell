@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/01 17:19:10 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/05 11:39:01 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,7 @@ int white_space(char c)
 	return (0);
 }
 
-// int	is_symbole(char c)
-// {
-// 	if (c == '>' || c == '<' || c == '|')
-// 		return (c);
-// 	return (0);
-// }
+
 int	get_type(char *str)
 {
 	if (!ft_strcmp(str, "|"))

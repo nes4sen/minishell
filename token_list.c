@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:43:28 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/24 16:59:26 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/04 20:39:45 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void token_add_back(t_token **head, char *token, t_type type)
 	t_token *ptr;
 
 	ptr = *head;
+	printf("---------->>> type %d\n", type);
 	if (!*head)
 	{
 		*head = creat_token(token, type);
