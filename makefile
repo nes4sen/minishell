@@ -2,9 +2,9 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 # -lreadline
 
-CFILES= command.c env.c  \
+CFILES= build_cmd.c env.c  \
 		token_list.c  minishell.c \
-		 rdrs_list.c \
+		 rdrs_list.c parsing.c\
 		syntax.c tokenizer.c utils.c
 
 OBJ_FILES = $(CFILES:.c=.o)
@@ -15,10 +15,10 @@ NAME=minishell
 all: $(NAME)
 
 $(NAME): $(OBJ_FILES)
-	$(CC) $(OBJ_FILES) -o $(NAME)
+	$(CC) $(OBJ_FILES) -o $(NAME) -lreadline 
 
 %.o:%.c minishell.h
-	$(CC) $(CFLAGS) -c $<
+	$(CC) $(CFLAGS) -c $< 
 
 clean:
 	rm -f $(OBJ_FILES);

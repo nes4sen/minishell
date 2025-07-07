@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readline.c                                         :+:      :+:    :+:   */
+/*   zfork.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 18:00:15 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/05/18 18:18:58 by nosahimi         ###   ########.fr       */
+/*   Created: 2025/07/06 16:19:57 by nosahimi          #+#    #+#             */
+/*   Updated: 2025/07/06 16:42:14 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *read_line()
+int main()
 {
-	char *line;
-	// char *tmp;
-	 
-	line = readline("minishell $>");
-	if (line)
-		add_history(line);
+	int corrent_pid = getpid();
+	printf("corrent pid = %d\n", corrent_pid);
 	
 	
+	
+	
+	int pid = fork();
+	printf("fork %d\n",pid);
+	int new_pid = getpid();
+	printf("new pid = %d\n", new_pid);
+	printf("fork %d\n",pid);
+	printf("fork final %d\n",pid);
 }

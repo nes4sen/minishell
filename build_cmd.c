@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.c                                          :+:      :+:    :+:   */
+/*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/05 14:31:01 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:36:30 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,30 @@ void print_arg(char **arg)
 	i = 0;
 	while (arg[i])
 	{
-		printf("arg	-> %s	\n",arg[i]);
+		printf("arg		: [%s]\n",arg[i]);
 		i++;
 	}
-	
 }
+void print_rdr(t_rdr *rdr)
+{
+	
+	while (rdr)
+	{
+		printf("rdr_str -> [%s]\nrdr_type-> [%d]\n",rdr->file , rdr->type);
+		rdr = rdr->next;
+	}	
+
+}
+
+
+
+
+
+
+
+
+
+
 
 t_cmd *create_node_cmd(char **cmd, t_rdr *rdr)
 {
@@ -109,7 +128,6 @@ char **get_cmd_arg(t_token *tokens)
 		{
 			if(!tokens->type)
 			{
-			
 				b_alloc[i] = malloc(ft_strlen(tokens->str) + 1);
 				if (!b_alloc)
 				{
@@ -140,7 +158,7 @@ t_cmd *build_cmd_list(t_token *tokens)
 	t_cmd	*cmd;
 	char	**arg;
 	t_rdr	*rdr;
-	
+
 	cmd = NULL;
 	while(tokens)
 	{
@@ -149,44 +167,18 @@ t_cmd *build_cmd_list(t_token *tokens)
 		add_back_cmd(&cmd, arg,rdr);
 		into_next_cmd(&tokens);
 	}
+	// printf("\n\033[1m----COMMAND----\033[0m\n");
+	// t_cmd 	*tmp = cmd;
+	// while (tmp)
+	// {
+	// 	print_arg(tmp->arg);
+	// 	printf("\n		-----------------		\n");
+	// 	print_rdr(tmp->rdr);
+	// 	printf("\n		NEXT_COMMAND		\n");
+	// 	tmp = tmp->next;
+	// }
 	return cmd;
 }
 
-
-/*--------------------------------------------------------------------------*/
-void print_rdr(t_rdr *rdr)
-{
-	
-	while (rdr)
-	{
-		printf("rdr_str -> %s		| rdr_type-> %d\n",rdr->file , rdr->type);
-		rdr = rdr->next;
-	}	
-
-}
-void  print_token( t_token *t)
-{
-	while (t)
-	{
-		printf("%s	|	%d\n", t->str, t->type);
-		t = t->next;
-	}
-}
-
-int main()
-{
-	char str[] = " one  >\"$var\" > hee tt  |  \" > two\"\' three \'";
-	t_token *token = tokenizer(str);
-
-	t_cmd *cmd = build_cmd_list(token);
-	int i = 0;
-	while (cmd)
-	{
-		printf("\n\n%d\n\n", i++);
-		print_arg(cmd->arg);
-		print_rdr(cmd->rdr);
-		cmd = cmd->next;
-	}
-}
 
 

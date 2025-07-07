@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/05 14:20:22 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/07 19:52:15 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char *get_token_symbole(char **str)
 	s = *str;
 	if (is_symbole(s[i]))
 	{
-		if (is_symbole(s[i + 1]))
+		if (is_symbole(s[i + 1]) == is_symbole(i))
 			i++;
 		i++;
 	}
@@ -53,38 +53,33 @@ char *get_token_symbole(char **str)
 	return (ft_substr(0, i, s));
 }
 
-char *encounter_str(char **str, char *token)
-{
-	if (is_symbole(**str))
-		token = get_token_symbole(str);
-	else
-		token = get_token(str);
-	return (token);
-}
 
 t_token *tokenizer(char *str)
 {
 	t_token	*head;
 	char	*token;
-	int 	type;
 
 	head = NULL;
-	type = 0;
 	while (*str)
 	{
 		while (white_space(*str))
 			str++;
-		token = encounter_str(&str, token);
-		if (type < 3)
-		{
-			type = get_type(token);
-			token_add_back(&head, token, type);
-		}
+		if (is_symbole(*str))
+			token = get_token_symbole(&str);
+		else if (!*str)
+			return (head);
 		else
-		{
-			token_add_back(&head, token, 6);
-			type = 0;
-		}
+			token = get_token(&str);
+		token_add_back(&head, token, 0);
+	}
+	get_type()
+	/*----------------------------------------------------------------*/
+	printf("\033[1m\n\n----TOKENIZER----\n\n\033[0m\n");
+	t_token *tmp = head;
+	while (tmp)
+	{
+		printf("token->str	:[%s]\ntype->type	:[%u]\n",tmp->str, tmp->type);
+		tmp = tmp->next;
 	}
 	return (head);
 }

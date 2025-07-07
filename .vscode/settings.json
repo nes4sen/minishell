@@ -6,6 +6,9 @@
 		"unistd.h": "c",
 		"limits.h": "c",
 		"readline.h": "c",
-		"history.h": "c"
+		"history.h": "c",
+		"sched.h": "c",
+		"algorithm": "c",
+		"format": "c"
 	}
 }

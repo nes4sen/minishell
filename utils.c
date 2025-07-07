@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/05 11:39:01 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/07 20:23:13 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,38 @@ int white_space(char c)
 }
 
 
-int	get_type(char *str)
+void	get_type(t_token *tokens)
 {
-	if (!ft_strcmp(str, "|"))
-		return (1);
-	if (!ft_strcmp(str, "<<"))
-		return (2);
-	if (!ft_strcmp(str, ">"))
-		return (3);
-	if (!ft_strcmp(str, "<"))
-		return (4);
-	if (!ft_strcmp(str, ">>"))
-		return (5);
-	return (0);
+	unsigned int	prev_type;
+
+	while (tokens)
+	{
+		prev_type = tokens->type;
+		if (tokens->type && prev_type >= 2 && prev_type <= 5)	
+		{
+			if (tokens->next)
+			{
+			
+				tokens->next->type = prev_type;
+			
+			}
+		}
+		else if (!ft_strcmp(tokens->str, "|"))
+			tokens->type = PIPE;
+		else if (!ft_strcmp(tokens->str, "<<"))
+			tokens->type = HEREDOC;
+		else if (!ft_strcmp(tokens->str, ">>"))
+			tokens->type = APPND;
+		else if (!ft_strcmp(tokens->str, "<"))
+			tokens->type = RDRIN;
+		else if (!ft_strcmp(tokens->str, ">"))
+			tokens->type = RDRIN;
+		else
+			tokens->type = CMD;
+		tokens = tokens->next;
+	}
 }
+
 char *ft_substr(int start, int end, char *str)
 {
 	int 	len;
