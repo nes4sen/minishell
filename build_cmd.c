@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/07 19:36:30 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:41:19 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,16 +167,16 @@ t_cmd *build_cmd_list(t_token *tokens)
 		add_back_cmd(&cmd, arg,rdr);
 		into_next_cmd(&tokens);
 	}
-	// printf("\n\033[1m----COMMAND----\033[0m\n");
-	// t_cmd 	*tmp = cmd;
-	// while (tmp)
-	// {
-	// 	print_arg(tmp->arg);
-	// 	printf("\n		-----------------		\n");
-	// 	print_rdr(tmp->rdr);
-	// 	printf("\n		NEXT_COMMAND		\n");
-	// 	tmp = tmp->next;
-	// }
+	printf("\n\033[1m----COMMAND----\033[0m\n");
+	t_cmd 	*tmp = cmd;
+	while (tmp)
+	{
+		print_arg(tmp->arg);
+		printf("\n		-----------------		\n");
+		print_rdr(tmp->rdr);
+		printf("\n		NEXT_COMMAND		\n");
+		tmp = tmp->next;
+	}
 	return cmd;
 }
 

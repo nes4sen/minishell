@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/07 19:52:59 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:32:07 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,12 @@ t_cmd	*parsing(char *line);
 
 /*-------|>---syntax error---<|--------*/
 
-int		is_symbole(char c);
-int syntax_error(t_token *tokens);
+int				is_symbole(char c);
+void			syntax_error(t_token *tokens);
+void			syntax_err_msg(char	*err);
+unsigned int	def_type(char *str);
+
+
 
 
 /*-------|>---env list---<|--------*/
@@ -101,6 +105,7 @@ t_token	*creat_token(char *token, t_type type);
 t_token *tokenizer(char *str);
 char	*get_token(char **str);
 void		get_type(t_token *tokens);
+void	get_next_type(t_token *tokens);
 
 
 

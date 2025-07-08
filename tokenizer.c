@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/07 19:52:15 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/08 17:13:11 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,16 @@ char	*get_token(char **str)
 
 char *get_token_symbole(char **str)
 {
-	int		i;
 	char	*s;
-	
+	int		i;
+
 	i = 0;
 	s = *str;
-	if (is_symbole(s[i]))
-	{
-		if (is_symbole(s[i + 1]) == is_symbole(i))
-			i++;
+	while (is_symbole(s[i]))
 		i++;
-	}
 	*str = (s + i);
 	return (ft_substr(0, i, s));
 }
-
 
 t_token *tokenizer(char *str)
 {
@@ -70,9 +65,10 @@ t_token *tokenizer(char *str)
 			return (head);
 		else
 			token = get_token(&str);
+		// printf("token == [%s]\n",token);
 		token_add_back(&head, token, 0);
 	}
-	get_type()
+	get_type(head);
 	/*----------------------------------------------------------------*/
 	printf("\033[1m\n\n----TOKENIZER----\n\n\033[0m\n");
 	t_token *tmp = head;

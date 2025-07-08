@@ -6,13 +6,11 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/07 19:28:55 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/08 19:42:18 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 
 int	is_symbole(char c)
@@ -23,23 +21,55 @@ int	is_symbole(char c)
 }
 void	syntax_err_msg(char	*err)
 {
-	printf("minishell:  syntax error near unexpected token `%s'\n", err);
+	
+	if (!ft_strcmp(err, "operator"))
+		printf("minishell: syntax error, invalid operator\n");
+	else if (*err && (*err == '\'' || *err == '"'))
+		printf("minishell: syntax error, unclosed (%c) Quote\n", *err);
+	else
+		printf("minishell: syntax error near unexpected token `%s'\n", err);
+	exit(1);
+}
+void	quote_err(char *str)
+{
+	char	quote;
+ 
+	quote = 0;
+	while (*str)
+	{
+		if (!quote)
+		{
+			if (*str == '\'' || *str == '"')
+				quote = *str;
+		}
+		else if (quote == *str)
+			quote = 0;
+		str++;
+	}
+	if (quote)
+		syntax_err_msg(&quote);
 }
 
-int	syntax_error(t_token *tokens)
+void	symbol_err(char *str)
 {
-	unsigned int prev_type;
-
-	if (tokens->type == 1)
-		return (syntax_err_msg(tokens->str), 1);
-	while (tokens->next)
+	if (is_symbole(*str))
 	{
-		prev_type = tokens->type;
-		tokens = tokens->next;
-		if (prev_type && tokens->type) 
-			return (syntax_err_msg(tokens->str), 1);
+		if (def_type(str) == 0)
+			syntax_err_msg("operator");
 	}
-	if (tokens->type == 1)
-		return (syntax_err_msg(tokens->str), 1);
-	return (0);
+}
+
+void	syntax_error(t_token *tokens)
+{
+	while (tokens)
+	{
+		quote_err(tokens->str);
+		symbol_err(tokens->str);
+		if (tokens->next)
+		{
+			if (def_type(tokens->str) && def_type(tokens->next->str))
+				syntax_err_msg(tokens->next->str);
+		}
+		tokens = tokens->next;
+	}
 }
