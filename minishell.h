@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/08 19:32:07 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:33:29 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_rdr
 {
 	char			*file;
 	t_type			type;
+	int				fd; // only in heredoc
 	struct s_rdr	*next;
 }t_rdr;
 
@@ -86,8 +87,6 @@ void			syntax_err_msg(char	*err);
 unsigned int	def_type(char *str);
 
 
-
-
 /*-------|>---env list---<|--------*/
 void 	add_back_env(t_env **head, char *name,char *value, int i);
 t_env	*creat_node_env(char *name, char *value, int i);
@@ -104,7 +103,7 @@ t_token	*creat_token(char *token, t_type type);
 /*_______|---tokenizer---|_________*/
 t_token *tokenizer(char *str);
 char	*get_token(char **str);
-void		get_type(t_token *tokens);
+void	get_type(t_token *tokens);
 void	get_next_type(t_token *tokens);
 
 
@@ -120,19 +119,18 @@ t_token *find_expand(t_token *tokens_list);
 // char 	*catch_var(char );
 
 /*_________|---rdr list---|__________*/
-t_rdr	*create_node_rdr(char *file, int type);
-void	add_back_rdr(t_rdr **head, char *file, int type);
+t_rdr	*create_node_rdr(char *file, int type, int fd);
+void	add_back_rdr(t_rdr **head, char *file, int type, int fd);
 
 
 /*_________|---command list---|________*/
 t_cmd 	*build_cmd_list(t_token *tokens);
-void	into_next_cmd(t_token **start);
-char 	**get_cmd_arg(t_token *tokens);
-int		count_words(t_token *tokens);
-t_rdr 	*get_rdr(t_token *tokens);
-void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
-t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
 
+int		count_words(t_token *tokens);
+void 	get_rdr(t_rdr **rdr, char *str, unsigned int type);
+void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
+char	**alloc_arg(t_token *tokens);
+t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
 
 
 #endif  

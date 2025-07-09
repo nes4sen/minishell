@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/08 19:41:19 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:44:29 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ t_cmd *create_node_cmd(char **cmd, t_rdr *rdr)
 	}
 	ptr->arg = cmd;
 	ptr->rdr = rdr;
+	
 	ptr->next = NULL;
 	return (ptr);
 }
-
 void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr)
 {
 	t_cmd *tmp;
@@ -76,23 +76,12 @@ void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr)
 	}
 }
 
-t_rdr *get_rdr(t_token *tokens)
+void get_rdr(t_rdr **head, char *file_name, unsigned int type)
 {
-	t_rdr *head;
-	
-	head = NULL;
-	while (tokens && tokens->type != 1)
-	{
-		if (tokens->type > 2 )
-		{
-			add_back_rdr(&head, tokens->str, tokens->type);
-			// tokens->next->type = tokens->type;
-			// if (tokens->next)
-            // 	tokens->next->type = tokens->type;
-		}
-		tokens = tokens->next;
-	}
-	return (head);
+	if (type == 2)
+		printf("toto");// get_heredoc();
+	if (type >= 3 && type <= 5)
+		add_back_rdr(head, file_name, type, -1);
 }
 int	count_words(t_token *tokens)
 {
@@ -109,73 +98,60 @@ int	count_words(t_token *tokens)
 	}
 	return (i);
 }
-char **get_cmd_arg(t_token *tokens)
+
+char **alloc_arg(t_token *tokens)
 {
 	int		b_len;
 	char 	**b_alloc;
-	int		i;
-
-	b_len =  count_words(tokens);
+	
+	b_len = count_words(tokens);
 	b_alloc = malloc(sizeof(char *) * b_len + 1);
-	i = 0;
-	if (!b_alloc)
+	if (b_alloc)
 	{
 		//free
 	}
-	while(i < b_len)
-	{
-		while (tokens)
-		{
-			if(!tokens->type)
-			{
-				b_alloc[i] = malloc(ft_strlen(tokens->str) + 1);
-				if (!b_alloc)
-				{
-					//free
-				}
-				ft_strcpy(b_alloc[i], tokens->str);
-				i++;
-			}
-			tokens = tokens->next;
-		}
-	}
-	b_alloc[i] = NULL;
+	b_alloc[b_len] = NULL;
 	return (b_alloc);
 }
-
-
-void	into_next_cmd(t_token **start)
+char *alloc_word(char *str)
 {
-	while(*start && (*start)->type != 1)
-		*start = (*start)->next;
-	if (*start && (*start)->type == 1)
-		*start = (*start)->next;
+	char *arg;
+
+	arg = malloc(sizeof(str) + 1);
+	if (!arg)
+	{
+	//free
+	}
+	ft_strcpy(arg, str);
+	return (arg);
 }
-
-
 t_cmd *build_cmd_list(t_token *tokens)
 {
 	t_cmd	*cmd;
 	char	**arg;
 	t_rdr	*rdr;
+	int 	i;
 
+	i = 0;
 	cmd = NULL;
+	rdr = NULL;
 	while(tokens)
 	{
-		rdr = get_rdr(tokens);
-		arg = get_cmd_arg(tokens);
-		add_back_cmd(&cmd, arg,rdr);
-		into_next_cmd(&tokens);
-	}
-	printf("\n\033[1m----COMMAND----\033[0m\n");
-	t_cmd 	*tmp = cmd;
-	while (tmp)
-	{
-		print_arg(tmp->arg);
-		printf("\n		-----------------		\n");
-		print_rdr(tmp->rdr);
-		printf("\n		NEXT_COMMAND		\n");
-		tmp = tmp->next;
+		arg = alloc_arg(tokens);
+		i = 0;
+		while (tokens && tokens->type != 1)
+		{
+			get_rdr(&rdr, tokens->str, tokens->type);
+			if (!tokens->type)
+			{
+				arg[i] = alloc_word(tokens->str);
+				i++;
+				printf("toto\n");
+			}
+			tokens= tokens->next;
+		}
+		add_back_cmd(&cmd, arg,rdr);	
+		tokens= tokens->next;	
 	}
 	return cmd;
 }

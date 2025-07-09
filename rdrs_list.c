@@ -6,13 +6,13 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:18:47 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/02 17:12:36 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/09 21:38:26 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_rdr *create_node_rdr( char *str, int type)
+t_rdr *create_node_rdr(char *str, int type, int fd)
 {
 	t_rdr *ptr;
 	char	*file;
@@ -31,16 +31,17 @@ t_rdr *create_node_rdr( char *str, int type)
 	ptr->next = NULL;
 	ptr->file = file;
 	ptr->type = type;
+	ptr->fd = fd;
 	return (ptr);
 }
 
-void	add_back_rdr(t_rdr **head, char *file, int type)
+void	add_back_rdr(t_rdr **head, char *file, int type, int fd)
 {
 	t_rdr *ptr;
 
 	if (!*head)
 	{
-		*head = create_node_rdr(file, type);
+		*head = create_node_rdr(file, type, fd);
 	}
 	else
 	{
@@ -49,6 +50,6 @@ void	add_back_rdr(t_rdr **head, char *file, int type)
 		{
 			ptr = ptr->next;
 		}
-		ptr->next = create_node_rdr(file, type); 
+		ptr->next = create_node_rdr(file, type, fd); 
 	}
 }

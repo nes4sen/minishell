@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/08 19:47:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:53:32 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,15 @@ unsigned int	def_type(char *str)
 }
 void	get_type(t_token *tokens)
 {
+	t_token *tmp;
+
+	tmp = tokens;
 	while (tokens)
 	{
 		tokens->type = def_type(tokens->str);
 		tokens = tokens->next;
 	}
+	get_next_type(tmp);
 }
 
 char *ft_substr(int start, int end, char *str)
