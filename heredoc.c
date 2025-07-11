@@ -6,10 +6,13 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/09 16:56:19 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/10 11:07:56 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-build_herdoc()
+void get_herdoc()
+{
+	
+}

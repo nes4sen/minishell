@@ -6,71 +6,73 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/06/29 18:44:54 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/11 12:05:34 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-/*
-	<---  the plane ---> 
-	
-	there is 3 types of $var :
 
-	1_ "$var"	-->	this type gonna expanded with no seperator, the string is literal.	
-	2_  $var	-->	this type should treated the same as the prompt,
-					 it shold be tokenized and added to the tokenizer list
-					 in this case
-					 			 |-> the $var shold be split
-	3_ '$var'	--> this is not a variable
-	
- 
-*/
-
-// char *catch_var(char )
-// {
-	
-// }
-
-
-
-void	get_expand(t_token *ptr, int i)
+int *global_quote_stat()
 {
-	char	*str;
-	int		i;
-	
-	str = ptr->str;
-	i = 0;
+	static int quote = 0;
+	return (&quote);
+}
+// get_expand
+ft_exstrlen(char *str)
+{
+	int	i;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
-		
+		if (str[i])
 	}
-	
 }
-//this function below loop into the strings and find the expandable var 
-t_token *find_expand(t_token *tokens_list)
+ft_exstrcpy()
 {
-	t_token	*ptr;
-	int		i;
-	int		quote;
 	
-	ptr = tokens_list;
-	quote = 0;
-	while (ptr)
-	{
-		i = 0;
-		while(ptr->str[i])
-		{
-			if (!quote)
-			{	
-				if (ptr->str[i] == '\'' || ptr->str[i] == '\"')
-					quote = ptr->str[i];
-			}
-			if (ptr->str[i] == quote)
-				quote = 0;
-			if (ptr->str[i] == '$' && quote != '\'')
-				get_expand(ptr, i);
-			i++;
-		}
-		ptr = ptr->next;
-	}	
 }
+ft_exsubstr()
+{
+	
+}
+t_token *expand_token(t_env *env, char *str)
+{
+	int 	i;
+	int		quote;
+	t_token *head;
+	int		j;
+
+	j = 0;
+	quote = 0;
+	i = 0;
+	head = NULL;
+	while (str[i])
+	{
+		if (!quote && (str[i] == '\'' || str[i] == '"'))
+			quote = str[i++];		
+		else if (quote == str[i])
+			quote = 0;
+		if (str[i] == '$' && quote != '\'')
+		{
+			token_add_back(&head, ft_substr(j, i, str), 0);
+			get_expand();
+		}
+		j = i;
+	}
+}
+
+
+/* 
+							var="1   2     3  "
+build anouther tokenizer that split tokens by quotes and give them a stat
+
+example 	echo hello"$var"'$var'" "    
+
+normal tokenizer 		[echo] [hello"$var toto"'$var'$var" "]
+
+expand_tokenizer 		[echo] [hello] ["$var toto"] ['$var'] [$var] [" "]
+
+						[echo] [hello] ["1  2  3  toto"] ['$var'] [1   2   3] [" "]	
+
+*/

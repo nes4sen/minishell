@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/09 21:44:29 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/11 11:07:01 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void print_rdr(t_rdr *rdr)
 	
 	while (rdr)
 	{
-		printf("rdr_str -> [%s]\nrdr_type-> [%d]\n",rdr->file , rdr->type);
+		printf("rdr_str -> [%s]\nrdr_type-> [%d]\n fd->%d",rdr->file , rdr->type, rdr->fd);
 		rdr = rdr->next;
 	}	
 
@@ -79,7 +79,7 @@ void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr)
 void get_rdr(t_rdr **head, char *file_name, unsigned int type)
 {
 	if (type == 2)
-		printf("toto");// get_heredoc();
+		// get_heredoc();
 	if (type >= 3 && type <= 5)
 		add_back_rdr(head, file_name, type, -1);
 }
@@ -105,7 +105,7 @@ char **alloc_arg(t_token *tokens)
 	char 	**b_alloc;
 	
 	b_len = count_words(tokens);
-	b_alloc = malloc(sizeof(char *) * b_len + 1);
+	b_alloc = malloc(sizeof(char *) * (b_len + 1));
 	if (b_alloc)
 	{
 		//free
@@ -132,7 +132,6 @@ t_cmd *build_cmd_list(t_token *tokens)
 	t_rdr	*rdr;
 	int 	i;
 
-	i = 0;
 	cmd = NULL;
 	rdr = NULL;
 	while(tokens)
@@ -143,15 +142,14 @@ t_cmd *build_cmd_list(t_token *tokens)
 		{
 			get_rdr(&rdr, tokens->str, tokens->type);
 			if (!tokens->type)
-			{
-				arg[i] = alloc_word(tokens->str);
-				i++;
-				printf("toto\n");
-			}
-			tokens= tokens->next;
+				arg[i++] = alloc_word(tokens->str);
+			tokens = tokens->next;
 		}
-		add_back_cmd(&cmd, arg,rdr);	
-		tokens= tokens->next;	
+		add_back_cmd(&cmd, arg,rdr);
+		print_arg(arg);
+		print_rdr(rdr);
+	 	if (tokens)
+			tokens = tokens->next;	
 	}
 	return cmd;
 }

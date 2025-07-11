@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:54:23 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/02 12:25:33 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/11 11:07:15 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_strcpy(char *dst, char *src)
 		dst[i] = src[i];
 		i++;
 	}
+	dst[i] = '\0';
 }
 
 t_env	*creat_node_env(char *name, char *value, int i)
