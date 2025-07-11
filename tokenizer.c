@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/09 16:54:12 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:14:56 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char *get_token_symbole(char **str)
 		i++;
 	*str = (s + i);
 	return (ft_substr(0, i, s));
-}
-
+} 
+// echo hello >>>>>>>>> >>  kfkf kdkf
 t_token *tokenizer(char *str)
 {
 	t_token	*head;

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/11 11:07:01 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:29:47 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void print_arg(char **arg)
 }
 void print_rdr(t_rdr *rdr)
 {
-	
+	// printf("toooooooooooo\n");
 	while (rdr)
 	{
 		printf("rdr_str -> [%s]\nrdr_type-> [%d]\n fd->%d",rdr->file , rdr->type, rdr->fd);

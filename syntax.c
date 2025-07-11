@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/09 16:52:28 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/11 16:19:03 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	is_symbole(char c)
 }
 void	syntax_err_msg(char	*err)
 {
-	
 	if (!ft_strcmp(err, "operator"))
 		printf("minishell: syntax error, invalid operator\n");
 	else if (*err && (*err == '\'' || *err == '"'))

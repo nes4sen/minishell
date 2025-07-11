@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/11 12:05:34 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:35:04 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,18 @@ build anouther tokenizer that split tokens by quotes and give them a stat
 
 example 	echo hello"$var"'$var'" "    
 
-normal tokenizer 		[echo] [hello"$var toto"'$var'$var" "]
+1_ normal tokenizer 		[echo] [hello"$var toto"'$var'$var" "]
 
-expand_tokenizer 		[echo] [hello] ["$var toto"] ['$var'] [$var] [" "]
 
-						[echo] [hello] ["1  2  3  toto"] ['$var'] [1   2   3] [" "]	
+2_ expand_tokenizer 		 [echo] [hello] ["$var toto"] ['$var'] [$var] [" "]
+loop into each tokens and seperate them by quotes
+
+3_							 [hello] [1  2  3  toto] [$var] [1   2   3] [ ]
+remove the quote and mark the tokens by stats: state 1 -> double quoted , 2-> single quoted, 3-> no quote
+then expand the variable
+
+
+4_ seperate by spaces if the spaces in the 3 state  
+							 [echo] [echo 1  2   3 toto$var1] [2] [3 ]
 
 */

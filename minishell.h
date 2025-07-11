@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/09 21:33:29 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/11 18:27:33 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,10 @@ typedef enum e_type
 	DLMTR
 }t_type;
 
+typedef struct s_extoken
+{
+	
+}t_extoken;
 
 typedef struct s_token
 {
