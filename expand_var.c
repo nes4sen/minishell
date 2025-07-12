@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/11 18:35:04 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/12 20:19:11 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,61 @@ t_token *expand_token(t_env *env, char *str)
 
 
 /* 
-							var="1   2     3  "
+							var="1   2  ' '   3  "
 build anouther tokenizer that split tokens by quotes and give them a stat
 
-example 	echo hello"$var"'$var'" "    
+example 	echo hello << world  > hello"$var"'$var'" "    
 
-1_ normal tokenizer 		[echo] [hello"$var toto"'$var'$var" "]
+1_ normal tokenizer 		  [echo]  [>] [|] [hello"$var toto" '$var'$var" "]
 
 
 2_ expand_tokenizer 		 [echo] [hello] ["$var toto"] ['$var'] [$var] [" "]
 loop into each tokens and seperate them by quotes
 
-3_							 [hello] [1  2  3  toto] [$var] [1   2   3] [ ]
+3_ 						 	[hello] [1  2  3  toto] [$var] [1   2   3] [ ]
 remove the quote and mark the tokens by stats: state 1 -> double quoted , 2-> single quoted, 3-> no quote
 then expand the variable
 
-
+	
 4_ seperate by spaces if the spaces in the 3 state  
 							 [echo] [echo 1  2   3 toto$var1] [2] [3 ]
 
+
+
+
+
+[echo]  []   [hello]  []   [<<]     []    [world] [hello] ["$var"] ['$var'] [" "]
+cmd    sep   cmd	  sep  herdoc   sep    dlm     cmd      cmd      cmd     cmd  
+noq    noq   noq      noq  noq      noq    noq     noq     2q        1q      2q
+
+
+
+
+
+*/
+
+
+/*		echo hello  " $var" [echo] [ ] [hello] [ ] [ $var]
+		[echo] -> [hello  1  2  ' ' 3];
+char *args[echo , hello, 1, 2, ' ', 3];
+	
+										echo hello >'toto'" $var   ' yoy'"     $var"tt""$var"
+
+		
+ultimate-tokenizer						[echo] [ hello] [ >] ['toto'][" var   ' yo'"][     $var] ["tt"] ["$var"]
+	
+syntax_error							old syntax error + skip spaces
+
+										mark each of the token by 3 stats , 2quted or single quoted or not quoted
+										the marks for the expand
+										
+										
+next step is removing the quotes, and expand	[echo] [ hello] [ >] [toto] [ var   ' yo'] [1  2   3 ] [tt] [1  2   3]  echo hello  "  rork  "
+																																			y
+												noq    noq       noq  sq     dq             noq         dq    dq     
+echo										[echo] [hello]  [>] [toto] [ var]
+
+echo hello toto"   world" $var"toto"
+[echo] [hello] [toto] ["world"] [$var] [toto]
+s       s         s      j        s     j
 */

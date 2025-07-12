@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/11 16:14:56 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/12 20:31:00 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,12 @@ t_token *tokenizer(char *str)
 	head = NULL;
 	while (*str)
 	{
-		while (white_space(*str))
-			str++;
+		if (white_space(*str))
+		{
+			token_add_back(&head, " ", SEPR);
+			while (white_space(*str))
+				str++;
+		}
 		if (is_symbole(*str))
 			token = get_token_symbole(&str);
 		else if (!*str)

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/09 16:53:32 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/12 20:33:34 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ unsigned int	def_type(char *str)
 		tmp = 2;
 	if (!ft_strcmp(str, ">"))
 		tmp = 4;
+	if (!ft_strcmp(str, " "))
+		tmp = 8;
 	return (tmp);
 }
 void	get_type(t_token *tokens)
