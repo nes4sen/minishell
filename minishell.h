@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/12 20:27:04 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:20:32 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 #include <readline/history.h>
 
 
-#define VOID_MODE 0
-#define SINGLE_MODE 1
-#define DOUBLE_MODE 2
+#define NO_QUOTE 0
+#define SINGLE_QUOTE 1
+#define DOUBLE_QUOTE 2
 
 typedef enum e_type
 {
@@ -35,10 +35,7 @@ typedef enum e_type
 	APPND,
 	file,
 	DLMTR,
-	SEPR,
-	NO_Q,
-	DBL_Q,
-	SNGL_Q
+	SEPR
 }t_type;
 
 // typedef struct s_extoken
@@ -50,7 +47,7 @@ typedef struct s_token
 {
 	char			*str;
 	t_type			type;
-	// int				index;
+	int				stat;
 	struct s_token	*next;
 }t_token;
 
@@ -86,6 +83,7 @@ typedef struct s_env
 int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
 t_cmd	*parsing(char *line);
+int	assigne_stat(char c);
 
 /*-------|>---syntax error---<|--------*/
 
@@ -104,13 +102,13 @@ char	*get_env_value(char *str);
 
 
 /*-------|>---token list---<|--------*/
-void 	token_add_back(t_token **head, char *token, t_type type);
-t_token	*creat_token(char *token, t_type type);
+void 	token_add_back(t_token **head, char *token, t_type type, int stat);
+t_token	*creat_token(char *token, t_type type, int stat);
 
 
 /*_______|---tokenizer---|_________*/
 t_token *tokenizer(char *str);
-char	*get_token(char **str);
+char	*get_token(char **str, int *stat);
 void	get_type(t_token *tokens);
 void	get_next_type(t_token *tokens);
 

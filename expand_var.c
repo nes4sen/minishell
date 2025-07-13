@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/12 20:19:11 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/13 17:14:03 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_token *expand_token(t_env *env, char *str)
 			quote = 0;
 		if (str[i] == '$' && quote != '\'')
 		{
-			token_add_back(&head, ft_substr(j, i, str), 0);
+			token_add_back(&head, ft_substr(j, i, str), 0, 0);
 			get_expand();
 		}
 		j = i;
@@ -90,6 +90,14 @@ then expand the variable
 [echo]  []   [hello]  []   [<<]     []    [world] [hello] ["$var"] ['$var'] [" "]
 cmd    sep   cmd	  sep  herdoc   sep    dlm     cmd      cmd      cmd     cmd  
 noq    noq   noq      noq  noq      noq    noq     noq     2q        1q      2q
+
+
+[echo]  []   ["hello"] [] [<<] [world] ['$var']
+[echo]  []   [hello] [] [<<] [world] [$var]
+echo hello << world1 2 3
+[echo] [hello] [<<] [world1] [2] [3]
+
+[echo]  []   [hello] [] [<<] [world] [$var]
 
 
 
