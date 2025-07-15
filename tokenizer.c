@@ -6,58 +6,41 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/13 19:02:00 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/15 18:26:22 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-int		*quote_stat()
-{
-	static int quote = 0;
-	return (&quote);
-}
+// int		*quote_stat()
+// {
+// 	static int quote = 0;
+// 	return (&quote);
+// }
 
-int	is_quote(char c)
-{
-	if (c == '\'' || c == '\"')
-		return (1);
-	return (0); 
-}
-int is_seperator(char c)
-{
-	if (!is_quote(c) && is_symbole(c) && is)
-		return (1);
-	return (0);
-}
-char	*get_token(char **str,int *stat)
+
+char	*get_token(char **str)
 {
 	int		quote;
 	char 	*s;
 	int		i;
-	int 	start;
 
-	start = 0;
 	quote  = 0;
 	s = *str;
 	i = 0;
-	if (!is_quote(s[i]) )
+	while (s[i])
 	{
-		while (s[i] && !is_quote(s[i]))
-			i++;
-	}
-	else if (is_quote(s[i]))
-	{
-		*stat = assigne_stat(s[i]);
+		if(!quote && is_seperator(s[i]))
+			break;
 		if (!quote && is_quote(s[i]))
-			quote = s[i++];
-		s++;
-		while (s[i] && s[i] != quote)
-			i++;
+			quote = s[i];
+		else if (quote == s[i])
+			quote = 0;
+		i++;
 	}
 	*str = (s + i);
-	return (ft_substr(start, i, s));
+	return (ft_substr(0, i, s));
 }
 
 char *get_token_symbole(char **str)
@@ -72,6 +55,7 @@ char *get_token_symbole(char **str)
 	*str = (s + i);
 	return (ft_substr(0, i, s));
 } 
+
 // echo hello >>>>>>>>> >>  kfkf kdkf
 t_token *tokenizer(char *str)
 {
@@ -82,20 +66,16 @@ t_token *tokenizer(char *str)
 	stat = 0;
 	head = NULL;
 	while (*str)
-	{
-		if (white_space(*str))
-		{
-			token_add_back(&head, " ", SEPR, stat);
-			while (white_space(*str))
-				str++;
-		}
+	{	
+		while (white_space(*str))
+			str++;
 		if (is_symbole(*str))
 			token = get_token_symbole(&str);
 		else if (!*str)
 			return (head);
 		else
-			token = get_token(&str, &stat);
-		token_add_back(&head, token, 0, stat);
+			token = get_token(&str);
+		token_add_back(&head, token, 0);
 	}
 	get_type(head);
 	/*----------------------------------------------------------------*/
@@ -103,7 +83,8 @@ t_token *tokenizer(char *str)
 	t_token *tmp = head;
 	while (tmp)
 	{
-		printf("token->str	:[%s]\ntype->type	:[%u]  token->state : [%d]\n",tmp->str, tmp->type, tmp->stat);
+		printf("token->str	:[%s]\ntype->type	:[%u]  \n",tmp->str, tmp->type);
+		remove_quote(head);
 		tmp = tmp->next;
 	}
 	return (head);

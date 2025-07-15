@@ -2,7 +2,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 # -lreadline
 
-CFILES= build_cmd.c env.c  \
+CFILES= build_cmd.c env.c  is_functions.c\
 		token_list.c  minishell.c \
 		 rdrs_list.c parsing.c\
 		syntax.c tokenizer.c utils.c

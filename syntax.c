@@ -6,19 +6,14 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/13 17:16:16 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/14 18:50:48 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-int	is_symbole(char c)
-{
-	if (c == '>' || c == '<' || c == '|')
-		return (c);
-	return (0);
-}
+
 void	syntax_err_msg(char	*err)
 {
 	if (!ft_strcmp(err, "operator"))
@@ -59,18 +54,13 @@ void	symbol_err(char *str)
 	}
 }
 
-int is_oprt(char *op)
-{
-	if ((def_type(op) >= 1  && def_type(op) <= 4))
-		return (1);
-	return (0);	
-}
+
 
 void	syntax_error(t_token *tokens)
 {
 	while (tokens)
 	{
-		// quote_err(tokens->str);
+		quote_err(tokens->str);
 		symbol_err(tokens->str);
 		if (tokens->next)
 		{

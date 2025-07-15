@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/13 17:20:32 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/15 16:01:28 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef enum e_type
 	RDROUT,
 	APPND,
 	file,
-	DLMTR,
-	SEPR
+	DLMTR
+	
 }t_type;
 
 // typedef struct s_extoken
@@ -47,7 +47,6 @@ typedef struct s_token
 {
 	char			*str;
 	t_type			type;
-	int				stat;
 	struct s_token	*next;
 }t_token;
 
@@ -61,7 +60,7 @@ typedef struct s_rdr
 
 typedef struct s_cmd
 {
-	char			**arg;
+	char			**arg; 
 	t_rdr			*rdr;
 	struct s_cmd	*next;
 } t_cmd;
@@ -80,6 +79,8 @@ typedef struct s_env
 // 	struct s_trash *next;
 // }t_trash;
 
+void remove_quote(t_token *token);
+
 int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
 t_cmd	*parsing(char *line);
@@ -87,7 +88,7 @@ int	assigne_stat(char c);
 
 /*-------|>---syntax error---<|--------*/
 
-int				is_symbole(char c);
+
 void			syntax_error(t_token *tokens);
 void			syntax_err_msg(char	*err);
 unsigned int	def_type(char *str);
@@ -102,13 +103,13 @@ char	*get_env_value(char *str);
 
 
 /*-------|>---token list---<|--------*/
-void 	token_add_back(t_token **head, char *token, t_type type, int stat);
-t_token	*creat_token(char *token, t_type type, int stat);
+void 	token_add_back(t_token **head, char *token, t_type type);
+t_token	*creat_token(char *token, t_type type);
 
 
 /*_______|---tokenizer---|_________*/
 t_token *tokenizer(char *str);
-char	*get_token(char **str, int *stat);
+char	*get_token(char **str);
 void	get_type(t_token *tokens);
 void	get_next_type(t_token *tokens);
 
@@ -138,5 +139,11 @@ void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
 char	**alloc_arg(t_token *tokens);
 t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
 
+/*__________is_functions________*/
+
+int	is_symbole(char c);
+int	is_seperator(char c);
+int	is_oprt(char *op);
+int	is_quote(char c);
 
 #endif  
