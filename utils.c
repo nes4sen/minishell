@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/12 20:33:34 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/16 11:02:13 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int white_space(char c)
 
 void	get_next_type(t_token *tokens)
 {
-
 	while (tokens)
 	{
 		if (tokens->type >= 3 && tokens->type <= 5)
@@ -62,8 +61,6 @@ unsigned int	def_type(char *str)
 		tmp = 2;
 	if (!ft_strcmp(str, ">"))
 		tmp = 4;
-	if (!ft_strcmp(str, " "))
-		tmp = 8;
 	return (tmp);
 }
 void	get_type(t_token *tokens)

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/15 20:34:58 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:29:35 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,49 @@ int is_expandable(char *str)
 	}
 	return (0);
 }
+void get_quoted_token(char **str)
+{
+	
+}
+void get_noquoted_token(char **str)
+{
+	int i;
+	char *s;
+	
+	s = *str;
+	i = 0;
+	while (s[i] && !is_quote(s[i]))
+		i++;
+	
+}
+// t_token     t_token  
+// [hello]     [$"world""toto $var"$var]
+// [hello]     [$] ['world']    [toto $var]   [$var]
+//             noquote       2q         1q
+//	remove the quote and expand and mark the tokens with a flag
+// 	the output is [world] [toto 1  "2"  3] [1  "2"  3]
+//	loop into this list and and create new t_token from it , separated by 
+//	the spaces in the noq flaged tokens.
+// the output gonna be like this [worldtoto 1 "2" 31] ["2"] [3]
+// delete the main t_token token and replace it with the new list 
 
-t_token *expand_token(t_token *head)
+
+t_token *reforge_token(t_token *head)  
 {
 	t_token *current;
 	t_token *next;
 	char 	*str;
+	t_token *phead;
 
+	phead = NULL;
 	str = head->str;
 	current = head;
 	while (*str)
 	{
 		if (is_quote(*str))
-			get_quoted_token();
+			get_quoted_token(&str, );
 		else
-		{
-			while ()
-		}
-		str++;
+			get_no_quoted_token(&str);
 	}
 	next = head->next;
 }

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/15 16:01:28 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/16 14:28:36 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,16 @@ typedef enum e_type
 	APPND,
 	file,
 	DLMTR
-	
 }t_type;
 
-// typedef struct s_extoken
-// {
-	
-// }t_extoken;
+
+typedef struct s_extoken
+{
+	char	*str;
+	int		type;            
+	struct s_extoken *next;
+}t_extoken;
+
 
 typedef struct s_token
 {
