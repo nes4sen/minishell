@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/15 18:26:22 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:05:04 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ t_token *tokenizer(char *str)
 		token_add_back(&head, token, 0);
 	}
 	get_type(head);
-	/*----------------------------------------------------------------*/
-	printf("\033[1m\n\n----TOKENIZER----\n\n\033[0m\n");
-	t_token *tmp = head;
-	while (tmp)
-	{
-		printf("token->str	:[%s]\ntype->type	:[%u]  \n",tmp->str, tmp->type);
-		remove_quote(head);
-		tmp = tmp->next;
-	}
+	// /*----------------------------------------------------------------*/
+	// printf("\033[1m\n\n----TOKENIZER----\n\n\033[0m\n");
+	// t_token *tmp = head;
+	// while (tmp)
+	// {
+	// 	printf("token->str	:[%s]\ntype->type	:[%u]  \n",tmp->str, tmp->type);
+	// 	remove_quote(head);
+	// 	tmp = tmp->next;
+	// }
 	return (head);
 }
 // int main()

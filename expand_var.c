@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/16 14:29:35 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/20 17:17:52 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void get_noquoted_token(char **str)
 	i = 0;
 	while (s[i] && !is_quote(s[i]))
 		i++;
-	
 }
 // t_token     t_token  
 // [hello]     [$"world""toto $var"$var]
@@ -136,8 +135,19 @@ void	remove_quote(t_token *token)
 	free(token->str);
 	token->str = tmp;
  } 
+ 	
+	expand_token(t_token *head)
+{
+	char *str;
+	
+	str = head->str;
+	while (*str)
+	{
+		
+	}
+	
+}
 
- 
 t_token *prepare_for_expand(t_env *env, t_token  *head)
 {
 	while (head)
@@ -177,7 +187,7 @@ then expand the variable
 	
 4_ seperate by spaces if the spaces in the 3 state  
 							 [echo] [echo 1  2   3 toto$var1] [2] [3 ]
-
+	
 
 
 

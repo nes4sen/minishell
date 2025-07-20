@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/16 14:28:36 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/20 15:30:36 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ typedef enum e_type
 }t_type;
 
 
-typedef struct s_extoken
+typedef struct s_exbtoken
 {
 	char	*str;
-	int		type;            
+	int		stat;         
 	struct s_extoken *next;
 }t_extoken;
 
@@ -50,6 +50,7 @@ typedef struct s_token
 {
 	char			*str;
 	t_type			type;
+	struct s_token *subtoken; 
 	struct s_token	*next;
 }t_token;
 
@@ -57,13 +58,13 @@ typedef struct s_rdr
 {
 	char			*file;
 	t_type			type;
-	int				fd; // only in heredoc
+	int				fd; // only for heredoc
 	struct s_rdr	*next;
 }t_rdr;
 
 typedef struct s_cmd
 {
-	char			**arg; 
+	char			**arg;
 	t_rdr			*rdr;
 	struct s_cmd	*next;
 } t_cmd;
@@ -87,7 +88,7 @@ void remove_quote(t_token *token);
 int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
 t_cmd	*parsing(char *line);
-int	assigne_stat(char c);
+// int		assigne_stat(char c);
 
 /*-------|>---syntax error---<|--------*/
 

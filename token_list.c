@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:43:28 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/14 17:05:37 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/20 16:42:11 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_token *creat_token(char *token, t_type type)
 	}
 	p->str = token;
 	p->type = type;
+	p->subtoken = NULL; // if the token have no quotes nor variables in it 
 	p->next = NULL;
 	return (p);
 }
