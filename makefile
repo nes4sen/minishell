@@ -26,4 +26,13 @@ fclean: clean
 	rm -f $(NAME);
 re: fclean all
 
+
+
+
+push:
+	git add . && git commit -m "scripted commit" && git push
+
+
+
+
 .PHONY: clean
