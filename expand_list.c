@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 11:45:03 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/20 10:38:23 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/20 18:46:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,32 @@ void add_back_extoken(t_extoken **head, char *str, int stat)
 	}
 }
 
-char *get_extoken()
-{
+// char *get_extoken()
+// {
 	
-}
-char *get_quoted_extoken(char **str)
-{
-	char 	*s;
+// }
+// char *get_quoted_extoken(char **str)
+// {
+// 	char 	*s;
 
-	s = *str;
+// 	s = *str;
 	
-}
-t_extoken extokenizer(char *str)
-{
-	int		i;
-	char	*extoken;
+// }
+// t_extoken extokenizer(char *str)
+// {
+// 	int		i;
+// 	char	*extoken;
 	
-	i = 0;
-	extoken = NULL;
-	while (*str)
-	{
-		if (is_quote(*str))
-			get_quoted_extoken(&str);
-		else
-			get_extoken();	
-	}
-}
+// 	i = 0;
+// 	extoken = NULL;
+// 	while (*str)
+// 	{
+// 		if (is_quote(*str))
+// 			get_quoted_extoken(&str);
+// 		else
+// 			get_extoken();	
+// 	}
+// }
 // what needed in the expand list 
 
 
