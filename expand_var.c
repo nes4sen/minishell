@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/20 17:17:52 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/21 11:00:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,14 @@ void	remove_quote(t_token *token)
 	token->str = tmp;
  } 
  	
-	expand_token(t_token *head)
+void	expand_token(t_token *head)
 {
 	char *str;
 	
 	str = head->str;
 	while (*str)
 	{
-		
+		8
 	}
 	
 }

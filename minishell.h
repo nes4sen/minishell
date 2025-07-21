@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/20 18:47:26 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/21 17:16:43 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void remove_quote(t_token *token);
 
 int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
-t_cmd	*parsing(char *line);
+t_cmd	*parsing(char *line, t_env *env);
 // int		assigne_stat(char c);
 
 /*-------|>---syntax error---<|--------*/
@@ -134,7 +134,7 @@ int		ft_strcmp(char *s1, char *s2);
 int		white_space(char c);
 
 /*		---variable expand---		*/
-void	get_expand(t_token *ptr);
+// void	get_expand(t_token *ptr);
 t_token *find_expand(t_token *tokens_list);
 // char 	*catch_var(char );
 

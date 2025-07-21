@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/13 18:48:20 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:45:56 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int main(int ac, char **av, char **envp)
 		line = readline("minishell $> ");
 		if (line && *line)
 			add_history(line);
-		cmd = parsing(line); //parsing function
+		cmd = parsing(line, env); //parsing function
 		if (!cmd)
 		{
 			//free all
