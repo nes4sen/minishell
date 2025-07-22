@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/21 17:22:40 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/22 17:17:25 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,28 @@ char *extract_var_name(char **s)
 	*s = (*s + i);
 	return (ft_substr(1 , i, str + 1));
 }
+fill_expanded_token(int len,t_extoken *extoken,t_env *env)
+{
+	char	*p;
+	char	*str;
+	int		i;
+	
+	p = malloc(len + 1);
+	if (!p)
+		//free
+	i = 0;
+	str = extoken->str;
+	while (i < len)
+	{
+		if (str[i] == '$')
+		{
+			
+		}
+		p[i] = str[i];
+	}
+}
 
-void	expand_extoken(t_extoken *exhead, t_env *env)
+void	scan_for_expand(t_extoken *exhead, t_env *env)
 {
 	// this function expand ...
 	char	*str;
@@ -122,6 +142,7 @@ void	expand_extoken(t_extoken *exhead, t_env *env)
 		}
 		final_len++;
 	}
+	fill_expanded_token(final_len, exhead, env);
 }
 
 //this function creat a linked list called t_extoken  , this list seperate the t_token token with quotes and remove them and expand the env_vars,
@@ -132,8 +153,11 @@ void	expand_token(t_token *token, t_env *env)
 	// this function loop throgh the string and create a list of tokens
 	//, remove the quotes, and flag the tokens
 	build_exlist(&exhead, token);
-	expand_extoken(exhead, env);
-	
+	while (exhead)
+	{
+		scan_for_expand(exhead, env);
+		exhead = exhead->next;
+	}
 }
 
 void	expand_env_vars(t_token *token, t_env *env)
