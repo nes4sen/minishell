@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:18:47 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/09 21:38:26 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:24:22 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,12 @@ void	add_back_rdr(t_rdr **head, char *file, int type, int fd)
 	t_rdr *ptr;
 
 	if (!*head)
-	{
 		*head = create_node_rdr(file, type, fd);
-	}
 	else
 	{
 		ptr = *head;
 		while (ptr->next)
-		{
 			ptr = ptr->next;
-		}
 		ptr->next = create_node_rdr(file, type, fd); 
 	}
 }

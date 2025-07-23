@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/23 11:45:27 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:55:57 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,15 @@ char *find_env_var(t_env *env, char *var)
 	/*
 		this function check if the captured var is in the env
 	*/
+	if (!var)
+		return (NULL);
 	while (!var && env)
 	{
 		if (!ft_strcmp(var, env->name))
-			return (env->value); // logic error ,  i return null if the var is null means that its unvalid named var , but what if the var name is valid but not found
+			return (env->value);
 		env = env->next;
 	}
-	return (NULL);
+	return (ft_substr(0 , 1, ""));
 }
 
 char is_valid_env_var_name(char c)
@@ -87,17 +89,13 @@ char is_valid_env_var_name(char c)
 	return (1);
 }
 
-char *extract_var_name(char **s)
+char *extract_var_name(char *str, int *index)
 {
 	int		i;
-	char	*str;
-	
 /*
 this function capture the name of the var
 
-*/
-	
-	str = *s;
+*/	
 	i = 1;
 	while (str[i])
 	{
@@ -107,29 +105,10 @@ this function capture the name of the var
 	}
 	if (i == 1) // means if the first char is invalid , that means no expand of $ should happen
 		return (NULL);
-	*s = (*s + i);
+	*index += i;	
 	return (ft_substr(1 , i, str + 1));
 }
-fill_expanded_token(int len,t_extoken *extoken,t_env *env)
-{
-	char	*p;
-	char	*str;
-	int		i;
-	
-	p = malloc(len + 1);
-	if (!p)
-		//free
-	i = 0;
-	str = extoken->str;
-	while (i < len)
-	{
-		if (str[i] == '$')
-		{
-			
-		}
-		p[i] = str[i];
-	}
-}
+
 /*
 this function scan the extoken , searching for a valid $ for expand, 
 calling the function find_env_var() that return the value of the env var found
@@ -138,32 +117,59 @@ calling the function find_env_var() that return the value of the env var found
 
 
 */
+// void	scan_for_expand(t_extoken *exhead, t_env *env)
+// {
+// 	// this function expand ...
+// 	char	*str;
+// 	int		final_len;
+// 	char 	*var;
+
+// 	final_len = 0;
+// 	str = exhead->str;
+// 	while (*str)
+// 	{
+// 		if (*str = '$' && exhead->stat != SINGLE_QUOTE)
+// 		{
+// 			var = extract_var_name(&str);
+// 			if (var)
+// 			{
+// 				var = find_env_var(env, extract_var_name(&str));
+// 				final_len += ft_strlen(var);
+// 				str =  (str + final_len);	
+// 			}
+			
+// 		}
+// 		final_len++;
+// 	}
+// 	fill_expanded_token(final_len, exhead, env);
+// }
+
 void	scan_for_expand(t_extoken *exhead, t_env *env)
 {
-	// this function expand ...
 	char	*str;
-	int		final_len;
-	char 	*var;
-
-	final_len = 0;
+	int		i;
+	char 	*var_name;
+	char	*var_value;
+	t_vars	*vars;
+	
 	str = exhead->str;
-	while (*str)
+	i = 0;
+	vars = NULL;
+	while (str[i])
 	{
-		if (*str = '$' && exhead->stat != SINGLE_QUOTE)
+		if (str[i] == '$')
 		{
-			var = extract_var_name(&str);
-			if (var)
+			var_name = extract_var_name((str + i), i);
+			if (var_name)
 			{
-				var = find_env_var(env, extract_var_name(&str));
-				final_len += ft_strlen(var);
-				str =  (str + final_len);	
+				var_value = find_env_var(env, var_name);
+				if (var_value)
+					add_back_var(&vars, i, ):
 			}
-			
 		}
-		final_len++;
 	}
-	fill_expanded_token(final_len, exhead, env);
 }
+
 
 //this function creat a linked list called t_extoken  , this list seperate the t_token token with quotes and remove them and expand the env_vars,
 void	expand_token(t_token *token, t_env *env)

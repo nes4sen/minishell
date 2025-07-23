@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/23 13:02:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:25:04 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ typedef struct s_vars
 	int		end;
 	struct s_vars *next;
 }t_vars;
+
+t_vars *create_node_var(char *value, int s, int e);
+void add_back_var(t_vars **head, char *val, int s, int e);
+
 
 
 void add_back_extoken(t_extoken **head, char *str, int stat);
