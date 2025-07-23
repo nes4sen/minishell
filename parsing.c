@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/22 17:17:25 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:45:27 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,13 @@ void build_exlist(t_extoken **exhead, t_token *token)
 }
 char *find_env_var(t_env *env, char *var)
 {
-	
+	/*
+		this function check if the captured var is in the env
+	*/
 	while (!var && env)
 	{
 		if (!ft_strcmp(var, env->name))
-			return (env->value);
+			return (env->value); // logic error ,  i return null if the var is null means that its unvalid named var , but what if the var name is valid but not found
 		env = env->next;
 	}
 	return (NULL);
@@ -80,7 +82,7 @@ char is_valid_env_var_name(char c)
 {
 	if (!(c >= 'a' && c <= 'z')
 		&& !(c >= 'A' && c <= 'Z')
-		&& c != '_')
+		&& c != '_' && !c)
 		return (0);
 	return (1);
 }
@@ -89,6 +91,11 @@ char *extract_var_name(char **s)
 {
 	int		i;
 	char	*str;
+	
+/*
+this function capture the name of the var
+
+*/
 	
 	str = *s;
 	i = 1;
@@ -123,22 +130,35 @@ fill_expanded_token(int len,t_extoken *extoken,t_env *env)
 		p[i] = str[i];
 	}
 }
+/*
+this function scan the extoken , searching for a valid $ for expand, 
+calling the function find_env_var() that return the value of the env var found
+-- the function extract_var_name() return the name of the var after the $
+-- if invalid (ex. $1 $+ ..) it return NULL
 
+
+*/
 void	scan_for_expand(t_extoken *exhead, t_env *env)
 {
 	// this function expand ...
 	char	*str;
 	int		final_len;
 	char 	*var;
-	
+
 	final_len = 0;
 	str = exhead->str;
 	while (*str)
 	{
 		if (*str = '$' && exhead->stat != SINGLE_QUOTE)
 		{
-			var = find_env_var(env, extract_var_name(&str));
-			final_len += ft_strlen(var);
+			var = extract_var_name(&str);
+			if (var)
+			{
+				var = find_env_var(env, extract_var_name(&str));
+				final_len += ft_strlen(var);
+				str =  (str + final_len);	
+			}
+			
 		}
 		final_len++;
 	}
@@ -183,3 +203,22 @@ t_cmd *parsing(char *line, t_env *env)
 	//expand and quote removing
 	return (build_cmd_list(token));
 }
+
+/*
+1_	loop into the tokenizer and check if the token have a valid $ for expand, if not check if the token is quoted
+
+	1.a_	is_expandable() -> expand_token()
+			
+			the function expand_token()  create a linked list called exlist with the function build_exlist(), its create tokens from the main token,
+			the extoken separated by quotes, and they get a flaged and quote removed.
+			
+			next, i loop through the exlist and expand the vars.
+		
+		summary:
+		1. create exlist
+		2. exlist tokens separeted with quotes
+		3. remove quotes and flag the extoken
+		4. expand the vars
+
+
+*/

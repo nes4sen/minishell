@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/21 17:16:43 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/23 13:02:46 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ typedef struct s_env
 // 	struct s_trash *next;
 // }t_trash;
 
+typedef struct s_vars
+{
+	char	*value;
+	int		start;
+	int		end;
+	struct s_vars *next;
+}t_vars;
 
 
 void add_back_extoken(t_extoken **head, char *str, int stat);
