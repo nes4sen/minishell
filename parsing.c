@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/23 13:55:57 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/24 13:27:31 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@
 
 void get_quoted_extoken(t_extoken **exhead, char **s)
 {
+	//this function remove target the quoted sring , remove it quotes and flag the token
+
 	char	*token;
 	char	*str;
 	int		quote;
 	int		i;
 	int		stat;
-	
+
 	i = 0;
 	str = *s;
 	quote = str[i++];
@@ -69,8 +71,6 @@ char *find_env_var(t_env *env, char *var)
 	/*
 		this function check if the captured var is in the env
 	*/
-	if (!var)
-		return (NULL);
 	while (!var && env)
 	{
 		if (!ft_strcmp(var, env->name))
@@ -144,44 +144,60 @@ calling the function find_env_var() that return the value of the env var found
 // 	fill_expanded_token(final_len, exhead, env);
 // }
 
-void	scan_for_expand(t_extoken *exhead, t_env *env)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*str;
+	char	*str1;
+	char	*str2;
+	char	*p;
+	size_t	first_len;
+	size_t	sec_len;
+
+	if (!s1 || !s2)
+		return (NULL);
+	str1 = (char *)s1;
+	str2 = (char *)s2;
+	first_len = ft_strlen(s1);
+	sec_len = ft_strlen(s2);
+	p = malloc(first_len + sec_len + 1);
+	if (!p)
+		return (NULL);
+	ft_strcpy(p, str1);
+	ft_strcpy(p + first_len, str2);
+	p[first_len + sec_len] = '\0';
+	return (p);
+}
+
+void	get_expand(t_extoken *exhead, t_env *env)
+{
 	int		i;
-	char 	*var_name;
-	char	*var_value;
-	t_vars	*vars;
+	char	*str;
+	char 	*join_str;
 	
 	str = exhead->str;
 	i = 0;
-	vars = NULL;
 	while (str[i])
 	{
 		if (str[i] == '$')
-		{
-			var_name = extract_var_name((str + i), i);
-			if (var_name)
-			{
-				var_value = find_env_var(env, var_name);
-				if (var_value)
-					add_back_var(&vars, i, ):
-			}
-		}
+			
+		i++;
 	}
 }
 
+/*
+	echo"hello$vary$var"
+	[echo] ["hello$vary$var"]
+*/
 
-//this function creat a linked list called t_extoken  , this list seperate the t_token token with quotes and remove them and expand the env_vars,
-void	expand_token(t_token *token, t_env *env)
+
+//this function create a linked list called t_extoken  , this list seperate the t_token token with quotes and remove them and expand the env_vars,
+void	prepare_for_expand(t_token *token, t_env *env)
 {
 	t_extoken *exhead;
 
-	// this function loop throgh the string and create a list of tokens
-	//, remove the quotes, and flag the tokens
 	build_exlist(&exhead, token);
 	while (exhead)
 	{
-		scan_for_expand(exhead, env);
+		get_expand(exhead, env);
 		exhead = exhead->next;
 	}
 }
@@ -191,7 +207,7 @@ void	expand_env_vars(t_token *token, t_env *env)
 	while (token)
 	{
 		if (is_expandable(token)) 
-			expand_token(token, env);
+			prepare_for_expand(token, env);
 		else if (is_quoted_str(token->str)) 
 			remove_quote(token);
 		token = token->next;
