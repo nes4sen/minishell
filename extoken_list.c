@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_list.c                                      :+:      :+:    :+:   */
+/*   extoken_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 11:45:03 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/20 18:46:49 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/25 10:12:45 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,33 +38,3 @@ void add_back_extoken(t_extoken **head, char *str, int stat)
 			tmp = tmp->next;
 	}
 }
-
-// char *get_extoken()
-// {
-	
-// }
-// char *get_quoted_extoken(char **str)
-// {
-// 	char 	*s;
-
-// 	s = *str;
-	
-// }
-// t_extoken extokenizer(char *str)
-// {
-// 	int		i;
-// 	char	*extoken;
-	
-// 	i = 0;
-// 	extoken = NULL;
-// 	while (*str)
-// 	{
-// 		if (is_quote(*str))
-// 			get_quoted_extoken(&str);
-// 		else
-// 			get_extoken();	
-// 	}
-// }
-// what needed in the expand list 
-
-

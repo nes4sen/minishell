@@ -1,29 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   mini_libft.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/25 10:17:45 by nosahimi         ###   ########.fr       */
+/*   Created: 2025/07/25 11:20:46 by nosahimi          #+#    #+#             */
+/*   Updated: 2025/07/25 11:23:56 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell.c"
 
-
-
-
-t_cmd *parsing(char *line, t_env *env)
+int	is_alpha(char c)
 {
-	t_token	*token;
-
-	token = tokenizer(line);
-	syntax_error(token);
-	expand_env_vars(token, env);
-	//herdoc
-	//expand and quote removing
-	return (build_cmd_list(token));
+	return ((c >= 'a' && c <= 'z') && (c >= 'A' && c <= 'Z'));
 }
 
+int is_digit(char c)
+{
+	return ((c >= '0' && c <= '9'));
+}

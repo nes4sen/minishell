@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/23 13:25:04 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/25 11:54:17 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef enum e_type
 }t_type;
 
 
-typedef struct s_exbtoken
+typedef struct s_extoken
 {
 	char	*str;
 	int		stat;         
@@ -91,9 +91,13 @@ typedef struct s_vars
 	struct s_vars *next;
 }t_vars;
 
+char *extract_var_name(char *str, int *index);
+char *find_env_var(t_env *env, char *var);
+
+
+
 t_vars *create_node_var(char *value, int s, int e);
 void add_back_var(t_vars **head, char *val, int s, int e);
-
 
 
 void add_back_extoken(t_extoken **head, char *str, int stat);
