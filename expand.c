@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/25 18:48:35 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:57:19 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	remove_quote(t_token *token)
 	{
 		if (str[i] == '$')
 		{
-			var_name = extract_var_name(&str[i], &i);
+			var_name = extract_var_name(&str[i]);
 			if (var_name)
 			{
 				start = i;
@@ -99,7 +99,8 @@ void	prepare_for_expand(t_token *token, t_env *env)
 	build_exlist(&exhead, token);
 	while (exhead)
 	{
-		get_expand(exhead, env);
+		if (is_expandable(exhead->str))
+			get_expand(exhead, env);
 		exhead = exhead->next;
 	}
 }
@@ -108,7 +109,7 @@ void	expand_env_vars(t_token *token, t_env *env)
 {
 	while (token)
 	{
-		if (is_expandable(token)) 
+		if (is_expandable(token->str)) 
 			prepare_for_expand(token, env);
 		else if (is_quoted_str(token->str)) 
 			remove_quote(token);

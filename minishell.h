@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/25 11:54:17 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:44:26 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,19 +91,15 @@ typedef struct s_vars
 	struct s_vars *next;
 }t_vars;
 
-char *extract_var_name(char *str, int *index);
+
+
+/*----------expand_tools----------*/
+char *extract_var_name(char *str);
 char *find_env_var(t_env *env, char *var);
 
-
-
-t_vars *create_node_var(char *value, int s, int e);
-void add_back_var(t_vars **head, char *val, int s, int e);
-
-
+/*----------extoken_list----------*/
 void add_back_extoken(t_extoken **head, char *str, int stat);
 t_extoken *create_extoken_list(char *str, int stat);
-
-
 
 
 
@@ -148,10 +144,6 @@ char	*ft_substr(int start, int end, char *str);
 int		ft_strcmp(char *s1, char *s2);
 int		white_space(char c);
 
-/*		---variable expand---		*/
-// void	get_expand(t_token *ptr);
-t_token *find_expand(t_token *tokens_list);
-// char 	*catch_var(char );
 
 /*_________|---rdr list---|__________*/
 t_rdr	*create_node_rdr(char *file, int type, int fd);
