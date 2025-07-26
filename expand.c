@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/26 11:57:19 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:37:55 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,36 +61,42 @@ void	remove_quote(t_token *token)
  } 
 
 
- void	get_expand(t_extoken *exhead, t_env *env)
-{
-	int		i;
-	char	*str;
-	char	*var_name;
-	char	*var_value;
-	char	*left_str;
-	int		start;
+ void get_expand(t_extoken *exhead, t_env *env)
+ {
+	char *str;
+	char *result;
+	int i = 0;
 	
 	str = exhead->str;
-	i = 0;
+	result = ft_strdup("");
 	while (str[i])
 	{
-		if (str[i] == '$')
-		{
-			var_name = extract_var_name(&str[i]);
-			if (var_name)
-			{
-				start = i;
-				left_str = ft_substr(start, i - 1, str);
-				i+= ft_strlen(var_name);
-				var_value = find_env_var(env, var_name);
-				left_str = ft_join(left_str, var_value);
-			}
-		}
-		else
-			i++;
+	 if (str[i] == '$')
+	 {
+		 char *var_name = extract_var_name(&str[i]);
+		 if (var_name)
+		 {
+			 char *var_value = find_env_var(env, var_name);
+			 if (var_value)
+				 result = ft_join(result, var_value);
+			 i += ft_strlen(var_name) + 1;  // Skip $VAR
+		 }
+		 else
+		 {
+			 result = ft_join_char(result, '$');
+			 i++;
+		 }
+	 }
+	 else
+	 {
+		 result = ft_join_char(result, str[i]);
+		 i++;
+	 }
 	}
-	exhead->str = left_str;
+	exhead->str = result;
 }
+
+ 
 
 void	prepare_for_expand(t_token *token, t_env *env)
 {
@@ -99,8 +105,8 @@ void	prepare_for_expand(t_token *token, t_env *env)
 	build_exlist(&exhead, token);
 	while (exhead)
 	{
-		if (is_expandable(exhead->str))
-			get_expand(exhead, env);
+
+		get_expand(exhead, env);
 		exhead = exhead->next;
 	}
 }
