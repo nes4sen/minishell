@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:16:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/25 11:30:43 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 11:30:46 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ char *extract_var_name(char *str)
 			break;
 		i++;
 	}
-	return (ft_substr(1 , i, str + 1));
+	return (ft_substr(1 , i, str	));
 }

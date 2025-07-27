@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   join.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:02:11 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/26 18:38:19 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 11:31:02 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ char *str_join(char *old, char *new)
     return (result);
 }
 
-char *char_join(char *old, char c)
+char *char_join(char *old, char c, int *index)
 {
     char *result;
     int old_len;
-    int i;
+
     if (!old)
         return (NULL);
     old_len = ft_strlen(old);
@@ -44,5 +44,6 @@ char *char_join(char *old, char c)
     ft_strcpy(result, old);
     result[old_len] = c;
     result[old_len + 1] = '\0';
+	*index += 1;
     return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/26 11:44:26 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 11:30:29 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ typedef struct s_vars
 	struct s_vars *next;
 }t_vars;
 
+char *str_join(char *old, char *new);
+char *char_join(char *old, char c, int *index);
 
 
 /*----------expand_tools----------*/
