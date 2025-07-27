@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 11:30:29 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 17:30:48 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,30 +91,35 @@ typedef struct s_vars
 	struct s_vars *next;
 }t_vars;
 
+
+/*-----------expand----------*/
+void	expand_env_vars(t_token *token, t_env *env);
+void remove_quote(t_token *token);
+char *extract_var_name(char *str);
+char *find_env_var(t_env *env, char *var);
+int is_expandable(char *str);
+
+
+/*-----------join-------------*/
 char *str_join(char *old, char *new);
 char *char_join(char *old, char c, int *index);
 
 
-/*----------expand_tools----------*/
-char *extract_var_name(char *str);
-char *find_env_var(t_env *env, char *var);
-
 /*----------extoken_list----------*/
+void build_exlist(t_extoken **exhead, t_token *token);
 void add_back_extoken(t_extoken **head, char *str, int stat);
 t_extoken *create_extoken_list(char *str, int stat);
 
 
 
-void remove_quote(t_token *token);
 
 int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
 t_cmd	*parsing(char *line, t_env *env);
 // int		assigne_stat(char c);
 
+
 /*-------|>---syntax error---<|--------*/
-
-
 void			syntax_error(t_token *tokens);
 void			syntax_err_msg(char	*err);
 unsigned int	def_type(char *str);

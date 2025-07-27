@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 11:45:03 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/25 10:12:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 17:25:43 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_extoken *create_extoken_list(char *str, int stat)
 	}
 	token->str = str;
 	token->stat = stat;
-	
+	return (token);
 }
 void add_back_extoken(t_extoken **head, char *str, int stat)
 {

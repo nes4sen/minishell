@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:07:19 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/25 10:13:30 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 17:27:17 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void get_no_quoted_extoken(t_extoken **exhead, char **s)
 	
 	i = 0;
 	str = *s;
-	while (str[i] && !is_quote(s[i]))
+	while (str[i] && !is_quote(str[i]))
 		i++;
 	token = ft_substr(1 , i, str);
 	add_back_extoken(exhead, token, 0);
@@ -37,6 +37,7 @@ void get_quoted_extoken(t_extoken **exhead, char **s)
 	int		i;
 	int		stat;
 
+	stat = 0;
 	i = 0;
 	str = *s;
 	quote = str[i++];
@@ -59,8 +60,8 @@ void build_exlist(t_extoken **exhead, t_token *token)
 	while (*str)
 	{
 		if (is_quote(*str))
-			get_quoted_extoken(exhead, str);
+			get_quoted_extoken(exhead, &str);
 		else
-			get_no_quoted_extoken(exhead, str);
+			get_no_quoted_extoken(exhead, &str);
 	}
 }

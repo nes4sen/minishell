@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:16:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 16:44:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 17:24:29 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char *extract_var_name(char *str)
 
 	i = 1;
 	if (!is_valid_env_var_name(str[i])
-		|| str[i] >= '0' && str[i] <= '9')
+		|| (str[i] >= '0' && str[i] <= '9'))
 		return (NULL);
 	while (str[i])
 	{
@@ -65,6 +65,25 @@ int is_expandable(char *str)
 		str++;
 	}
 	return (0);
+}
+int  str_no_quote_len(char *str)
+{
+	int		len;
+	char	quote;
+
+	len = 0;
+	quote = 0;
+	while (*str)
+	{
+		if (!quote && is_quote(*str))
+			quote = *str;
+		else if (*str == quote)
+			quote = 0;
+		else
+			len++;
+		str++;
+	}
+	return len;
 }
 
 void	remove_quote(t_token *token)

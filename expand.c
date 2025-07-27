@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 16:44:41 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 17:35:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void get_expand(t_extoken *exhead, t_env *env)
 	int i = 0;
 	
 	str = exhead->str;
-	result = ft_strdup("");
+	result = "";
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -31,14 +31,14 @@ void get_expand(t_extoken *exhead, t_env *env)
 			{
 				char *var_value = find_env_var(env, var_name);
 				if (var_value)
-					result = ft_join(result, var_value);
+					result = str_join(result, var_value);
 				i += ft_strlen(var_name) + 1;  // Skip $VAR
 			}
 			else
-				result = ft_join_char(result, '$', &i);
+				result = char_join(result, '$', &i);
 		}
 		else
-			result = ft_join_char(result, str[i], &i);
+			result =  char_join(result, str[i], &i);
 	}
 	exhead->str = result;
 }
@@ -70,7 +70,7 @@ void fill_subtoken(t_token *token,t_extoken *exhead)
 	token->subtoken = subhead;
 }
 
-void	*prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
+void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 {
 	
 	t_extoken *tmp;
@@ -86,6 +86,16 @@ void	*prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 }
 
 
+int is_quoted_str(char *str)
+{
+	while (*str)
+	{
+		if (is_quote(*str))
+			return (1);
+		str++;
+	}
+	return (0);
+}
 void	expand_env_vars(t_token *token, t_env *env)
 {
 	t_extoken *exhead;

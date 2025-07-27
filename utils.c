@@ -6,21 +6,13 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/16 11:02:13 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 17:32:34 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_strcmp(char *s1, char *s2)
-{
-	while (*s1 && (*s1 == *s2))
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
-}
+
 
 int white_space(char c)
 {
@@ -76,23 +68,4 @@ void	get_type(t_token *tokens)
 	get_next_type(tmp);
 }
 
-char *ft_substr(int start, int end, char *str)
-{
-	int 	len;
-	char	*s;
-	int		i;
 
-	len = (end - start);
-	s = malloc(len + 1);
-	if (!s)
-		return NULL;
-	i = 0;
-	while (start < end)
-	{
-		s[i] = str[start];
-		i++;
-		start++;
-	}
-	s[i] = '\0';
-	return (s);
-}
