@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:16:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 11:30:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:44:46 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,47 @@ char *extract_var_name(char *str)
 	}
 	return (ft_substr(1 , i, str	));
 }
+
+int is_expandable(char *str)
+{
+	int quote;
+
+	quote = 0;
+	while (*str)
+	{
+		if (!quote && is_quote(*str))
+			quote = *str;
+		else if (quote == *str)
+			quote = 0;
+		if (quote != '\'' && *str == '$')
+			return (1);
+		str++;
+	}
+	return (0);
+}
+
+void	remove_quote(t_token *token)
+{
+	char	*s;
+	char	*tmp;
+	int		i;
+	int		quote;
+	
+	s = token->str;
+	tmp = malloc(str_no_quote_len(s) + 1);
+	i = 0;
+	quote = 0;
+	while(*s)
+	{
+		if (!quote && is_quote(*s))
+			quote = *s;
+		else if (quote == *s)
+			quote = 0;	
+		else
+			tmp[i++] = *s;
+		s++;
+	}
+	tmp[i] = '\0';
+	free(token->str);
+	token->str = tmp;
+ } 

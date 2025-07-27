@@ -6,59 +6,12 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 11:59:15 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:44:41 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int is_expandable(char *str)
-{
-	int quote;
-
-	quote = 0;
-	while (*str)
-	{
-		if (!quote && is_quote(*str))
-			quote = *str;
-		else if (quote == *str)
-			quote = 0;
-		if (quote != '\'' && *str == '$')
-			return (1);
-		str++;
-	}
-	return (0);
-}
-
-void	remove_quote(t_token *token)
-{
-	char	*s;
-	char	*tmp;
-	int		i;
-	int		quote;
-	
-	s = token->str;
-	tmp = malloc(str_no_quote_len(s) + 1);
-	if (tmp)
-	{
-		//free
-	}
-	i = 0;
-	quote = 0;
-	while(*s)
-	{
-		if (!quote && is_quote(*s))
-			quote = *s;
-		else if (quote == *s)
-			quote = 0;	
-		else
-			tmp[i++] = *s;
-		s++;
-	}
-	tmp[i] = '\0';
-	free(token->str);
-	token->str = tmp;
- } 
 
 
 void get_expand(t_extoken *exhead, t_env *env)
@@ -89,10 +42,34 @@ void get_expand(t_extoken *exhead, t_env *env)
 	}
 	exhead->str = result;
 }
-void fill_subtoken(t_token token,t_extoken *exhead)
+void fill_subtoken(t_token *token,t_extoken *exhead)
 {
-		
+	char	*str;
+	int		i;
+	char	*subtoken;;
+	t_token *subhead;
+	
+	subhead = NULL;
+	subtoken = "";
+	while (exhead)
+	{
+		i = 0;
+		str = exhead->str;
+		while (str[i])
+		{
+			subtoken = char_join(subtoken, str[i], 0);
+			if (white_space(str[i]) && exhead->stat == NO_QUOTE)
+			{
+				token_add_back(&subhead, subtoken, 0);	
+				subtoken = "";
+			}
+			i++;
+		}
+		exhead = exhead->next;
+	}
+	token->subtoken = subhead;
 }
+
 void	*prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 {
 	
@@ -106,10 +83,7 @@ void	*prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 			get_expand(tmp, env);
 		tmp = tmp->next;
 	}
-	
-	//
 }
-
 
 
 void	expand_env_vars(t_token *token, t_env *env)

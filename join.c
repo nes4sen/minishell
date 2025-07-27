@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:02:11 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 11:31:02 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:28:31 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char *char_join(char *old, char c, int *index)
     ft_strcpy(result, old);
     result[old_len] = c;
     result[old_len + 1] = '\0';
-	*index += 1;
+	if (index)
+		*index += 1;
     return (result);
 }
