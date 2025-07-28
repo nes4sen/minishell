@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:16:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 17:24:29 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:05:31 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char is_valid_env_var_name(char c)
 
 char *extract_var_name(char *str)
 {
-	int		i;
+	int	i;
 
 	i = 1;
 	if (!is_valid_env_var_name(str[i])
@@ -46,7 +46,7 @@ char *extract_var_name(char *str)
 			break;
 		i++;
 	}
-	return (ft_substr(1 , i, str	));
+	return (ft_substr(1 , i, str));
 }
 
 int is_expandable(char *str)

@@ -6,30 +6,31 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 17:35:49 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:51:13 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-
 void get_expand(t_extoken *exhead, t_env *env)
 {
 	char *str;
 	char *result;
-	int i = 0;
+	int i;
+	char *var_name;
+	char *var_value;
 	
 	str = exhead->str;
 	result = "";
+	i = 0;
 	while (str[i])
 	{
 		if (str[i] == '$')
 		{
-			char *var_name = extract_var_name(&str[i]);
+			var_name = extract_var_name(&str[i]);
 			if (var_name)
 			{
-				char *var_value = find_env_var(env, var_name);
+				var_value = find_env_var(env, var_name);
 				if (var_value)
 					result = str_join(result, var_value);
 				i += ft_strlen(var_name) + 1;  // Skip $VAR
@@ -42,8 +43,13 @@ void get_expand(t_extoken *exhead, t_env *env)
 	}
 	exhead->str = result;
 }
+
 void fill_subtoken(t_token *token,t_extoken *exhead)
 {
+
+/*
+this function loop through the exlist, and create and fill the subtoken in the token
+*/
 	char	*str;
 	int		i;
 	char	*subtoken;;
@@ -69,13 +75,45 @@ void fill_subtoken(t_token *token,t_extoken *exhead)
 	}
 	token->subtoken = subhead;
 }
+void print_exlist(t_extoken *token)
+{
+	while (token)
+	{
+		printf("x[%s] [%d]x\n", token->str, token->stat);
+		token = token->next;
+	}
+	
+}
+void print_subtoken(t_token *token)
+{
+	t_token *sub;
+	while (token)
+	{
+		if (!token->subtoken)
+		{
+			printf("{%s}\n",token->str);	
+		}
+		else
+		{
+			sub = token->subtoken;	
+			while(sub)
+			{
+				printf("sub{%s  %d}\n", sub->str, sub->type);
+				sub = sub->next;
+			}
+		}
+		token = token->next;
+	}
+}
 
 void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 {
 	
 	t_extoken *tmp;
-	
+	t_extoken *print;
+
 	build_exlist(exhead, token);
+	print = *exhead; 
 	tmp = *exhead;
 	while (tmp)
 	{
@@ -83,8 +121,11 @@ void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 			get_expand(tmp, env);
 		tmp = tmp->next;
 	}
+	tmp = *exhead;
+	fill_subtoken(token, tmp);
+	print_subtoken(token);
+	print_exlist(print);	
 }
-
 
 int is_quoted_str(char *str)
 {
@@ -99,7 +140,7 @@ int is_quoted_str(char *str)
 void	expand_env_vars(t_token *token, t_env *env)
 {
 	t_extoken *exhead;
-
+	
 	exhead = NULL;
 	while (token)
 	{
@@ -111,3 +152,4 @@ void	expand_env_vars(t_token *token, t_env *env)
 	}
 }
 
+// toto$HOME

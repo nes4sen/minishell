@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:07:19 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 17:27:17 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/28 11:18:57 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void get_no_quoted_extoken(t_extoken **exhead, char **s)
 	str = *s;
 	while (str[i] && !is_quote(str[i]))
 		i++;
-	token = ft_substr(1 , i, str);
+	token = ft_substr(0 , i, str);
 	add_back_extoken(exhead, token, 0);
 	*s += i;
 }

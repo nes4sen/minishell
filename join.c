@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:02:11 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 16:50:07 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/28 18:17:45 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ char *str_join(char *old, char *new)
     old_len = ft_strlen(old);
     new_len = ft_strlen(new);
     result = malloc(old_len + new_len + 1);
-    if (!result)
-        //free
+    // if (!result)
+    //     ;
     ft_strcpy(result, old);
     ft_strcpy(result + old_len, new);
     return (result);
@@ -39,12 +39,13 @@ char *char_join(char *old, char c, int *index)
         return (NULL);
     old_len = ft_strlen(old);
     result = malloc(old_len + 2);
-    if (!result)
+    // if (!result)
         //free
     ft_strcpy(result, old);
     result[old_len] = c;
     result[old_len + 1] = '\0';
 	if (index)
 		*index += 1;
+	// printf("---[%s %d]----\n", result, old_len);
     return (result);
 }
