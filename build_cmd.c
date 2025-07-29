@@ -3,43 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/11 16:29:47 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:54:43 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-void print_arg(char **arg)
-{
-	int i;
-	i = 0;
-	while (arg[i])
-	{
-		printf("arg		: [%s]\n",arg[i]);
-		i++;
-	}
-}
-void print_rdr(t_rdr *rdr)
-{
-	// printf("toooooooooooo\n");
-	while (rdr)
-	{
-		printf("rdr_str -> [%s]\nrdr_type-> [%d]\n fd->%d",rdr->file , rdr->type, rdr->fd);
-		rdr = rdr->next;
-	}	
-
-}
-
-
-
-
-
-
-
 
 
 
@@ -86,12 +57,16 @@ void get_rdr(t_rdr **head, char *file_name, unsigned int type)
 int	count_words(t_token *tokens)
 {
 	int i;
-
+	
 	i = 0;
 	if (!tokens)
 		return (0);
 	while (tokens && tokens->type != 1)
 	{
+		while (tokens->subtoken)
+		{
+			
+		}
 		if (!tokens->type)
 			i++;
 		tokens = tokens->next;
@@ -125,34 +100,160 @@ char *alloc_word(char *str)
 	ft_strcpy(arg, str);
 	return (arg);
 }
-t_cmd *build_cmd_list(t_token *tokens)
-{
-	t_cmd	*cmd;
-	char	**arg;
-	t_rdr	*rdr;
-	int 	i;
 
-	cmd = NULL;
-	rdr = NULL;
-	while(tokens)
+// t_cmd *build_cmd_list(t_token *tokens)
+// {
+// 	t_cmd	*cmd;
+// 	char	**arg;
+// 	t_rdr	*rdr;
+// 	int 	i;
+
+// 	cmd = NULL;
+// 	rdr = NULL;
+// 	while(tokens)
+// 	{
+// 		arg = alloc_arg(tokens);
+// 		i = 0;
+// 		while (tokens && tokens->type != 1)
+// 		{
+// 			get_rdr(&rdr, tokens->str, tokens->type);
+// 			if (!tokens->type)
+// 				arg[i++] = alloc_word(tokens->str);
+// 			tokens = tokens->next;
+// 		}
+// 		add_back_cmd(&cmd, arg,rdr);
+// 		print_arg(arg);
+// 		print_rdr(rdr);
+// 	 	if (tokens)
+// 			tokens = tokens->next;	
+// 	}
+// 	return cmd;
+// }
+
+int args_len(t_token *token)
+{
+	int len;
+	t_token *tmp;
+
+	len = 0;
+	while (token)
 	{
-		arg = alloc_arg(tokens);
-		i = 0;
-		while (tokens && tokens->type != 1)
+		if (token->subtoken)
 		{
-			get_rdr(&rdr, tokens->str, tokens->type);
-			if (!tokens->type)
-				arg[i++] = alloc_word(tokens->str);
-			tokens = tokens->next;
-		}
-		add_back_cmd(&cmd, arg,rdr);
-		print_arg(arg);
-		print_rdr(rdr);
-	 	if (tokens)
-			tokens = tokens->next;	
+			tmp = token->subtoken;
+			while (tmp)
+			{
+				len++;
+				tmp = tmp->next;	
+			}
+		}else if (token->type == CMD)
+			len++;
+		token = token->next;
 	}
-	return cmd;
+	return (len);
+}
+char **space_for_args(t_token *token)
+{
+	int len;
+	char **args;
+	int i;
+
+	len = args_len(token);
+	if (len == 0)
+		return (NULL);
+	i = 0;
+	args = malloc(sizeof(char *) * (len + 1));
+	if (!args)
+	{
+		//free
+	}
+	while (i < len)
+	{
+		args[i] = NULL;
+		i++;
+	}
+	return (args);
 }
 
+void get_args(char ***args, t_token *token)
+{
+	int i;
+	
+	i = 0;
+	if (token->subtoken)
+	{
+		while (token->subtoken)
+		{
+			(*args)[i] = alloc_word(token->subtoken->str);
+				i++;
+			token->subtoken = token->subtoken->next;
+		}
+	}
+	else if (token->type == CMD)
+	{
+		(*args)[i] = alloc_word(token->str);
+		i++;
+	}
+}
 
+t_cmd	*build_cmd_list(t_token *token)
+{
+	t_rdr	*rdr;
+	t_cmd	*cmd;
+	char **args;
+	
+	cmd = NULL;
+	rdr = NULL;	
+	args = space_for_args(token);
+	while (token)
+	{
+		if (token->subtoken)
+		while (token && token->type != 1)
+		{
+			get_rdr(&rdr, token->str, token->type);
+			get_args(&args, token);
+			token = token->next;
+		}
+		add_back_cmd(&cmd, args, rdr);
+		token = token->next;
+	}
+	return (cmd);
+}
+void print_arg(char **arg)
+{
+	int i;
 
+	i = 0;
+	while (arg[i])
+	{
+		printf("Arg[%d]: %s\n", i, arg[i]);
+		i++;
+	}
+}
+
+void print_rdr(t_rdr *rdr)
+{
+	t_rdr *tmp;
+
+	tmp = rdr;
+	while (tmp)
+	{
+		printf("Rdr file: %s, type: %d\n", tmp->file, tmp->type);
+		tmp = tmp->next;
+	}
+}
+void print_all_cmd(t_cmd *cmd)
+{
+	t_cmd *tmp;
+	
+
+	tmp = cmd;
+	while (tmp)
+	{
+	
+		printf("Command:\n");
+		print_arg(tmp->arg);
+		print_rdr(tmp->rdr);
+		tmp = tmp->next;
+	}
+}

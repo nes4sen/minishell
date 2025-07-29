@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/29 14:10:18 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:43:35 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,10 @@ void print_subtoken(t_token *token)
 void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 {
 	t_extoken *tmp;
-	t_extoken *print;
+	// t_extoken *print;
 
 	build_exlist(exhead, token);
-	print = *exhead; 
+	// print = *exhead; 
 	tmp = *exhead;
 	while (tmp)
 	{
