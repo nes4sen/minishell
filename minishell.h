@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 17:30:48 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/29 11:09:16 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_token
 {
 	char			*str;
 	t_type			type;
-	struct s_token *subtoken; 
+	struct s_token *subtoken;
 	struct s_token	*next;
 }t_token;
 

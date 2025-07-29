@@ -6,24 +6,13 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:43:28 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/20 16:42:11 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/29 11:23:22 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "minishell.h"
 
-// int	assigne_stat(char c)
-// {
-// 	int stat;
-	
-// 	stat = NO_QUOTE;
-// 	if (c == '\'')
-// 		stat = SINGLE_QUOTE;
-// 	else if (c == '"')
-// 		stat = DOUBLE_QUOTE;
-// 	return (stat);
-// }
 
 t_token *creat_token(char *token, t_type type)
 {

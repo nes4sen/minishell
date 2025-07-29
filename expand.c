@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/28 18:51:13 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/29 14:10:18 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,11 @@ void get_expand(t_extoken *exhead, t_env *env)
 
 void fill_subtoken(t_token *token,t_extoken *exhead)
 {
-
-/*
-this function loop through the exlist, and create and fill the subtoken in the token
-*/
 	char	*str;
 	int		i;
 	char	*subtoken;;
 	t_token *subhead;
-	
+
 	subhead = NULL;
 	subtoken = "";
 	while (exhead)
@@ -63,13 +59,15 @@ this function loop through the exlist, and create and fill the subtoken in the t
 		str = exhead->str;
 		while (str[i])
 		{
-			subtoken = char_join(subtoken, str[i], 0);
 			if (white_space(str[i]) && exhead->stat == NO_QUOTE)
 			{
 				token_add_back(&subhead, subtoken, 0);	
 				subtoken = "";
+				while (white_space(str[i]) && exhead->stat == NO_QUOTE)
+					i++;
 			}
-			i++;
+			else
+				subtoken = char_join(subtoken, str[i++], 0);
 		}
 		exhead = exhead->next;
 	}
@@ -108,7 +106,6 @@ void print_subtoken(t_token *token)
 
 void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 {
-	
 	t_extoken *tmp;
 	t_extoken *print;
 
@@ -123,8 +120,8 @@ void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 	}
 	tmp = *exhead;
 	fill_subtoken(token, tmp);
-	print_subtoken(token);
-	print_exlist(print);	
+// print_subtoken(token);
+// print_exlist(print);	
 }
 
 int is_quoted_str(char *str)
