@@ -3,14 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/29 19:54:43 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/30 12:14:51 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void print_arg(char **arg)
+{
+	int i;
+
+	i = 0;
+	while (arg[i])
+	{
+		printf("Arg[%d]: %s\n", i, arg[i]);
+		i++;
+	}
+}
+
+void print_rdr(t_rdr *rdr)
+{
+	t_rdr *tmp;
+
+	tmp = rdr;
+	while (tmp)
+	{
+		printf("Rdr file: %s, type: %d\n", tmp->file, tmp->type);
+		tmp = tmp->next;
+	}
+}
+void print_all_cmd(t_cmd *cmd)
+{
+	t_cmd *tmp;
+	
+
+	tmp = cmd;
+	while (tmp)
+	{
+		printf("Command:\n");
+		print_arg(tmp->arg);
+		print_rdr(tmp->rdr);
+		tmp = tmp->next;
+	}
+}
+
+
 
 
 
@@ -215,45 +255,9 @@ t_cmd	*build_cmd_list(t_token *token)
 			token = token->next;
 		}
 		add_back_cmd(&cmd, args, rdr);
-		token = token->next;
+		if (token)
+			token = token->next;
 	}
+	print_all_cmd(cmd);
 	return (cmd);
-}
-void print_arg(char **arg)
-{
-	int i;
-
-	i = 0;
-	while (arg[i])
-	{
-		printf("Arg[%d]: %s\n", i, arg[i]);
-		i++;
-	}
-}
-
-void print_rdr(t_rdr *rdr)
-{
-	t_rdr *tmp;
-
-	tmp = rdr;
-	while (tmp)
-	{
-		printf("Rdr file: %s, type: %d\n", tmp->file, tmp->type);
-		tmp = tmp->next;
-	}
-}
-void print_all_cmd(t_cmd *cmd)
-{
-	t_cmd *tmp;
-	
-
-	tmp = cmd;
-	while (tmp)
-	{
-	
-		printf("Command:\n");
-		print_arg(tmp->arg);
-		print_rdr(tmp->rdr);
-		tmp = tmp->next;
-	}
 }

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/29 19:43:35 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/30 12:33:26 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// poor logic
 void get_expand(t_extoken *exhead, t_env *env)
 {
 	char *str;
@@ -44,6 +45,7 @@ void get_expand(t_extoken *exhead, t_env *env)
 	exhead->str = result;
 }
 
+// poor logic
 void fill_subtoken(t_token *token,t_extoken *exhead)
 {
 	char	*str;
@@ -59,7 +61,7 @@ void fill_subtoken(t_token *token,t_extoken *exhead)
 		str = exhead->str;
 		while (str[i])
 		{
-			if (white_space(str[i]) && exhead->stat == NO_QUOTE)
+			if ((white_space(str[i]) && exhead->stat == NO_QUOTE))
 			{
 				token_add_back(&subhead, subtoken, 0);	
 				subtoken = "";
@@ -69,6 +71,7 @@ void fill_subtoken(t_token *token,t_extoken *exhead)
 			else
 				subtoken = char_join(subtoken, str[i++], 0);
 		}
+		token_add_back(&subhead, subtoken, 0);
 		exhead = exhead->next;
 	}
 	token->subtoken = subhead;
@@ -89,7 +92,7 @@ void print_subtoken(t_token *token)
 	{
 		if (!token->subtoken)
 		{
-			printf("{%s}\n",token->str);	
+			 printf("{%s}\n",token->str);	
 		}
 		else
 		{
@@ -107,10 +110,8 @@ void print_subtoken(t_token *token)
 void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 {
 	t_extoken *tmp;
-	// t_extoken *print;
 
 	build_exlist(exhead, token);
-	// print = *exhead; 
 	tmp = *exhead;
 	while (tmp)
 	{
@@ -120,8 +121,6 @@ void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
 	}
 	tmp = *exhead;
 	fill_subtoken(token, tmp);
-// print_subtoken(token);
-// print_exlist(print);	
 }
 
 int is_quoted_str(char *str)
