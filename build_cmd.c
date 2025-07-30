@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/30 12:14:51 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:30:00 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,10 @@ void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr)
 void get_rdr(t_rdr **head, char *file_name, unsigned int type)
 {
 	if (type == 2)
+	{
 		// get_heredoc();
+		
+	}
 	if (type >= 3 && type <= 5)
 		add_back_rdr(head, file_name, type, -1);
 }
@@ -247,7 +250,7 @@ t_cmd	*build_cmd_list(t_token *token)
 	args = space_for_args(token);
 	while (token)
 	{
-		if (token->subtoken)
+		// if (token->subtoken)
 		while (token && token->type != 1)
 		{
 			get_rdr(&rdr, token->str, token->type);

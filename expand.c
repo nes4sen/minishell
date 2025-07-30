@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/30 12:33:26 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/30 20:34:04 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,37 +45,76 @@ void get_expand(t_extoken *exhead, t_env *env)
 	exhead->str = result;
 }
 
-// poor logic
-void fill_subtoken(t_token *token,t_extoken *exhead)
-{
-	char	*str;
-	int		i;
-	char	*subtoken;;
-	t_token *subhead;
+// // poor logic
+// void fill_subtoken(t_token *token,t_extoken *exhead)
+// {
+// 	char	*str;
+// 	int		i;
+// 	char	*subtoken;;
+// 	t_token *subhead;
 
+// 	subhead = NULL;
+// 	subtoken = "";
+// 	while (exhead)
+// 	{
+// 		i = 0;
+// 		str = exhead->str;
+// 		while (str[i])
+// 		{
+// 			if ((white_space(str[i]) && exhead->stat == NO_QUOTE))
+// 			{
+// 				token_add_back(&subhead, subtoken, 0);	
+// 				subtoken = "";
+// 				while (white_space(str[i]) && exhead->stat == NO_QUOTE)
+// 					i++;
+// 			}
+// 			else
+// 				subtoken = char_join(subtoken, str[i++], 0);
+// 		}
+// 		// token_add_back(&subhead, subtoken, 0);
+// 		exhead = exhead->next;
+// 	}
+// 	token->subtoken = subhead;
+// }
+
+void	get_substr(char **substr, t_token **subhead)
+{
+	token_add_back(subhead, *substr, 0);
+	*substr = "";
+	
+}
+
+void	fill_subtoken(t_token *token, t_extoken *extoken)
+{
+	t_token *subhead;
+	char	*substr;
+	char	*str;
+	
+	substr = "";
 	subhead = NULL;
-	subtoken = "";
-	while (exhead)
+	while (extoken)
 	{
-		i = 0;
-		str = exhead->str;
-		while (str[i])
+		str = extoken->str;
+		while (*str)
 		{
-			if ((white_space(str[i]) && exhead->stat == NO_QUOTE))
+			if (white_space(*str) && extoken->stat == NO_QUOTE)
 			{
-				token_add_back(&subhead, subtoken, 0);	
-				subtoken = "";
-				while (white_space(str[i]) && exhead->stat == NO_QUOTE)
-					i++;
+				get_substr(&substr, &subhead);
+				while (white_space(*str) && extoken->stat == NO_QUOTE)
+					str++;
 			}
 			else
-				subtoken = char_join(subtoken, str[i++], 0);
+				substr = char_join(substr, *str++, 0);
 		}
-		token_add_back(&subhead, subtoken, 0);
-		exhead = exhead->next;
+		if (!*str && !extoken->next)
+			token_add_back(&subhead, substr, 0);
+		extoken = extoken->next;
 	}
 	token->subtoken = subhead;
 }
+
+
+
 void print_exlist(t_extoken *token)
 {
 	while (token)
@@ -149,3 +188,35 @@ void	expand_env_vars(t_token *token, t_env *env)
 }
 
 // toto$HOME
+
+// void fill_subtoken(t_token *token, t_extoken *exhead)
+// {
+// 	t_token	*subhead = NULL;
+// 	char	*str;
+// 	int		start, end;
+
+// 	while (exhead)
+// 	{
+// 		str = exhead->str;
+// 		end = 0;
+// 		while (str[end])
+// 		{
+// 			// Skip leading whitespace (if outside quotes)
+// 			while (str[end] && white_space(str[end]) && exhead->stat == NO_QUOTE)
+// 				end++;
+// 			start = end;
+
+// 			// Move to the end of the token
+// 			while (str[end] && (!white_space(str[end]) || exhead->stat != NO_QUOTE))
+// 				end++;
+// 			if (start < end)
+// 			{
+// 				char *subtoken = ft_substr(str, start, end - start);
+// 				token_add_back(&subhead, subtoken, 0);
+// 				free(subtoken);
+// 			}
+// 		}
+// 		exhead = exhead->next;
+// 	}
+// 	token->subtoken = subhead;
+// }
