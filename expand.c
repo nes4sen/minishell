@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/30 20:34:04 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:40:14 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,37 +45,7 @@ void get_expand(t_extoken *exhead, t_env *env)
 	exhead->str = result;
 }
 
-// // poor logic
-// void fill_subtoken(t_token *token,t_extoken *exhead)
-// {
-// 	char	*str;
-// 	int		i;
-// 	char	*subtoken;;
-// 	t_token *subhead;
 
-// 	subhead = NULL;
-// 	subtoken = "";
-// 	while (exhead)
-// 	{
-// 		i = 0;
-// 		str = exhead->str;
-// 		while (str[i])
-// 		{
-// 			if ((white_space(str[i]) && exhead->stat == NO_QUOTE))
-// 			{
-// 				token_add_back(&subhead, subtoken, 0);	
-// 				subtoken = "";
-// 				while (white_space(str[i]) && exhead->stat == NO_QUOTE)
-// 					i++;
-// 			}
-// 			else
-// 				subtoken = char_join(subtoken, str[i++], 0);
-// 		}
-// 		// token_add_back(&subhead, subtoken, 0);
-// 		exhead = exhead->next;
-// 	}
-// 	token->subtoken = subhead;
-// }
 
 void	get_substr(char **substr, t_token **subhead)
 {
@@ -112,8 +82,6 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 	}
 	token->subtoken = subhead;
 }
-
-
 
 void print_exlist(t_extoken *token)
 {
@@ -172,6 +140,7 @@ int is_quoted_str(char *str)
 	}
 	return (0);
 }
+
 void	expand_env_vars(t_token *token, t_env *env)
 {
 	t_extoken *exhead;
@@ -186,37 +155,3 @@ void	expand_env_vars(t_token *token, t_env *env)
 		token = token->next;
 	}
 }
-
-// toto$HOME
-
-// void fill_subtoken(t_token *token, t_extoken *exhead)
-// {
-// 	t_token	*subhead = NULL;
-// 	char	*str;
-// 	int		start, end;
-
-// 	while (exhead)
-// 	{
-// 		str = exhead->str;
-// 		end = 0;
-// 		while (str[end])
-// 		{
-// 			// Skip leading whitespace (if outside quotes)
-// 			while (str[end] && white_space(str[end]) && exhead->stat == NO_QUOTE)
-// 				end++;
-// 			start = end;
-
-// 			// Move to the end of the token
-// 			while (str[end] && (!white_space(str[end]) || exhead->stat != NO_QUOTE))
-// 				end++;
-// 			if (start < end)
-// 			{
-// 				char *subtoken = ft_substr(str, start, end - start);
-// 				token_add_back(&subhead, subtoken, 0);
-// 				free(subtoken);
-// 			}
-// 		}
-// 		exhead = exhead->next;
-// 	}
-// 	token->subtoken = subhead;
-// }

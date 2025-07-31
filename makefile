@@ -5,10 +5,10 @@ CFLAGS = -Wall -Wextra -Werror -g
 CFILES= build_cmd.c env.c  is_functions.c \
 		token_list.c  minishell.c join.c  \
 		expand_tools.c extoken_list.c     \
-		extokenizer.c    \
+		extokenizer.c  build_cmd_list.c\
 		rdrs_list.c parsing.c expand.c    \
 		syntax.c tokenizer.c utils.c      \
-		mini_libft.c \
+		mini_libft.c cmd_args.c \
 
 OBJ_FILES = $(CFILES:.c=.o)
 

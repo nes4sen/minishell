@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/31 11:01:08 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:34:33 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ typedef struct s_vars
 
 /*-----------expand----------*/
 void	expand_env_vars(t_token *token, t_env *env);
-void remove_quote(t_token *token);
-char *extract_var_name(char *str);
-char *find_env_var(t_env *env, char *var);
-int is_expandable(char *str);
+void	remove_quote(t_token *token);
+char 	*extract_var_name(char *str);
+char 	*find_env_var(t_env *env, char *var);
+int 	is_expandable(char *str);
 
 
 /*-----------join-------------*/
@@ -155,16 +155,20 @@ int		white_space(char c);
 /*_________|---rdr list---|__________*/
 t_rdr	*create_node_rdr(char *file, int type, int fd);
 void	add_back_rdr(t_rdr **head, char *file, int type, int fd);
+void 	get_rdr(t_rdr **rdr, t_token *token, unsigned int type);
 
 
 /*_________|---command list---|________*/
 t_cmd 	*build_cmd_list(t_token *tokens);
-
-int		count_words(t_token *tokens);
-void 	get_rdr(t_rdr **rdr, t_token *token, unsigned int type);
 void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
-char	**alloc_arg(t_token *tokens);
 t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
+
+/*------------cmd_args---------------*/
+char *alloc_word(char *str);
+int args_len(t_token *token);
+char **space_for_args(t_token *token);
+void get_args(char ***args, t_token *token);
+
 
 /*__________is_functions________*/
 
