@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extokenizer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:07:19 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/28 11:18:57 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/31 15:48:18 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void get_no_quoted_extoken(t_extoken **exhead, char **s)
 
 void get_quoted_extoken(t_extoken **exhead, char **s)
 {
-	//this function remove target the quoted sring , remove it quotes and flag the token
+	//this function remove quotes from the string and add the token to the exlist 
 
 	char	*token;
 	char	*str;
@@ -46,10 +46,10 @@ void get_quoted_extoken(t_extoken **exhead, char **s)
 	token = ft_substr(1 , i, str);
 	if (quote == '\'')
 		stat = SINGLE_QUOTE;
-	else if (str[i] == '"')
+	else if (quote == '"')
 		stat = DOUBLE_QUOTE;
 	add_back_extoken(exhead, token, stat);
-	*s = *s + i;
+	*s += i + 1; // Skip the closing quote
 }
 
 void build_exlist(t_extoken **exhead, t_token *token)
