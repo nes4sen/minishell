@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/29 11:09:16 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:01:08 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	add_back_rdr(t_rdr **head, char *file, int type, int fd);
 t_cmd 	*build_cmd_list(t_token *tokens);
 
 int		count_words(t_token *tokens);
-void 	get_rdr(t_rdr **rdr, char *str, unsigned int type);
+void 	get_rdr(t_rdr **rdr, t_token *token, unsigned int type);
 void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
 char	**alloc_arg(t_token *tokens);
 t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);

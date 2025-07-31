@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/27 17:32:34 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:03:32 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ unsigned int	def_type(char *str)
 	if (!ft_strcmp(str, ">>"))
 		tmp = 5;
 	if (!ft_strcmp(str, "<"))
-		tmp = 2;
+		tmp = 3;
 	if (!ft_strcmp(str, ">"))
 		tmp = 4;
 	return (tmp);
