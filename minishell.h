@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:43:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/31 11:34:33 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/01 23:31:29 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,18 @@ typedef struct s_vars
 }t_vars;
 
 
+
+/*-----------mmtracker----------*/
+
+typedef struct s_mmtrack
+{
+	void *ptr;
+	struct s_mmtrack *next;
+} t_mmtrack;
+
+t_mmtrack *create_mm_node(void *ptr);
+void *mm_alloc(size_t size, t_mmtrack **mm_head);
+void mm_free(t_mmtrack **mm_head);
 /*-----------expand----------*/
 void	expand_env_vars(t_token *token, t_env *env);
 void	remove_quote(t_token *token);
