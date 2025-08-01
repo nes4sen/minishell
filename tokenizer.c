@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/20 16:05:04 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/01 23:32:18 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ t_token *tokenizer(char *str)
 {
 	t_token	*head;
 	char	*token;
-	int		stat;
 
-	stat = 0;
 	head = NULL;
 	while (*str)
 	{	
