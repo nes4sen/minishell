@@ -17,6 +17,7 @@ int main(int ac, char **av, char **envp)
 {
 	t_cmd	*cmd;
 	t_env	*env;
+	int		status = 0;
 	char	*line;
 
 	(void)ac;
@@ -25,15 +26,24 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		line = readline("minishell $> ");
+		if (!line) // Ctrl+D (EOF)
+		{
+			printf("exit\n");
+			break;
+		}
 		if (line && *line)
 			add_history(line);
 		cmd = parsing(line, env); //parsing function
 		if (!cmd)
 		{
-			//free all
-			exit(1);
+			free(line);
+			continue; // Continuer au lieu d'exit
 		} 
+		status = execute_command(cmd, &env, status); // Corriger signature et récupérer status
 		free(line);
+		// TODO: free cmd structure
 		// rl_clear_history();
 	}
+	// TODO: free env structure
+	return (status);
 }

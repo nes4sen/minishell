@@ -12,12 +12,6 @@
 
 #include "minishell.h"
 
-typedef struct s_mmtrack
-{
-    void *ptr;
-    struct s_mmtracker *next;
-} t_mmtrack;
-
 t_mmtrack *create_mm_node(void *ptr)
 {
     t_mmtrack *new_node;
@@ -37,7 +31,6 @@ t_mmtrack *create_mm_node(void *ptr)
 void *mm_alloc(size_t size, t_mmtrack **mm_head)
 {
     void *ptr;
-    t_mmtrack *new_node;
     t_mmtrack *tmp;
 
     ptr = malloc(size);

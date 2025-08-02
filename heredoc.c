@@ -16,17 +16,14 @@
 
 void build_heredoc(t_token *token)
 {
-	int	rfd;
-	int wfd;
+	(void)token; // Supprimer warning unused parameter
 
 	while (token)
 	{
 		if (token->type == HEREDOC)
 		{
-				
+			// TODO: implémenter heredoc		
 		}
 		token = token->next;
 	}
 }
-
-hello << f
