@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/31 11:38:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/03 11:48:19 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void print_rdr(t_rdr *rdr)
 void print_all_cmd(t_cmd *cmd)
 {
 	t_cmd *tmp;
-	
-
+	int len = 0;
 	tmp = cmd;
 	while (tmp)
 	{
@@ -48,7 +47,9 @@ void print_all_cmd(t_cmd *cmd)
 		printf("\nrediractions:\n");
 		print_rdr(tmp->rdr);
 		tmp = tmp->next;
+		len++;
 	}
+	printf("->>>%d\n",len);
 }
 
 void get_rdr(t_rdr **head, t_token *token, unsigned int type)
@@ -66,27 +67,28 @@ void get_rdr(t_rdr **head, t_token *token, unsigned int type)
 		add_back_rdr(head, file_name, type, -1);
 }
 
-t_cmd	*build_cmd_list(t_token *token)
+void build_cmd(t_shell *shell)
 {
 	t_rdr	*rdr;
-	t_cmd	*cmd;
-	char **args;
+	t_token	*token;	
+	char	**args;
+	int		arg_i;
 
-	cmd = NULL;
-	rdr = NULL;	
-	args = space_for_args(token);
+	rdr = NULL;
+	token = shell->tokens;
 	while (token)
 	{
+		args = space_for_args(token);
+		arg_i = 0;
 		while (token && token->type != 1)
 		{
 			get_rdr(&rdr, token, token->type);
-			get_args(&args, token);
+			get_args(args, token, &arg_i);
 			token = token->next;
 		}
-		add_back_cmd(&cmd, args, rdr);
+		add_back_cmd(&(shell->cmd), args, rdr);
 		if (token)
 			token = token->next;
 	}
-	print_all_cmd(cmd);
-	return (cmd);
+	print_all_cmd(shell->cmd);
 }

@@ -6,24 +6,25 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/31 12:36:52 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/03 12:06:08 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-
-void build_heredoc(t_token *token)
+void hanldle_heredoc(t_shell *shell)
 {
-	(void)token; // Supprimer warning unused parameter
+	t_token *token;
+	t_token *last_heredoc;
 
+	token = shell->tokens;
 	while (token)
 	{
 		if (token->type == HEREDOC)
-		{
-			// TODO: implémenter heredoc		
-		}
+			last_heredoc = token->type;
 		token = token->next;
 	}
+	
 }
+

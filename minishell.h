@@ -33,6 +33,7 @@ typedef enum e_type
 }t_type;
 
 
+
 typedef struct s_extoken
 {
 	char	*str;
@@ -88,7 +89,7 @@ typedef struct s_vars
 
 
 
-/*-----------mmtracker----------*/
+
 
 typedef struct s_mmtrack
 {
@@ -96,11 +97,24 @@ typedef struct s_mmtrack
 	struct s_mmtrack *next;
 } t_mmtrack;
 
+
+typedef struct s_shell
+{
+	char		*line;
+	t_token		*tokens;
+	t_env		*env;
+	t_cmd		*cmd;
+	t_mmtrack	*mmtrack;
+	int			exit_s;
+}t_shell;
+
+/*-----------mmtracker----------*/
 t_mmtrack *create_mm_node(void *ptr);
 void *mm_alloc(size_t size, t_mmtrack **mm_head);
 void mm_free(t_mmtrack **mm_head);
+
 /*-----------expand----------*/
-void	expand_env_vars(t_token *token, t_env *env);
+void	expand_env_vars(t_shell *shell);
 void	remove_quote(t_token *token);
 char 	*extract_var_name(char *str);
 char 	*find_env_var(t_env *env, char *var);
@@ -122,7 +136,7 @@ t_extoken *create_extoken_list(char *str, int stat);
 
 int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
-t_cmd	*parsing(char *line, t_env *env);
+void	parsing(t_shell *shell);
 // int		assigne_stat(char c);
 
 
@@ -179,7 +193,7 @@ void 	get_rdr(t_rdr **rdr, t_token *token, unsigned int type);
 
 
 /*_________|---command list---|________*/
-t_cmd 	*build_cmd_list(t_token *tokens);
+void	build_cmd(t_shell *shell);
 void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
 t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
 
@@ -187,7 +201,7 @@ t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
 char *alloc_word(char *str);
 int args_len(t_token *token);
 char **space_for_args(t_token *token);
-void get_args(char ***args, t_token *token);
+void	get_args(char **args, t_token *token, int *arg_i);
 
 
 /*__________is_functions________*/

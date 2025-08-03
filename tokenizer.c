@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/01 23:32:18 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/02 19:24:51 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-// int		*quote_stat()
-// {
-// 	static int quote = 0;
-// 	return (&quote);
-// }
-
 
 char	*get_token(char **str)
 {
@@ -56,7 +48,6 @@ char *get_token_symbole(char **str)
 	return (ft_substr(0, i, s));
 } 
 
-// echo hello >>>>>>>>> >>  kfkf kdkf
 t_token *tokenizer(char *str)
 {
 	t_token	*head;
@@ -76,26 +67,6 @@ t_token *tokenizer(char *str)
 		token_add_back(&head, token, 0);
 	}
 	get_type(head);
-	// /*----------------------------------------------------------------*/
-	// printf("\033[1m\n\n----TOKENIZER----\n\n\033[0m\n");
-	// t_token *tmp = head;
-	// while (tmp)
-	// {
-	// 	printf("token->str	:[%s]\ntype->type	:[%u]  \n",tmp->str, tmp->type);
-	// 	remove_quote(head);
-	// 	tmp = tmp->next;
-	// }
+
 	return (head);
 }
-// int main()
-// {
-// 	char str[] = " one  >\"$var\">>   <<  \" > three \"\' for \'";
-// 	t_token *token = tokenizer(str);
-// 	// t_token *tmp;
-	
-// 	while (token)
-// 	{
-// 		printf("[str -> %s			| type -> %d]\n", token->str, token->type);
-// 		token= token->next;
-// 	}
-// }

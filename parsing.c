@@ -6,20 +6,17 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/31 11:51:12 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/03 11:50:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmd *parsing(char *line, t_env *env)
+void parsing(t_shell *shell)
 {
-	t_token	*token;
-
-	token = tokenizer(line);
-	syntax_error(token);
-	expand_env_vars(token, env);
-	//herdoc
-	return (build_cmd_list(token));
+	shell->tokens = tokenizer(shell->line);
+	syntax_error(shell->tokens);
+	expand_env_vars(shell);
+	handle_heredoc(shell);
+	build_cmd(shell);
 }
-

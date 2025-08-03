@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/31 11:40:14 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/02 20:50:07 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,20 +114,22 @@ void print_subtoken(t_token *token)
 	}
 }
 
-void	prepare_for_expand(t_token *token,t_extoken **exhead, t_env *env)
+void	prepare_for_expand(t_shell *shell)
 {
+	t_extoken *exhead;
 	t_extoken *tmp;
 
-	build_exlist(exhead, token);
-	tmp = *exhead;
+	exhead = NULL;
+	build_exlist(&exhead, shell->tokens);
+	tmp = exhead;
 	while (tmp)
 	{
 		if (tmp->stat != SINGLE_QUOTE)
-			get_expand(tmp, env);
+			get_expand(tmp, shell->env);
 		tmp = tmp->next;
 	}
-	tmp = *exhead;
-	fill_subtoken(token, tmp);
+	tmp = exhead;
+	fill_subtoken(shell->tokens, tmp);
 }
 
 int is_quoted_str(char *str)
@@ -141,17 +143,18 @@ int is_quoted_str(char *str)
 	return (0);
 }
 
-void	expand_env_vars(t_token *token, t_env *env)
+void	expand_env_vars(t_shell *shell)
 {
-	t_extoken *exhead;
+	t_token *save_point;
 	
-	exhead = NULL;
-	while (token)
+	save_point = shell->tokens;
+	while (shell->tokens)
 	{
-		if (is_expandable(token->str)) 
-			prepare_for_expand(token, &exhead, env);
-		else if (is_quoted_str(token->str)) 
-			remove_quote(token);
-		token = token->next;
+		if (is_expandable(shell->tokens->str)) 
+			prepare_for_expand(shell);
+		else if (is_quoted_str(shell->tokens->str)) 
+			remove_quote(shell->tokens);
+		shell->tokens = shell->tokens->next;
 	}
+	shell->tokens = save_point;
 }
