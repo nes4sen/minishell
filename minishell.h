@@ -20,6 +20,9 @@
 #define SINGLE_QUOTE 1
 #define DOUBLE_QUOTE 2
 
+
+#define FREE_ALL 1
+#define FREE_ALL_EXCEPT_ENV 2
 typedef enum e_type
 {
 	CMD,
@@ -97,6 +100,11 @@ typedef struct s_mmtrack
 	struct s_mmtrack *next;
 } t_mmtrack;
 
+typedef struct s_mmenv
+{
+	void			*ptr;
+	struct s_mmev	*next;
+}t_mmenv;
 
 typedef struct s_shell
 {

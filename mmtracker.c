@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   mmtracker.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:37:39 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/01 23:15:56 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/04 21:41:22 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_mmtrack *create_mm_node(void *ptr)
+t_mmtrack *create_mm_node(void *ptr, t_mmtrack *head)
 {
     t_mmtrack *new_node;
 
     new_node = malloc(sizeof(t_mmtrack));
     if (!new_node)
     {
-        perror("Memory allocation failed");
+        mm_alloc(0, FREE_ALL);
         exit(EXIT_FAILURE);
     }
     new_node->ptr = ptr;
@@ -27,39 +27,52 @@ t_mmtrack *create_mm_node(void *ptr)
     return (new_node);
 }
 
-
-void *mm_alloc(size_t size, t_mmtrack **mm_head)
+void mm_alloc(size_t size, int free_flag)
 {
-    void *ptr;
-    t_mmtrack *tmp;
+	static t_mmtrack	*mm_head = NULL;
+	static t_mmtrack	*mm_tail = NULL;
+    void 				*ptr;
 
+	if (free_flag == FREE_ALL)
+	{
+		mm_free(mm_head);
+		allocat_env(1);
+	}
+	else if(free_flag == FREE_ALL_EXCEPT_ENV)
+		mm_free(mm_head);
     ptr = malloc(size);
     if (!ptr)
-    {
-        perror("Memory allocation failed");
-        // free all
-        exit(EXIT_FAILURE);
-    }
-    if (!*mm_head)
-    {
-        *mm_head = create_mm_node(ptr);
-    }
+		//free
+    if (!mm_head)
+        mm_head = create_mm_node(ptr, mm_head);
     else
-    {
-        tmp = *mm_head;
-        while (tmp->next)
-            tmp = tmp->next;
-        tmp->next = create_mm_node(ptr);
-    }
-    return (ptr);
+	{
+		mm_tail = mm_head->next;
+        mm_tail = create_mm_node(ptr, mm_head);
+	}
 }
 
-void mm_free(t_mmtrack **mm_head)
+void mm_free(t_mmtrack *mm_head)
 {
     t_mmtrack *tmp;
     t_mmtrack *next_node;
 
-    tmp = *mm_head;
+    tmp = mm_head;
+    while (tmp)
+    {
+        next_node = tmp->next;
+        free(tmp->ptr);
+        free(tmp);
+        tmp = next_node;
+    } 
+}
+
+void mm_free_env(t_mmenv *mm_head)
+{
+	t_mmenv		*tmp;
+    t_mmenv		*next_node;
+
+    tmp = mm_head;
     while (tmp)
     {
         next_node = tmp->next;
@@ -67,5 +80,41 @@ void mm_free(t_mmtrack **mm_head)
         free(tmp);
         tmp = next_node;
     }
-    *mm_head = NULL;   
 }
+
+t_mmtrack *create_mmenv_node(void *ptr, t_mmenv *head)
+{
+    t_mmenv *new_node;
+
+    new_node = malloc(sizeof(t_mmenv));
+    if (!new_node)
+    {
+        mm_alloc(0, FREE_ALL);
+        exit(EXIT_FAILURE);
+    }
+    new_node->ptr = ptr;
+    new_node->next = NULL;
+    return (new_node);
+}
+	
+void	allocat_env(size_t size, int free_flag)
+{
+	static t_mmenv	*head = NULL;
+	static t_mmenv	*tail = NULL;
+	void			*ptr;
+
+	if (free_flag)
+		mm_free_env(head);
+	ptr = malloc(size);
+	if (!ptr)
+	{
+		mm_alloc(0, FREE_ALL);
+        exit(EXIT_FAILURE);
+	}
+	if (!head)
+		head = create_mmenv_node()
+}
+/*
+
+
+*/
