@@ -6,11 +6,12 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:02:11 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/28 18:17:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:36:16 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 char *str_join(char *old, char *new)
 {
