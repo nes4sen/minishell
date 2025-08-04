@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/02 19:24:51 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:09:25 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ char *get_token_symbole(char **str)
 	return (ft_substr(0, i, s));
 } 
 
-t_token *tokenizer(char *str)
+void	tokenizer(t_shell *shell)
 {
-	t_token	*head;
 	char	*token;
-
-	head = NULL;
+	char 	*str;
+	
+	str = shell->line;
 	while (*str)
 	{	
 		while (white_space(*str))
@@ -61,12 +61,10 @@ t_token *tokenizer(char *str)
 		if (is_symbole(*str))
 			token = get_token_symbole(&str);
 		else if (!*str)
-			return (head);
+			break ;
 		else
 			token = get_token(&str);
-		token_add_back(&head, token, 0);
+		token_add_back(&shell->tokens, token, 0);
 	}
-	get_type(head);
-
-	return (head);
+	get_type(shell->tokens);
 }

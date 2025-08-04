@@ -136,7 +136,7 @@ t_extoken *create_extoken_list(char *str, int stat);
 
 int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
-void	parsing(t_shell *shell);
+void	parser(t_shell *shell);
 // int		assigne_stat(char c);
 
 
@@ -161,7 +161,7 @@ t_token	*creat_token(char *token, t_type type);
 
 
 /*_______|---tokenizer---|_________*/
-t_token *tokenizer(char *str);
+void	tokenizer(t_shell *shell);
 char	*get_token(char **str);
 void	get_type(t_token *tokens);
 void	get_next_type(t_token *tokens);

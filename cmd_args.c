@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:26:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/03 11:40:25 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:04:45 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char **space_for_args(t_token *token)
 	{
 		//free
 	}
-	while (i < len)
+	while (i <= len)
 	{
 		args[i] = NULL;
 		i++;

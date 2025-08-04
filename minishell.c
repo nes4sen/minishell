@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/02 16:02:12 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/04 19:09:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int main(int ac, char **av, char **envp)
 		}
 		if (shell.line && *shell.line)
 			add_history(shell.line);
-		parsing(&shell); //parsing function 
+		parser(&shell); //parsing function 
 		//  shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s); // Corriger signature et récupérer status
 		free(shell.line);
 	}
