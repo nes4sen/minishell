@@ -27,13 +27,14 @@ clean:
 	rm -f $(OBJ_FILES);
 fclean: clean
 	rm -f $(NAME);
+
 re: fclean all
 
 
 
 
 push:
-	git add . && git commit -m "scripted commit" && git push
+	git add . && git commit -m "$commit" && git push
 
 
 .PHONY: clean
