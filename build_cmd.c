@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/05 18:00:48 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:45:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,5 @@ void build_cmd(t_shell *shell)
 		if (token)
 			token = token->next;
 	}
-	print_all_cmd(shell->cmd);
+	// print_all_cmd(shell->cmd);
 }

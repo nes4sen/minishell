@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:37:39 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/05 19:25:01 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:43:51 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	free_env(void)
 		free(head);
 		head = tmp;	
 	}
+	track->env = NULL;
 }
 
 void free_others(void)
@@ -86,6 +87,8 @@ void free_others(void)
 		free(head);
 		head = pointer_inside;
 	}
+	track->head = NULL;
+	track->tail = NULL;
 }
 
 void	mm_free(int	which_free)
