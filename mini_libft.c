@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:20:46 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/04 19:41:37 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:28:29 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,7 @@ char *ft_substr(int start, int end, char *str)
 	int		i;
 
 	len = (end - start);
-	s = malloc(len + 1);
-	if (!s)
-		return NULL;
+	s = mm_alloc(len + 1);
 	i = 0;
 	while (start < end)
 	{

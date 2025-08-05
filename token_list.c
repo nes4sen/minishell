@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:43:28 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/05 12:01:21 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:26:43 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ t_token *create_token(char *token, t_type type)
 {
 	t_token *p;
 
-	p = malloc(sizeof(t_token));
-	if (!p)
-	{
-	 //free
-	}
+	p = mm_alloc(sizeof(t_token));
 	p->str = token;
 	p->type = type;
 	p->subtoken = NULL; // if the token have no quotes nor variables in it 

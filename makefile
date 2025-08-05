@@ -8,7 +8,7 @@ CFILES= build_cmd.c env.c  is_functions.c \
 		extokenizer.c  build_cmd_list.c\
 		rdrs_list.c parsing.c expand.c    \
 		syntax.c tokenizer.c utils.c      \
-		mini_libft.c cmd_args.c \
+		mini_libft.c cmd_args.c mmtracker.c\
 
 OBJ_FILES = $(CFILES:.c=.o)
 

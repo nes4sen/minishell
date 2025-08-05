@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:26:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/04 19:04:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:27:53 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ char *alloc_word(char *str)
 {
 	char *arg;
 
-	arg = malloc(sizeof(str) + 1);
-	if (!arg)
-	{
-	//free
-	}
+	arg = mm_alloc(sizeof(str) + 1);
 	ft_strcpy(arg, str);
 	return (arg);
 }
@@ -59,11 +55,7 @@ char **space_for_args(t_token *token)
 	if (len == 0)
 		return (NULL);
 	i = 0;
-	args = malloc(sizeof(char *) * (len + 1));
-	if (!args)
-	{
-		//free
-	}
+	args = mm_alloc(sizeof(char *) * (len + 1));
 	while (i <= len)
 	{
 		args[i] = NULL;

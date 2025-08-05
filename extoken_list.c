@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 11:45:03 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/30 11:13:51 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:28:56 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_extoken *create_extoken_list(char *str, int stat)
 {
 	t_extoken *token;
 	
-	token = malloc(sizeof(t_extoken));
+	token = mm_alloc(sizeof(t_extoken));
 	if (!token)
 	{
 		//free

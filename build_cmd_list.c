@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:25:31 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/02 13:01:40 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:27:00 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,9 @@ t_cmd *create_node_cmd(char **cmd, t_rdr *rdr)
 {
 	t_cmd *ptr;
 	
-	ptr = malloc(sizeof(t_cmd));
-	if (!ptr)
-	{
-		//free
-	}
+	ptr = mm_alloc(sizeof(t_cmd));
 	ptr->arg = cmd;
 	ptr->rdr = rdr;
-	
 	ptr->next = NULL;
 	return (ptr);
 }

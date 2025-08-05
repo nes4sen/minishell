@@ -6,11 +6,12 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:37:39 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/05 14:17:25 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:25:01 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 t_mmtrack *create_mm_node(void *ptr)
 {
@@ -27,23 +28,66 @@ t_mmtrack *create_mm_node(void *ptr)
     return (new_node);
 }
 
-void	mm_alloc(size_t size)
+void	*mm_alloc(size_t size)
 {
-	t_mmtrack		*head;
-	t_mmtrack		*tail;
-	t_adress_track	*tracker;
+	t_address_track	*tracker;
+	void			*ptr;
 	
-	tracker = adress_tracker();
-	head = tracker->head;
-	tail = tracker->tail;
-	if (!head)
-		head = create_mm_node(size);
+	tracker = address_tracker();
+	ptr = malloc(size);
+	if (!ptr)
+	{
+		//free all
+	}
+	if (!tracker->head)
+	{
+		tracker->head = create_mm_node(ptr);
+		tracker->tail = tracker->head;
+	}
 	else
 	{
-		tail = head->next;
-		tail = create_mm_node(size);
+		tracker->tail->next = create_mm_node(ptr);
+		tracker->tail = tracker->tail->next;
+	}
+	return (ptr);
+}
+
+
+void	free_env(void)
+{
+	t_address_track *track;
+	t_env			*head;
+	t_env			*tmp;
+
+	track = address_tracker();
+	head = track->env;
+	while (head)
+	{
+		tmp = head->next;	
+		free(head->value);
+		free(head->name);
+		free(head);
+		head = tmp;	
 	}
 }
+
+void free_others(void)
+{
+	t_address_track	*track;
+	t_mmtrack		*head;
+	void			*pointer_inside;
+
+	track = address_tracker();
+	head = track->head;
+	while (head)
+	{
+		pointer_inside = head->next;
+		free(head->ptr);
+		free(head);
+		head = pointer_inside;
+	}
+}
+
 void	mm_free(int	which_free)
 {
 	if (which_free == FREE_ALL)
@@ -58,47 +102,3 @@ void	mm_free(int	which_free)
 		//free fd
 	}
 }
-
-void	free_env()
-{
-	t_adress_track *track;
-	t_env			*head;
-	t_env			*tmp;
-
-	track = adress_tracker();
-	while (head)
-	{
-		tmp = head->next;	
-		free(head->value);
-		free(head->name);
-		free(head);
-		head = tmp;	
-	}
-}
-
-void free_others()
-{
-	t_adress_track	*track;
-	t_mmtrack		*head;
-	void			*pointer_inside;
-
-	
-	while (head)
-	{
-		pointer_inside = head->next;
-		free(head->ptr);
-		free(head);
-		head = pointer_inside;
-	}
-
-}
-
-/*
-
-char **ptr1 = mm_alloc(size);
-int *ptr2 = mm_alloc(size);
-char *ptr3 = mm_alloc(size);
-
-garbage_collector --> [ptr1]--[ptr2]--[ptr3]
-
-*/

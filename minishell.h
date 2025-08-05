@@ -1,7 +1,6 @@
-
-
 #ifndef MINISHELL_H
 #define MINISHELL_H
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,8 +33,6 @@ typedef enum e_type
 	file,
 	DLMTR
 }t_type;
-
-
 
 typedef struct s_extoken
 {
@@ -76,12 +73,6 @@ typedef struct s_env
 	struct s_env	*next;
 }t_env;
 
-// typedef struct s_trash
-// {
-// 	void *ptr;
-// 	struct s_trash *next;
-// }t_trash;
-
 typedef struct s_vars
 {
 	char	*value;
@@ -89,10 +80,6 @@ typedef struct s_vars
 	int		end;
 	struct s_vars *next;
 }t_vars;
-
-
-
-
 
 typedef struct s_mmtrack
 {
@@ -116,21 +103,24 @@ typedef struct s_shell
 	int			exit_s;
 }t_shell;
 
-typedef struct s_adress_track
+typedef struct s_address_track
 {
 	t_mmtrack	*head; // the head of alloc_tracker
 	t_mmtrack	*tail;  
 	t_env		*env; //the heaad of env
 	int			fd;
 	
-}t_adress_track;
+}t_address_track;
 
-t_adress_track *adress_tracker(void);
+
+t_address_track *address_tracker(void);
 
 /*-----------mmtracker----------*/
 t_mmtrack *create_mm_node(void *ptr);
-void *mm_alloc(size_t size, t_mmtrack **mm_head);
-void mm_free(t_mmtrack **mm_head);
+void *mm_alloc(size_t size);
+void	mm_free(int	which_free);
+void 	free_others(void);
+void	free_env(void);
 
 /*-----------expand----------*/
 void	expand_env_vars(t_shell *shell);

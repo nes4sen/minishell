@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:16:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/28 18:05:31 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:28:10 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	remove_quote(t_token *token)
 	int		quote;
 	
 	s = token->str;
-	tmp = malloc(str_no_quote_len(s) + 1);
+	tmp = mm_alloc(str_no_quote_len(s) + 1);
 	i = 0;
 	quote = 0;
 	while(*s)

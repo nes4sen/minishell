@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:18:47 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/23 13:24:22 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 19:29:41 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ t_rdr *create_node_rdr(char *str, int type, int fd)
 	t_rdr *ptr;
 	char	*file;
 	
-	ptr = malloc(sizeof(t_rdr));
+	ptr = mm_alloc(sizeof(t_rdr));
 	if (!ptr)
 	{
 		//free
 	}
-	file = malloc(ft_strlen(str) + 1);
+	file = mm_alloc(ft_strlen(str) + 1);
 	if (!file)
 	{
 		//free;

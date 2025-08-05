@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/03 11:48:19 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 18:00:48 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void print_rdr(t_rdr *rdr)
 		tmp = tmp->next;
 	}
 }
+
 void print_all_cmd(t_cmd *cmd)
 {
 	t_cmd *tmp;
