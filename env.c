@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:54:23 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/11 11:07:15 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 12:28:28 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ t_env *get_env(char **envp)
 		add_back_env(&head,name, value, i);
 		i++;
 	}
+	
 	return head;
 }
 

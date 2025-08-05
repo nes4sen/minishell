@@ -96,8 +96,8 @@ typedef struct s_vars
 
 typedef struct s_mmtrack
 {
-	void *ptr;
-	struct s_mmtrack *next;
+	void				*ptr;
+	struct s_mmtrack	*next;
 } t_mmtrack;
 
 typedef struct s_mmenv
@@ -115,6 +115,17 @@ typedef struct s_shell
 	t_mmtrack	*mmtrack;
 	int			exit_s;
 }t_shell;
+
+typedef struct s_adress_track
+{
+	t_mmtrack	*head; // the head of alloc_tracker
+	t_mmtrack	*tail;  
+	t_env		*env; //the heaad of env
+	int			fd;
+	
+}t_adress_track;
+
+t_adress_track *adress_tracker(void);
 
 /*-----------mmtracker----------*/
 t_mmtrack *create_mm_node(void *ptr);
@@ -165,7 +176,7 @@ int		idx_nod(t_env *env);
 
 /*-------|>---token list---<|--------*/
 void 	token_add_back(t_token **head, char *token, t_type type);
-t_token	*creat_token(char *token, t_type type);
+t_token	*create_token(char *token, t_type type);
 
 
 /*_______|---tokenizer---|_________*/

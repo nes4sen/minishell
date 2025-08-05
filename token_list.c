@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:43:28 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/29 11:23:22 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/05 12:01:21 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "minishell.h"
 
 
-t_token *creat_token(char *token, t_type type)
+t_token *create_token(char *token, t_type type)
 {
 	t_token *p;
 
@@ -36,13 +36,11 @@ void token_add_back(t_token **head, char *token, t_type type)
 
 	ptr = *head;
 	if (!*head)
-	{
-		*head = creat_token(token, type);
-	}
+		*head = create_token(token, type);
 	else
 	{
 		while (ptr->next)
 			ptr = ptr->next;
-		ptr->next = creat_token(token, type);
+		ptr->next = create_token(token, type);
 	}
 }
