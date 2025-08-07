@@ -1,6 +1,9 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+      
+       
+       
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +14,8 @@
 #include <signal.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -116,15 +121,15 @@ typedef struct s_address_track
 t_address_track *address_tracker(void);
 
 /*-----------mmtracker----------*/
-t_mmtrack *create_mm_node(void *ptr);
-void *mm_alloc(size_t size);
-void	mm_free(int	which_free);
-void 	free_others(void);
-void	free_env(void);
+t_mmtrack	*create_mm_node(void *ptr);
+void 		*mm_alloc(size_t size);
+void		mm_free(int	which_free);
+void 		free_others(void);
+void		free_env(void);
 
 /*-----------expand----------*/
 void	expand_env_vars(t_shell *shell);
-void	remove_quote(t_token *token);
+char	*remove_quote(char *str);
 char 	*extract_var_name(char *str);
 char 	*find_env_var(t_env *env, char *var);
 int 	is_expandable(char *str);
@@ -207,9 +212,9 @@ void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
 t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
 
 /*------------cmd_args---------------*/
-char *alloc_word(char *str);
-int args_len(t_token *token);
-char **space_for_args(t_token *token);
+char	*alloc_word(char *str);
+int		args_len(t_token *token);
+char	**space_for_args(t_token *token);
 void	get_args(char **args, t_token *token, int *arg_i);
 
 
@@ -219,6 +224,8 @@ int	is_symbole(char c);
 int	is_seperator(char c);
 int	is_oprt(char *op);
 int	is_quote(char c);
+int is_quoted_str(char *str);
+
 
 /*__________builtins________*/
 // cd 

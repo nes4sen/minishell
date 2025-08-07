@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/05 19:45:49 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/08 00:26:54 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void build_cmd(t_shell *shell)
 	char	**args;
 	int		arg_i;
 
+
 	rdr = NULL;
 	token = shell->tokens;
 	while (token)
@@ -87,9 +88,9 @@ void build_cmd(t_shell *shell)
 			get_args(args, token, &arg_i);
 			token = token->next;
 		}
-		add_back_cmd(&(shell->cmd), args, rdr);
+		add_back_cmd(&(shell->cmd), args, rdr); // check if i should pass * or **
 		if (token)
 			token = token->next;
 	}
-	// print_all_cmd(shell->cmd);
+	print_all_cmd(shell->cmd);
 }

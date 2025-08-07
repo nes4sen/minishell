@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/02 20:50:07 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/08 00:26:08 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	expand_env_vars(t_shell *shell)
 		if (is_expandable(shell->tokens->str)) 
 			prepare_for_expand(shell);
 		else if (is_quoted_str(shell->tokens->str)) 
-			remove_quote(shell->tokens);
+			shell->tokens->str = remove_quote(shell->tokens->str);
 		shell->tokens = shell->tokens->next;
 	}
 	shell->tokens = save_point;
