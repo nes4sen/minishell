@@ -114,7 +114,6 @@ typedef struct s_address_track
 	t_mmtrack	*tail;  
 	t_env		*env; //the heaad of env
 	int			fd;
-	
 }t_address_track;
 
 
