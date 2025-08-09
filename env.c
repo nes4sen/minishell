@@ -45,26 +45,40 @@ t_env	*creat_node_env(char *name, char *value, int i)
 	t_env  *env;
 	
 	// if name or value is null
-	 
-	env = malloc(sizeof(t_env));
+	if(!name)
+		return(NULL);
+
+	env = mm_alloc(sizeof(t_env));
 	if (!env)
-	{
-		//free
-	}
+		return(NULL);
+
+	// Initialiser tous les champs
+    env->next = NULL;
+    env->name = NULL;
+    env->value = NULL;
+    env->index = i;
+	
 	env->next = NULL;
-	env->name = malloc(ft_strlen(name) + 1);
+
+	env->name = mm_alloc(ft_strlen(name) + 1);
 	if (!env->name)
 	{
-		//free
+		// free(env);
+		// return(NULL);
 	}
 	ft_strcpy(env->name, name);
-	env->value = malloc(ft_strlen(value) + 1);
-	if (!env->value)
+	if(value == NULL)
+		env->value = NULL;
+	else
 	{
-		//free
+		env->value = mm_alloc(ft_strlen(value) + 1);
+		if (!env->value)
+		{
+			// free(env->name);
+			// free(env);
+		}
+		ft_strcpy(env->value, value);
 	}
-	ft_strcpy(env->value, value);
-	env->index = i;
 	return (env);
 }
 

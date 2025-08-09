@@ -45,7 +45,7 @@ char	*alloc_words(char const *s, char c)
 		s++;
 	while (s[len] != c && s[len])
 		len++;
-	p = malloc((len + 1) * sizeof(char));
+	p = mm_alloc((len + 1) * sizeof(char));
 	len = 0;
 	while (s[len] && s[len] != c)
 	{
@@ -78,7 +78,7 @@ char	**ft_split(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	p = (char **)malloc((word_count(s, c) + 1) * sizeof(char *));
+	p = (char **)mm_alloc((word_count(s, c) + 1) * sizeof(char *));
 	if (!p)
 		return (NULL);
 	i = 0;

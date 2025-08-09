@@ -92,5 +92,5 @@ void build_cmd(t_shell *shell)
 		if (token)
 			token = token->next;
 	}
-	print_all_cmd(shell->cmd);
+	// print_all_cmd(shell->cmd);
 }

@@ -4,6 +4,7 @@ int     fonc_export(char **arg,  t_env **env)
 {
     int     i;
     int     status;
+    int     final_status;
 
     if(!arg)
         return(-1);
@@ -13,15 +14,20 @@ int     fonc_export(char **arg,  t_env **env)
         return(0);
     }
     i = 1;
+    final_status = 0;
     while (arg[i])
     {   
-        if(has_equal_sign(arg[i])) // si on '=' (var=value)
+        if(has_equal_sign(arg[i]))
+        {
             status = var_with_equal(arg, i, env);
+        }
         else
-            var_no_value(arg, i, env);
+            status = var_no_value(arg, i, env);
+        if(status != 0)
+            final_status = status;
         i++;
     }
-    return(status);
+    return(final_status);
 }
 
 char    *get_var_name(char *str)
@@ -65,23 +71,23 @@ char    *get_var_value(char *str)
 int     mak_as_export(t_env **env, char *str)
 {
     char    *name;
-    char    *value;
+    // char    *value;
 
     name = get_var_name(str);
     if (!name)
         return (-1);
-    value = get_var_value(str);
-    if (!value)
-    {
-        free(name);
-        return (-1);
-    }
+    // value = get_var_value(str);
+    // if (!value)
+    // {
+    //     free(name);
+    //     return (-1);
+    // }
     if (check_var_exist_env(*env, name) == -1)
-        add_back_env(env, name, value, (idx_nod(*env) + 1));
+        add_back_env(env, name, NULL, (idx_nod(*env) + 1));
     else
-        updat_env(*env, name, value);
+        updat_env(env, name, NULL);
     free(name);
-    free(value);
+    // free(value);
     return (0);
 }
 
@@ -124,20 +130,26 @@ int     has_equal_sign(char *str)
     return(0);
 }
 
-void    updat_env(t_env *env, char *name, char *value)
+void    updat_env(t_env **env, char *name, char *value)
 {
-    if (!env || !name || !value)
+    t_env *current;
+    
+    if (!env || !name)
         return;
-    if(value[0] != '"') // si pas de guillemets
-        add_double_quotes(value, name, env);
-    else
+        
+    current = *env;
+    while (current)
     {
-        while (env)
+        if(ft_strcmp(name, current->name) == 0)
         {
-            if(ft_strcmp(name, env->name) == 0)
-                free(env->value), env->value = value;
-            env = env->next;
+            // free(current->value);
+            if (value)
+                current->value = ft_strdup(value); // Allouer nouvelle mémoire
+            else
+                current->value = NULL; // Pour les variables sans valeur
+            return; // Sortir après avoir trouvé et mis à jour
         }
+        current = current->next;
     }
 }
 
@@ -148,21 +160,21 @@ void    add_double_quotes(char *value, char *name, t_env *env)
     
     if (!value || !name || !env)
         return;
-    new_str = malloc(ft_strlen(value) + 3);
+    new_str = mm_alloc(ft_strlen(value) + 1);
     if (!new_str)
         return;
-    new_str[0] = '"';
+    // new_str[0] = '"';
     (1) &&(i = 1, j = 0);
     while (value[j])
         new_str[i++] = value[j++];
-    new_str[i++] = '"';
+    // new_str[i++] = '"';
     new_str[i] = '\0';
     while (env)
     {
         if (ft_strcmp(name, env->name) == 0)
         {
-            free(env->value);
-            env->value = new_str;
+            // free(env->value);
+            // env->value = new_str;
             return;
         }
         env = env->next;
@@ -174,7 +186,17 @@ void    print_env(t_env *env)
 {
     while (env)
     {
-        printf("%s\n", env->name);
-        env = env->next;
+        if(ft_strcmp("_", env->name) == 0)
+            env = env->next;
+        else if(env->value == NULL)
+        {
+            printf("declare -x %s\n", env->name);
+            env = env->next;
+        }
+        else
+        {
+            printf("declare -x %s=\"%s\"\n", env->name, env->value);
+            env = env->next;
+        }
     }
 }

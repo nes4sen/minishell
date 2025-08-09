@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-int     echo_fonc(char **arg)
+int     echo_fonc(char **arg, int status)
 {
     int i = 1;
     int flag_newline = 1;
@@ -9,6 +9,8 @@ int     echo_fonc(char **arg)
         return(-1);
     // vérifier s'il y a flag -n ou plusieurs -nn ou -n -n
     i = echo_check_n(arg, &flag_newline, i);
+    if(ft_strcmp(arg[i], "$?") == 0)
+        printf("%d\n", status);
     while (arg[i])
     {
         printf("%s", arg[i]);

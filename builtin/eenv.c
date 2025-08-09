@@ -1,6 +1,5 @@
 #include "../minishell.h"
 
-int     help_env_fonc(t_env *env);
 
 int     env_fonc(char **arg, t_env *env)
 {
@@ -24,21 +23,21 @@ int     help_env_fonc(t_env *env)
 
     while (env != NULL)
     {   
-        temp = ft_strjoin(env->name, "=");
-        if(!temp)
-            return (-1);
-        if(env->value)
+        if(env->value == NULL)
+            env = env->next;
+        else
         {
+            temp = ft_strjoin(env->name, "=");
+            if(!temp)
+                return (-1);
             name_value = ft_strjoin(temp, env->value);
-            free(temp);
+            // free(temp);
             if(!name_value)
                 return (-1);
+            printf("%s\n", name_value);
+            // free(name_value);
+            env = env->next;
         }
-        else
-            name_value = temp;
-        printf("%s\n", name_value);
-        free(name_value);
-        env = env->next;
     }
     return 0; 
 }

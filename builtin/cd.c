@@ -19,9 +19,9 @@ int     fonc_cd(char **arg, t_env *env)
     else
     {
         printf("cd: too many arguments\n");
-        return(free(pwd_now), -1);
+        return(/*free(pwd_now),*/ -1);
     }
-    free(pwd_now);
+    // free(pwd_now);
     return(status);
 }
 
@@ -33,7 +33,7 @@ void    update_env(t_env **env, const char *name, const char *value)
     {
         if (ft_strcmp(current->name, (char*)name) == 0)
         {
-            free(current->value);
+            // free(current->value);
             current->value = ft_strdup(value);
             return;
         }

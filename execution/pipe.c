@@ -29,115 +29,175 @@ int     count_nuber_cmd(t_cmd *cmd)
     return(count);
 }
 
-
-int     execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
+int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
 {
     int     nbr_pipe;
     int     i = 0;
-    char    *path;
+    char    *path = NULL;
     int     (*pipes)[2];
+    pid_t   *pids;
     pid_t   id;
 
     if(!cmd)
         return(-1);
+    
     nbr_pipe = count_nuber_cmd(cmd) - 1;
+    if (nbr_pipe <= 0)
+        return execute_simple_command(cmd, env, status);
 
-    pipes = malloc(sizeof(int[2]) * nbr_pipe);
-    if(!pipes)
+    // Allouer mémoire pour pipes et PIDs
+    pipes = mm_alloc(sizeof(int[2]) * nbr_pipe);
+    pids = mm_alloc(sizeof(pid_t) * (nbr_pipe + 1));
+    if(!pipes || !pids)
         return(-1);
-    // premierment je vais creer les pipes pour avoir les fil_descrepter
+
+    // Créer tous les pipes
+    i = 0;
     while(i < nbr_pipe)
     {
         if(pipe(pipes[i]) == -1)
-            return (perror("pipe"), free(pipes), 1);
+        {
+            perror("pipe");
+            // free(pipes);
+            // free(pids);
+            return(-1);
+        }
         i++;
     }
-    // on vas creer  chaque proces avec fork()
+
+    // Créer tous les processus
     i = 0;
-    while(i <= nbr_pipe && cmd)
+    t_cmd *current = cmd;
+    while(current && i <= nbr_pipe)
     {
         id = fork();
         if(id == -1)
-            return (perror("fork"), free(pipes), -1);
-        if(id == 0)
+        {
+            perror("fork");
+            // free(pipes);
+            // free(pids);
+            return(-1);
+        }
+        
+        if(id == 0) // Processus enfant
         {
             signal(SIGINT, SIG_DFL);
             signal(SIGQUIT, SIG_DFL);
-            if(i == 0)
+            
+            // Configuration des pipes selon la position
+            if(i == 0) // Premier processus
             {
-                dup2(pipes[i][1], STDOUT_FILENO);
-                close(pipes[i][0]);
-                close_other_fil(pipes, nbr_pipe, pipes[i][1], -1);
-            }
-            else if(i > 0 && i < nbr_pipe)
-            {
-                dup2(pipes[i - 1][0], STDIN_FILENO);
-                dup2(pipes[i][1], STDOUT_FILENO);
-                close(pipes[i - 1][1]);
-                close(pipes[i][0]);
-                close_other_fil(pipes, nbr_pipe, pipes[i - 1][0], pipes[i][1]);
-            }
-            else
-            {
-                dup2(pipes[i - 1][0], 0);
-                close(pipes[i - 1][1]);
-                close_other_fil(pipes, nbr_pipe, pipes[i - 1][0], -1);
-            }
-            // gerrer les redirection
-            if(cmd->rdr)
-            {
-                t_rdr *red = cmd->rdr;
-                while(red)
+                if(nbr_pipe > 0)
                 {
-                    if(open_check_file(red) == -1)
-                        return (free(pipes), -1);
-                    red = red->next;
+                    dup2(pipes[0][1], STDOUT_FILENO);
                 }
             }
-            // on vas executer la commande
-            if(is_builin_command(cmd->arg[0]))
+            else if(i == nbr_pipe) // Dernier processus
             {
-                free(pipes);
-                return execute_builtin(cmd, env, status);
+                dup2(pipes[i-1][0], STDIN_FILENO);
+            }
+            else // Processus du milieu
+            {
+                dup2(pipes[i-1][0], STDIN_FILENO);
+                dup2(pipes[i][1], STDOUT_FILENO);
+            }
+            
+            // Fermer TOUS les descripteurs de pipes dans l'enfant
+            int j = 0;
+            while(j < nbr_pipe)
+            {
+                close(pipes[j][0]);
+                close(pipes[j][1]);
+                j++;
+            }
+            
+            // Gérer les redirections
+            if(current->rdr)
+            {
+                // t_rdr *red = current->rdr;
+                execute_with_redirection(cmd, env, status);
+                // while(red)
+                // {
+                //     if(open_check_file(red) == -1)
+                //     {
+                //         free(pipes);
+                //         free(pids);
+                //         exit(1);
+                //     }
+                //     red = red->next;
+                // }
+            }
+            
+            // Exécuter la commande
+            if(is_builin_command(current->arg[0]))
+            {
+                int builtin_status = execute_builtin(current, env, status);
+                // free(pipes);
+                // free(pids);
+                exit(builtin_status);
             }
             else
             {
-                char **env_array;
-                path = get_path_cmd(cmd->arg[0], env);
+                path = get_path_cmd(current->arg[0], env);
                 if(!path)
                 {
-                    fprintf(stderr, "Command not found: %s\n", cmd->arg[0]);
-                    free(pipes);
-                    exit(1);
+                    fprintf(stderr, "Command not found: %s\n", current->arg[0]);
+                    // free(pipes);
+                    // free(pids);
+                    exit(127);
                 }
-                env_array = env_to_char_array(*env);
-                if(execve(path, cmd->arg, env_array) == -1)
-                    perror("execve"), free(path), free_env_array(env_array), free(pipes), exit(1);
+                
+                char **env_array = env_to_char_array(*env);
+                execve(path, current->arg, env_array);
+                
+                // Si on arrive ici, execve a échoué
+                perror("execve");
+                // free(path);
+                // free_env_array(env_array);
+                // free(pipes);
+                // free(pids);
+                exit(1);
             }
         }
-        else if(id > 0) 
+        else // Processus parent
         {
-            if(i < nbr_pipe)
-            {
-                close(pipes[i][0]);
-                close(pipes[i][1]);
-            }
-            waitpid(id, &status, 0);
-            if(cmd->next == NULL)
-            {
-                if(WIFEXITED(status))
-                    status = WEXITSTATUS(status);
-                else
-                    status = 1; // erreur si le processus n'est pas terminé normalement
-            }
-            cmd = cmd->next;
+            pids[i] = id;
+            current = current->next;
             i++;
         }
     }
-    if(path)
-        free(path);
-    free(pipes);
-    return(status);
+    
+    // IMPORTANT: Fermer tous les pipes dans le parent
+    i = 0;
+    while(i < nbr_pipe)
+    {
+        close(pipes[i][0]);
+        close(pipes[i][1]);
+        i++;
+    }
+    
+    // Attendre tous les processus enfants
+    int final_status = 0;
+    i = 0;
+    while(i <= nbr_pipe)
+    {
+        int child_status;
+        waitpid(pids[i], &child_status, 0);
+        
+        // Le status de retour est celui du dernier processus
+        if(i == nbr_pipe)
+        {
+            if(WIFEXITED(child_status))
+                final_status = WEXITSTATUS(child_status);
+            else
+                final_status = 1;
+        }
+        i++;
+    }
+    
+    // free(pipes);
+    // free(pids);
+    return(final_status);
 }
 
 void    close_other_fil(int pipes[][2], int nbr_pipe, int fd1, int fd2)
@@ -191,15 +251,17 @@ char   *get_path_cmd(char *cmd, t_env **env)
     {
         full_path = ft_strjoin(arg[i], "/");
         full_path = ft_strjoin(full_path, cmd);
+        if(!full_path)
+            return(NULL);
         if(access(full_path, X_OK) == 0)
         {
-            f_free(arg);
+            // f_free(arg);
             return (full_path);
         }
-        free(full_path);
+        // free(full_path);
         i++;
     }
-    f_free(arg);
+    // f_free(arg);
     return (NULL);
 }
 

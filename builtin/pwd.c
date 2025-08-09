@@ -8,7 +8,7 @@ int		fonc_pwd(char **arg, t_env *env)
     }
 	if(arg[1])
 	{
-		printf("pwd: too many arguments");
+		printf("pwd: too many arguments\n");
 		return(1);
 	}
 	print_repert(env);

@@ -22,7 +22,7 @@ char	*ft_strjoin(char *dest, char *src)
 		return (NULL);
 	i = 0;
 	j = 0;
-	p = malloc(ft_strlen((char *)dest) + ft_strlen((char *)src) + 1);
+	p = mm_alloc(ft_strlen((char *)dest) + ft_strlen((char *)src) + 1);
 	if (!p)
 		return (NULL);
 	while (dest[i] != '\0')
@@ -74,7 +74,7 @@ char	*ft_strdup(const char *s1)
 
 	if (!s1)
 		return (NULL);
-	str = malloc(ft_strlen((char *)s1) + 1);
+	str = mm_alloc(ft_strlen((char *)s1) + 1);
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -148,7 +148,7 @@ char **env_to_char_array(t_env *env)
     }
     
     // Allouer le tableau
-    env_array = malloc(sizeof(char *) * (count + 1));
+    env_array = mm_alloc(sizeof(char *) * (count + 1));
     if (!env_array)
         return NULL;
     
@@ -161,7 +161,7 @@ char **env_to_char_array(t_env *env)
         env_array[i] = malloc(len);
         if (!env_array[i])
         {
-            free_env_array(env_array);
+            // free_env_array(env_array);
             return NULL;
         }
         
@@ -207,4 +207,17 @@ char *ft_strcat(char *dest, const char *src)
     }
     dest[i + j] = '\0';
     return dest;
+}
+
+int		idx_nod(t_env *env)
+{
+    int i;
+
+    i = 0;
+    while (env)
+    {
+        env->index = i++;
+        env = env->next;
+    }
+    return(i);
 }

@@ -55,8 +55,8 @@ int main(int ac, char **av, char **envp)
 		if (shell.line && *shell.line)
 			add_history(shell.line);
 		parser(&shell); //parsing function 
+		shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s); // Corriger signature et récupérer status
 		init_structs_after_free(&shell);
-		//  shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s); // Corriger signature et récupérer status
 		mm_free(FREE_ALL_EXCEPT_ENV);
 	}
 	return (shell.exit_s);
