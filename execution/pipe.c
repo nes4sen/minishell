@@ -46,8 +46,8 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
         return execute_simple_command(cmd, env, status);
 
     // Allouer mémoire pour pipes et PIDs
-    pipes = mm_alloc(sizeof(int[2]) * nbr_pipe);
-    pids = mm_alloc(sizeof(pid_t) * (nbr_pipe + 1));
+    pipes = malloc(sizeof(int[2]) * nbr_pipe);
+    pids = malloc(sizeof(pid_t) * (nbr_pipe + 1));
     if(!pipes || !pids)
         return(-1);
 
@@ -58,8 +58,8 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
         if(pipe(pipes[i]) == -1)
         {
             perror("pipe");
-            // free(pipes);
-            // free(pids);
+            free(pipes);
+            free(pids);
             return(-1);
         }
         i++;
@@ -74,8 +74,8 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
         if(id == -1)
         {
             perror("fork");
-            // free(pipes);
-            // free(pids);
+            free(pipes);
+            free(pids);
             return(-1);
         }
         
@@ -132,8 +132,8 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             if(is_builin_command(current->arg[0]))
             {
                 int builtin_status = execute_builtin(current, env, status);
-                // free(pipes);
-                // free(pids);
+                free(pipes);
+                free(pids);
                 exit(builtin_status);
             }
             else
@@ -142,8 +142,8 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
                 if(!path)
                 {
                     fprintf(stderr, "Command not found: %s\n", current->arg[0]);
-                    // free(pipes);
-                    // free(pids);
+                    free(pipes);
+                    free(pids);
                     exit(127);
                 }
                 
@@ -152,10 +152,10 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
                 
                 // Si on arrive ici, execve a échoué
                 perror("execve");
-                // free(path);
-                // free_env_array(env_array);
-                // free(pipes);
-                // free(pids);
+                free(path);
+                free_env_array(env_array);
+                free(pipes);
+                free(pids);
                 exit(1);
             }
         }
@@ -181,22 +181,38 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
     i = 0;
     while(i <= nbr_pipe)
     {
+        signal(SIGINT, SIG_IGN);
         int child_status;
         waitpid(pids[i], &child_status, 0);
         
         // Le status de retour est celui du dernier processus
-        if(i == nbr_pipe)
-        {
+        
             if(WIFEXITED(child_status))
                 final_status = WEXITSTATUS(child_status);
-            else
-                final_status = 1;
-        }
+            else 
+            {
+                if (WTERMSIG(child_status) == SIGINT)
+                { 
+                    write(2, "\n", 1);
+                    final_status = 130;
+                    setup_signals();
+                    return (final_status);
+
+                }
+                else if (WTERMSIG(child_status) == SIGQUIT)
+                {
+                    write(2, "Quit\n", 5);
+                    final_status = 131;   
+                    setup_signals();
+                    return (final_status);
+                }
+            }
         i++;
     }
     
     // free(pipes);
     // free(pids);
+    setup_signals();
     return(final_status);
 }
 

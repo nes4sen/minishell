@@ -49,7 +49,7 @@ int main(int ac, char **av, char **envp)
 		if (!shell.line) // Ctrl+D (EOF)
 		{
 			write(1, "exit\n", 5);
-			mm_free(FREE_ALL);
+			// mm_free(FREE_ALL);
 			exit(1);
 		}
 		if (shell.line && *shell.line)
@@ -57,7 +57,7 @@ int main(int ac, char **av, char **envp)
 		parser(&shell); //parsing function 
 		shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s); // Corriger signature et récupérer status
 		init_structs_after_free(&shell);
-		mm_free(FREE_ALL_EXCEPT_ENV);
+		// mm_free(FREE_ALL_EXCEPT_ENV);
 	}
 	return (shell.exit_s);
 }
