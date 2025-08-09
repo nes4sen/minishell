@@ -2,8 +2,6 @@
 #define MINISHELL_H
 
       
-       
-       
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -67,7 +65,6 @@ typedef struct s_rdr
 {
 	char			*file;
 	t_type			type;
-	int				fd; // only for heredoc
 	struct s_rdr	*next;
 }t_rdr;
 
@@ -75,6 +72,7 @@ typedef struct s_cmd
 {
 	char			**arg;
 	t_rdr			*rdr;
+	char			*heredox;
 	struct s_cmd	*next;
 } t_cmd;
 
@@ -86,13 +84,7 @@ typedef struct s_env
 	struct s_env	*next;
 }t_env;
 
-typedef struct s_vars
-{
-	char	*value;
-	int		start;
-	int		end;
-	struct s_vars *next;
-}t_vars;
+
 
 typedef struct s_mmtrack
 {
@@ -123,6 +115,13 @@ typedef struct s_address_track
 	t_env		*env; //the heaad of env
 	int			fd;
 }t_address_track;
+
+
+void	scan_for_heredoc(t_shell *shell);
+char	*prepare_to_heredoc(char *delemetre, t_shell *shell);
+void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell);
+void	expand_heredoc(char *line, t_env *env);
+char	*generate_filename(int len);
 
 
 t_address_track *address_tracker(void);
@@ -208,8 +207,8 @@ char	*ft_strcat(char *dest, const char *src);
 
 
 /*_________|---rdr list---|__________*/
-t_rdr	*create_node_rdr(char *file, int type, int fd);
-void	add_back_rdr(t_rdr **head, char *file, int type, int fd);
+t_rdr	*create_node_rdr(char *file, int type);
+void	add_back_rdr(t_rdr **head, char *file, int type);
 void 	get_rdr(t_rdr **rdr, t_token *token, unsigned int type);
 
 
@@ -296,7 +295,7 @@ char    **f_free(char **p);
 
 /*__________Redirection________*/
 int     execute_with_redirection(t_cmd *current, t_env **env, int status);
-int     open_check_file(t_rdr *red, t_fd_fils *fil);
+int     open_check_file(t_cmd *cmd, t_fd_fils *fil);
 
 /*__________execution________*/
 int     execute_command(t_cmd *cmd, t_env **env, int status);

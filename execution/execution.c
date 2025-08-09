@@ -21,10 +21,9 @@ int     execute_command(t_cmd *cmd, t_env **env, int status)
                 return(status); // <-- Ajoute ce break pour ne pas exécuter plusieurs fois la pipeline
             }
             // Gérer les redirections
-            else if(current->rdr && (current->rdr->type == RDRIN || 
+            else if((current->rdr && (current->rdr->type == RDRIN || 
                 current->rdr->type == RDROUT || 
-                current->rdr->type == APPND || 
-                current->rdr->type == HEREDOC))
+                current->rdr->type == APPND)) || cmd->heredox)
                 {
                     status = execute_with_redirection(current, env, status);
                 }
@@ -68,7 +67,7 @@ int     execute_with_redirection(t_cmd *current, t_env **env, int status)
     initial_fd_fils(&fils);
     while(red)
     {
-        if(open_check_file(red, &fils) ==  -1)
+        if(open_check_file(current, &fils) ==  -1)
         {
             return(-1);
         }
@@ -80,9 +79,9 @@ int     execute_with_redirection(t_cmd *current, t_env **env, int status)
 }
 
 
-int     open_check_file(t_rdr *red, t_fd_fils *fil)
+int     open_check_file(t_cmd *cmd, t_fd_fils *fil)
 {
-
+	t_rdr *red = cmd->rdr;
     if(red->type == RDRIN)
     {
         fil->outfil = open(red->file, O_RDONLY);
@@ -119,13 +118,18 @@ int     open_check_file(t_rdr *red, t_fd_fils *fil)
         dup2(fil->infil, 1);
         close(fil->infil);
     }
-    else if(red->type == HEREDOC)
+    else if(cmd->heredox)
     {
-        if(red->fd == -1)
-            return(-1);
-        fil->save_stdout = dup(0);
-        dup2(red->fd, 0);
-        close(red->fd);
+		int fd;
+		fd = open(cmd->heredox, O_RDONLY);
+		if(fd == -1)
+		{
+			perror("open");
+			return(-1);
+		}
+		fil->save_stdout = dup(0);
+		dup2(fd, 0);
+		close(fd);
     }
     else
         return(-1);

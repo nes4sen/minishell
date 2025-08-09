@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:54:23 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/05 12:28:28 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/09 18:47:48 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_env	*creat_node_env(char *name, char *value, int i)
 	if(!name)
 		return(NULL);
 
-	env = mm_alloc(sizeof(t_env));
+	env = malloc(sizeof(t_env));
 	if (!env)
 		return(NULL);
 
@@ -60,7 +60,7 @@ t_env	*creat_node_env(char *name, char *value, int i)
 	
 	env->next = NULL;
 
-	env->name = mm_alloc(ft_strlen(name) + 1);
+	env->name = malloc(ft_strlen(name) + 1);
 	if (!env->name)
 	{
 		// free(env);
@@ -71,7 +71,7 @@ t_env	*creat_node_env(char *name, char *value, int i)
 		env->value = NULL;
 	else
 	{
-		env->value = mm_alloc(ft_strlen(value) + 1);
+		env->value = malloc(ft_strlen(value) + 1);
 		if (!env->value)
 		{
 			// free(env->name);
