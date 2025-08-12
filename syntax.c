@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 22:40:38 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:50:40 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,22 @@ int	syntax_error(t_shell *shell)
 {
     t_token *tokens;
 
-    if (!shell || !shell->tokens) // Ensure shell and tokens are valid
+    if (!shell || !shell->tokens) 
         return (1);
     tokens = shell->tokens;
     if (tokens->type == PIPE)
         return (syntax_err_msg("|", shell));
     while (tokens)
     {
-        if (tokens->str && quote_err(tokens->str)) // Check tokens->str
+        if (tokens->str && quote_err(tokens->str)) 
             return (1);
-        if (tokens->str && symbol_err(tokens->str)) // Check tokens->str
+        if (tokens->str && symbol_err(tokens->str))
             return (1);
-        if (tokens->str && is_oprt(tokens->str)) // Check tokens->str
+        if (tokens->str && is_oprt(tokens->str)) 
         {
-            if (!tokens->next) // Ensure tokens->next is valid
+            if (!tokens->next) 
                 return (syntax_err_msg("newline", shell));
-            else if (tokens->next->str && is_oprt(tokens->next->str)) // Check tokens->next->str
+            else if (tokens->next->str && is_oprt(tokens->next->str))
                 return (syntax_err_msg(tokens->next->str, shell));
         }
         tokens = tokens->next;
