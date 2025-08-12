@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/08 00:26:08 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:30:50 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ void	get_substr(char **substr, t_token **subhead)
 {
 	token_add_back(subhead, *substr, 0);
 	*substr = "";
-	
 }
 
 void	fill_subtoken(t_token *token, t_extoken *extoken)

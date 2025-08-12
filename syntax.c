@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 14:29:31 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 19:26:52 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-int	syntax_err_msg(char	*err)
+int	syntax_err_msg(char	*err, t_shell *shell)
 {
 	if (!ft_strcmp(err, "operator"))
 		write(1, "minishell: syntax error, invalid operator\n", 42);
@@ -24,7 +24,8 @@ int	syntax_err_msg(char	*err)
 		write(1, err, ft_strlen(err));
 		write(1, "\n", 1);
 	}
-	return (2);
+	shell->exit_s = 2;
+	return (1);
 }
 int	quote_err(char *str)
 {
@@ -43,26 +44,27 @@ int	quote_err(char *str)
 		str++;
 	}
 	if (quote)
-		return (syntax_err_msg(&quote));
+		return (syntax_err_msg(&quote, NULL));
 	return (0);
 }
 
-/*this function check if the first char is a symbole but the token type is a cmd*/
 int	symbol_err(char *str)
 {
 	if (is_symbole(*str))
 	{
 		if (def_type(str) == 0)
-			return (syntax_err_msg("operator"));
+			return (syntax_err_msg("operator", NULL));
 	}
 	return (0);
 }
 
-
-int	syntax_error(t_token *tokens)
+int	syntax_error(t_shell *shell)
 {
+	t_token *tokens;
+
+	tokens = shell->tokens;
 	if (tokens && tokens->type == PIPE)
-		return (syntax_err_msg("|"));
+		return (syntax_err_msg("|", shell));
 	while (tokens)
 	{
 		if (quote_err(tokens->str))
@@ -72,10 +74,10 @@ int	syntax_error(t_token *tokens)
 		
 		if (is_oprt(tokens->str))
 		{
-				if ((tokens->next == NULL))
-					return (syntax_err_msg("newline"));
-				else if (is_oprt(tokens->next->str))
-					return (syntax_err_msg(tokens->next->str));
+			if ((tokens->next == NULL))
+				return (syntax_err_msg("newline", shell));
+			else if (is_oprt(tokens->next->str))
+				return (syntax_err_msg(tokens->next->str, shell));
 		}
 		tokens = tokens->next; 
 	}

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:16:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/08 00:25:42 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:31:59 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char *extract_var_name(char *str)
 	int	i;
 
 	i = 1;
+
 	if (!is_valid_env_var_name(str[i])
 		|| (str[i] >= '0' && str[i] <= '9'))
 		return (NULL);

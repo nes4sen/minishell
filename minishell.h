@@ -113,7 +113,6 @@ typedef struct s_address_track
 	t_mmtrack	*head; // the head of alloc_tracker
 	t_mmtrack	*tail;  
 	t_env		*env; //the heaad of env
-	int			fd;
 }t_address_track;
 
 
@@ -161,8 +160,8 @@ int		parser(t_shell *shell);
 
 
 /*-------|>---syntax error---<|--------*/
-int			syntax_error(t_token *tokens);
-int			syntax_err_msg(char	*err);
+int			syntax_error(t_shell *shell);
+int			syntax_err_msg(char	*err, t_shell *shell);
 unsigned int	def_type(char *str);
 
 

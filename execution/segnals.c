@@ -4,18 +4,13 @@ void    handler_ctrl_c(int sig)
 {
     if(sig == SIGINT)
     {
-        printf("\n");
-        rl_replace_line("", 0);
+        write(1, "\n", 1);
+		rl_replace_line("", 0);
         rl_on_new_line();
         rl_redisplay();
     }
 }
 
-void    handler_ctrl_d(int sig)
-{
-    (void)sig;
-    exit(0);
-}
 // Fonction pour configurer les gestionnaires de signaux
 void setup_signals(void)
 {
