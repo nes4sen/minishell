@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/09 22:18:58 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 06:29:04 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,7 @@ char	*generate_filename(int len)
 	random = mm_alloc(len + 1);
 	while (i < len)
 	{
-		read(fd, &byte, 1);
-		if (read < 0)
+		if (read(fd, &byte, 1) < 0)
 		{
 			close(fd);
 			return(ft_strdup("randomfile_xd"));

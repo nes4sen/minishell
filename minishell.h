@@ -311,4 +311,6 @@ void    handler_ctrl_d(int sig);
 void    handler_ctrl_slash(int sig);
 void    setup_signals(void);
 
+int     ft_strchr(char *str, char c);
+
 #endif  

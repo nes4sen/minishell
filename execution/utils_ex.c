@@ -221,3 +221,19 @@ int		idx_nod(t_env *env)
     }
     return(i);
 }
+
+int     ft_strchr(char *str, char c)
+{
+    int     i;
+
+    if(!str)
+        return(1);
+    i = 0;
+    while(str[i])
+    {
+        if(str[i] == c)
+            return(0);
+        i++;
+    }
+    return(1);
+}

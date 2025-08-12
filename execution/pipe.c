@@ -254,11 +254,15 @@ char   *get_path_cmd(char *cmd, t_env **env)
     int i;
     char *path;
     char *full_path = NULL;
+    char *save;
     char **arg;
-    
+
     path = get_path(env);
     if(!path)
-        return (printf("PATH not found\n"), NULL);
+    {
+        printf("%s: Nosuch file or directory\n", cmd);
+        exit(127);
+    }
     arg = ft_split(path, ':');
     if(!arg)
         return (NULL);
@@ -269,15 +273,21 @@ char   *get_path_cmd(char *cmd, t_env **env)
         full_path = ft_strjoin(full_path, cmd);
         if(!full_path)
             return(NULL);
-        if(access(full_path, X_OK) == 0)
+        if(access(full_path, F_OK) == 0)
         {
+            if(access(full_path, X_OK) == 0)
+            {
+                return (full_path);
+            }
+            else
+                save = cmd;
             // f_free(arg);
-            return (full_path);
         }
-        // free(full_path);
         i++;
     }
     // f_free(arg);
+    if(save)
+        return(save);
     return (NULL);
 }
 

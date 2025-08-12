@@ -43,6 +43,7 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	shell = (t_shell){0}; // compound literal
 	init_env(envp, &shell);
+	setup_signals();
 	while (1)
 	{
 		shell.line = readline("minishell $> ");

@@ -5,7 +5,7 @@ int     echo_fonc(char **arg, int status)
     int i = 1;
     int flag_newline = 1;
 
-    if(!arg || !arg[0])
+    if(!arg || !arg[0] || !arg[i])
         return(-1);
     // vérifier s'il y a flag -n ou plusieurs -nn ou -n -n
     i = echo_check_n(arg, &flag_newline, i);
