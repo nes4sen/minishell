@@ -119,7 +119,7 @@ typedef struct s_address_track
 void	scan_for_heredoc(t_shell *shell);
 char	*prepare_to_heredoc(char *delemetre, t_shell *shell);
 void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell);
-void	expand_heredoc(char *line, t_env *env);
+void	expand_heredoc(char **line, t_env *env);
 char	*generate_filename(int len);
 
 
