@@ -156,13 +156,13 @@ t_extoken *create_extoken_list(char *str, int stat);
 
 int		ft_strlen(char *str);
 void	ft_strcpy(char *dst, char *src);
-void	parser(t_shell *shell);
+int		parser(t_shell *shell);
 // int		assigne_stat(char c);
 
 
 /*-------|>---syntax error---<|--------*/
-void			syntax_error(t_token *tokens);
-void			syntax_err_msg(char	*err);
+int			syntax_error(t_token *tokens);
+int			syntax_err_msg(char	*err);
 unsigned int	def_type(char *str);
 
 

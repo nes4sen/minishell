@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 16:53:10 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/04 19:09:25 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 12:28:08 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ void	tokenizer(t_shell *shell)
 		if (is_symbole(*str))
 			token = get_token_symbole(&str);
 		else if (!*str)
-			break ;
+		{
+			// get_type(shell->tokens);
+			return ;
+		}
 		else
 			token = get_token(&str);
 		token_add_back(&shell->tokens, token, 0);
