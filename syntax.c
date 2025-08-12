@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 19:26:52 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:40:38 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	syntax_err_msg(char	*err, t_shell *shell)
 		write(1, err, ft_strlen(err));
 		write(1, "\n", 1);
 	}
-	shell->exit_s = 2;
+	if (shell)
+		shell->exit_s = 2;
 	return (1);
 }
 int	quote_err(char *str)
@@ -60,26 +61,27 @@ int	symbol_err(char *str)
 
 int	syntax_error(t_shell *shell)
 {
-	t_token *tokens;
+    t_token *tokens;
 
-	tokens = shell->tokens;
-	if (tokens && tokens->type == PIPE)
-		return (syntax_err_msg("|", shell));
-	while (tokens)
-	{
-		if (quote_err(tokens->str))
-			return (1);
-		if (symbol_err(tokens->str))
-			return (1);
-		
-		if (is_oprt(tokens->str))
-		{
-			if ((tokens->next == NULL))
-				return (syntax_err_msg("newline", shell));
-			else if (is_oprt(tokens->next->str))
-				return (syntax_err_msg(tokens->next->str, shell));
-		}
-		tokens = tokens->next; 
-	}
-	return (0);
+    if (!shell || !shell->tokens) // Ensure shell and tokens are valid
+        return (1);
+    tokens = shell->tokens;
+    if (tokens->type == PIPE)
+        return (syntax_err_msg("|", shell));
+    while (tokens)
+    {
+        if (tokens->str && quote_err(tokens->str)) // Check tokens->str
+            return (1);
+        if (tokens->str && symbol_err(tokens->str)) // Check tokens->str
+            return (1);
+        if (tokens->str && is_oprt(tokens->str)) // Check tokens->str
+        {
+            if (!tokens->next) // Ensure tokens->next is valid
+                return (syntax_err_msg("newline", shell));
+            else if (tokens->next->str && is_oprt(tokens->next->str)) // Check tokens->next->str
+                return (syntax_err_msg(tokens->next->str, shell));
+        }
+        tokens = tokens->next;
+    }
+    return (0);
 }

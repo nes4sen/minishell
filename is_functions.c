@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_functions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 11:09:49 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/14 17:02:44 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:42:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int is_seperator(char c)
 }
 int is_oprt(char *op)
 {
-	if ((def_type(op) >= 1  && def_type(op) <= 4))
+	if ((def_type(op) >= 1  && def_type(op) <= 5))
 		return (1);
 	return (0);	
 }

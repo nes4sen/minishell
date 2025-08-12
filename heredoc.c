@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 21:28:59 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 22:46:03 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 		signal(SIGINT, SIG_DFL);
 		while (1)
 		{
-			
 			line = readline("> ");
+			if (!line)
+				break;
 			if (!ft_strcmp(line, dlmtr))
 			{
 				mm_free(FREE_ALL);
@@ -95,7 +96,7 @@ void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 				exit(0);
 			}
 			if (exflag)
-			expand_heredoc(&line, shell->env);
+				expand_heredoc(&line, shell->env);
 			write(fd, line, ft_strlen(line));
 			write(fd, "\n", 1);
 		}
