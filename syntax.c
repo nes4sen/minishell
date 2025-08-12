@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 14:11:12 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:29:31 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,13 @@ int	syntax_err_msg(char	*err)
 {
 	if (!ft_strcmp(err, "operator"))
 		write(1, "minishell: syntax error, invalid operator\n", 42);
-	else if (*err && (*err == '\'' || *err == '"'))
+	else if (*err)
 	{
-		if (*err == '\'')
-			write(1, "minishell: syntax error, unclosed (\') Quote\n", 44);
-		if (*err == '\"')
-			write(1, "minishell: syntax error, unclosed (\") Quote\n", 44);
-		
+		write(1, "minishell: syntax error near unexpected token ", 46);
+		write(1, err, ft_strlen(err));
+		write(1, "\n", 1);
 	}
-	else if ( *err)
-	{
-		write(1, "minishell: syntax error near unexpected token operator\n", 55);
-	}
-	else 
-		return (0);
-	return (1);
+	return (2);
 }
 int	quote_err(char *str)
 {
@@ -69,7 +61,8 @@ int	symbol_err(char *str)
 
 int	syntax_error(t_token *tokens)
 {
-	
+	if (tokens && tokens->type == PIPE)
+		return (syntax_err_msg("|"));
 	while (tokens)
 	{
 		if (quote_err(tokens->str))
@@ -80,16 +73,9 @@ int	syntax_error(t_token *tokens)
 		if (is_oprt(tokens->str))
 		{
 				if ((tokens->next == NULL))
-				{
-					write(1, "minishell: syntax error near unexpected token 'newline'\n", 56);
-					return (1);
-				}
+					return (syntax_err_msg("newline"));
 				else if (is_oprt(tokens->next->str))
-				{
-					syntax_err_msg(tokens->next->str);
-					// printf("[toto]\n");
-					return (1);
-				}
+					return (syntax_err_msg(tokens->next->str));
 		}
 		tokens = tokens->next; 
 	}
