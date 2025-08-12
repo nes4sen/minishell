@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 13:05:16 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/12 14:11:12 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	syntax_err_msg(char	*err)
 			write(1, "minishell: syntax error, unclosed (\") Quote\n", 44);
 		
 	}
-	else if (!err || *err)
+	else if ( *err)
 	{
-		write(1, "minishell: syntax error near unexpected token operator", 54);
+		write(1, "minishell: syntax error near unexpected token operator\n", 55);
 	}
 	else 
 		return (0);
@@ -79,7 +79,12 @@ int	syntax_error(t_token *tokens)
 		
 		if (is_oprt(tokens->str))
 		{
-				if ((tokens->next == NULL || is_oprt(tokens->next->str)))
+				if ((tokens->next == NULL))
+				{
+					write(1, "minishell: syntax error near unexpected token 'newline'\n", 56);
+					return (1);
+				}
+				else if (is_oprt(tokens->next->str))
 				{
 					syntax_err_msg(tokens->next->str);
 					// printf("[toto]\n");
