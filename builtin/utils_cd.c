@@ -26,7 +26,7 @@ int    cd_zero_arg(char *tmp, char *pwd_now, char *cur,t_env *env)
         if(!cur)
         {
             perror("getcwd");
-            return(-1);
+            return(1);
         }
         update_env(&env, "PWD", cur);
         // free(cur);
@@ -34,7 +34,7 @@ int    cd_zero_arg(char *tmp, char *pwd_now, char *cur,t_env *env)
     else
     {
         printf("cd: HOME not set\n");
-        return(-1);
+        return(1);
     }
     return(0);
 }
@@ -47,7 +47,7 @@ int    cd_whith_1p(char *pwd_now, char *cur, t_env *env)
     if(!cur)
     {
         perror("getcwd");
-        return(-1);
+        return(1);
     }
     update_env(&env, "PWD", cur);
     free(cur);
@@ -67,7 +67,7 @@ int    cd_whith_2p(char *pwd_now, char *cur, t_env *env)
     if(!cur)
     {
         perror("getcwd");
-        return(-1);
+        return(1);
     }
     update_env(&env, "PWD", cur);
     // free(cur);
@@ -91,20 +91,20 @@ int    cd_with_arg(char **arg, char *pwd_now, char *cur, t_env *env)
             if(!S_ISDIR(info.st_mode))
             {
                 printf("cd: %s: Not a directory\n", arg[1]);
-                return(-1);
+                return(1);
             }
         }
         if (chdir(arg[1]) == -1)
         {
             printf("cd: no such file or directory: %s\n", arg[1]);
-            return(-1);
+            return(1);
         }
         update_env(&env, "OLDPWD", pwd_now);
         cur = getcwd(NULL, 0);
         if(!cur)
         {
             perror("getcwd");
-            return(-1);
+            return(1);
         }
         update_env(&env, "PWD", cur);
         // free(cur);

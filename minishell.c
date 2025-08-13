@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 12:08:50 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/13 01:20:45 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int main(int ac, char **av, char **envp)
 	shell = (t_shell){0}; // compound literal
 	init_env(envp, &shell);
 	setup_signals();
+	shell.exit_s = 0;
 	while (1)
 	{
 		shell.line = readline("minishell $> ");
@@ -55,8 +56,13 @@ int main(int ac, char **av, char **envp)
 		}
 		if (shell.line && *shell.line)
 			add_history(shell.line);
-		if (!parser(&shell)) //parsing function 
+		if (!parser(&shell))
+		{
+			signal(SIGINT, SIG_IGN);
+			signal(SIGQUIT, SIG_IGN);	
 			shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s); // Corriger signature et récupérer status
+		} //parsing function 
+		setup_signals();
 		init_structs_after_free(&shell);
 		mm_free(FREE_ALL_EXCEPT_ENV);
 	}

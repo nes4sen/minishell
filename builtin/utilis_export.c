@@ -10,9 +10,7 @@ int     var_with_equal(char **arg, int i, t_env **env)
     if(!is_valid_name(name))
     {
         export_error(arg[1]);
-        // free(name);
-        // free(value);
-        return(-1);
+        return(127);
     } 
     if(check_var_exist_env(*env, name) == -1)
         add_back_env(env, name, value, (idx_nod(*env) + 1));

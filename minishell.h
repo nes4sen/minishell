@@ -253,7 +253,7 @@ int     help_env_fonc(t_env *env);
 
 // exit
 int     exit_fonc(char **arg, int last_code);
-void    help_exit_fonc(char **arg, int exit_code);
+int    help_exit_fonc(char **arg, int exit_code);
 
 // export
 int     fonc_export(char **arg,  t_env **env);

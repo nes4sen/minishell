@@ -6,7 +6,7 @@ int     fonc_cd(char **arg, t_env *env)
     char    *current_getcwd = NULL;
     char    *pwd_now;
     int     nombre_arg;
-    int     status;
+    int     status = 0;
 
     if(!arg)
         return(-1);
@@ -19,9 +19,8 @@ int     fonc_cd(char **arg, t_env *env)
     else
     {
         printf("cd: too many arguments\n");
-        return(/*free(pwd_now),*/ -1);
+        return(1);
     }
-    // free(pwd_now);
     return(status);
 }
 

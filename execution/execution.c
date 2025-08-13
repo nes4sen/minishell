@@ -211,7 +211,12 @@ int     execute_simple_command(t_cmd *cmd, t_env **env, int status)
 
         }
         else if(pid > 0) //parent
+        {
+            
             waitpid(pid, &status, 0);
+            if(WIFEXITED(status))
+                status = WEXITSTATUS(status);
+        }
     }
     // Note: path est alloué et libéré dans le processus enfant
     // Le parent ne doit pas le libérer

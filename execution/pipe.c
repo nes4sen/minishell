@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:19:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/09 22:10:21 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/13 05:02:57 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,25 +138,71 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             }
             else
             {
-                path = get_path_cmd(current->arg[0], env);
-                if(!path)
+                if(!ft_strchr(current->arg[0], '/'))
                 {
-                    fprintf(stderr, "Command not found: %s\n", current->arg[0]);
+                    struct  stat buf;
+                    if(stat(current->arg[0], &buf) == 0)
+                    {
+                        if(S_ISDIR(buf.st_mode))
+                        {
+                            write(2, "Is a directory\n",15);
+                            free(pipes);
+                            free(pids);
+                            exit(126);
+                        }
+                    }
+                    if(access(current->arg[0], F_OK) != 0)
+                    {
+                        printf("%s: Nosuch file or directory\n", current->arg[0]);
+                        free(pipes);
+                        free(pids);
+                        exit(127);
+                    }
+                    if(access(current->arg[0], X_OK) != 0)
+                    {
+                        printf("%s: Permission denied\n", current->arg[0]);
+                        free(pipes);
+                        free(pids);
+                        exit(127);
+                    }
+                    char **env_array = env_to_char_array(*env);
+                    if(execve(current->arg[0], current->arg, env_array) == -1)
+                    {
+                        perror("");
+                        free(pipes);
+                        free(pids);
+                        exit(127);
+                    }
+                }
+                else
+                {
+                    
+                    path = get_path_cmd(current->arg[0], env);
+                    if(!path)
+                    {
+                        fprintf(stderr, "Command not found: %s\n", current->arg[0]);
+                        free(pipes);
+                        free(pids);
+                        exit(127);
+                    }
+                    else if(!ft_strcmp(path, current->arg[0]))
+                    {
+                        fprintf(stderr, "%s: Permission denied\n", cmd->arg[0]);
+                        free(pipes);
+                        free(pids);
+                        exit(127);
+                    }
+                    char **env_array = env_to_char_array(*env);
+                    execve(path, current->arg, env_array);
+                    
+                    // Si on arrive ici, execve a échoué
+                    perror("execve");
+                    free(path);
+                    free_env_array(env_array);
                     free(pipes);
                     free(pids);
-                    exit(127);
+                    exit(1);
                 }
-                
-                char **env_array = env_to_char_array(*env);
-                execve(path, current->arg, env_array);
-                
-                // Si on arrive ici, execve a échoué
-                perror("execve");
-                free(path);
-                free_env_array(env_array);
-                free(pipes);
-                free(pids);
-                exit(1);
             }
         }
         else // Processus parent
@@ -209,9 +255,6 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             }
         i++;
     }
-    
-    // free(pipes);
-    // free(pids);
     setup_signals();
     return(final_status);
 }
@@ -254,7 +297,7 @@ char   *get_path_cmd(char *cmd, t_env **env)
     int i;
     char *path;
     char *full_path = NULL;
-    char *save;
+    char *save = NULL;
     char **arg;
 
     path = get_path(env);
@@ -264,7 +307,7 @@ char   *get_path_cmd(char *cmd, t_env **env)
         exit(127);
     }
     arg = ft_split(path, ':');
-    if(!arg)
+    if(!arg || !cmd[0])
         return (NULL);
     i = 0;
     while (arg[i])
@@ -285,10 +328,7 @@ char   *get_path_cmd(char *cmd, t_env **env)
         }
         i++;
     }
-    // f_free(arg);
-    if(save)
-        return(save);
-    return (NULL);
+    return (save);
 }
 
 

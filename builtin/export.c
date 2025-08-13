@@ -95,7 +95,7 @@ void    export_error(char *str)
 {
     if (!str)
         return;
-    fprintf(stderr, "export: `%s': not a valid identifier\n", str);
+    printf("export: `%s': No such file or directory\n", str);
 }
 
 int     is_valid_name(char *str)

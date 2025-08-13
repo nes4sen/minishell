@@ -10,7 +10,7 @@ int     env_fonc(char **arg, t_env *env)
     if(arg[1])
     {
         printf("env: %s: No such file or directory\n", arg[1]);
-        return(-1);
+        return(127);
     }
     status = help_env_fonc(env);
     return(status);
