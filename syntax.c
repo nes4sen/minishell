@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/13 11:03:05 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 22:06:43 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	symbol_err(char *str)
 	return (0);
 }
 
+
+
 int	syntax_error(t_shell *shell)
 {
     t_token *tokens;
@@ -78,7 +80,7 @@ int	syntax_error(t_shell *shell)
         {
             if (!tokens->next) 
                 return (syntax_err_msg("newline", shell));
-            else if (tokens->next->str && is_oprt(tokens->next->str))
+            else if (tokens->next->str && !ft_strcmp(tokens->next->str, "|")) // poor logic , | <<, | > is valid
                 return (syntax_err_msg(tokens->next->str, shell));
         }
         tokens = tokens->next;
