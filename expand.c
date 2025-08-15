@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 18:36:28 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 20:50:49 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 	}
 	if (*substr)
 			get_substr(&substr, &subhead);
-	print_subtokens(subhead);
+	// print_subtokens(subhead);
 	token->subtoken = subhead;
 }
 

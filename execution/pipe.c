@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:19:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/13 05:02:57 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/15 20:29:48 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,9 +301,9 @@ char   *get_path_cmd(char *cmd, t_env **env)
     char **arg;
 
     path = get_path(env);
-    if(!path)
+    if(!path || !*path)
     {
-        printf("%s: Nosuch file or directory\n", cmd);
+        printf("%s: No such file or directory\n", cmd);
         exit(127);
     }
     arg = ft_split(path, ':');

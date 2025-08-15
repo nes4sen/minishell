@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/14 10:37:03 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 21:27:08 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 	pid = fork();
 	if (pid == 0)
 	{
+		// setup_signals();
 		signal(SIGINT, SIG_DFL);
 		while (1)
 		{

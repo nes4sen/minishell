@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:37:39 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 21:44:24 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/09 18:48:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_mmtrack *create_mm_node(void *ptr)
     new_node = malloc(sizeof(t_mmtrack));
     if (!new_node)
     {
-        mm_free(FREE_ALL);
+        // free_all
         exit(EXIT_FAILURE);
     }
     new_node->ptr = ptr;
@@ -72,7 +72,7 @@ void	free_env(void)
 	track->env = NULL;
 }
 
-void free_mmtrack(void)
+void free_others(void)
 {
 	t_address_track	*track;
 	t_mmtrack		*head;
@@ -97,9 +97,12 @@ void	mm_free(int	which_free)
 	if (which_free == FREE_ALL)
 	{
 		free_env();
-		free_mmtrack();
-		free_lltrack();
+		free_others();
+		// free fd
 	}
 	else if (which_free == FREE_ALL_EXCEPT_ENV)
-		free_mmtrack();
+	{
+		free_others();
+		//free fd
+	}
 }

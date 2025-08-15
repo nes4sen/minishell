@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 21:48:48 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 18:45:46 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,3 @@ int main(int ac, char **av, char **envp)
 	}
 	return (shell.exit_s);
 }
-
-

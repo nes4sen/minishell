@@ -86,7 +86,7 @@ int     mak_as_export(t_env **env, char *str)
         add_back_env(env, name, NULL, (idx_nod(*env) + 1));
     else
         updat_env(env, name, NULL);
-    free(name);
+    // free(name);
     // free(value);
     return (0);
 }
@@ -143,10 +143,9 @@ void    updat_env(t_env **env, char *name, char *value)
         if(ft_strcmp(name, current->name) == 0)
         {
             // free(current->value);
-            if (value)
+            if(value)
                 current->value = ft_strdup(value); // Allouer nouvelle mémoire
-            else
-                current->value = NULL; // Pour les variables sans valeur
+            // Pour les variables sans valeur
             return; // Sortir après avoir trouvé et mis à jour
         }
         current = current->next;

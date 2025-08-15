@@ -31,5 +31,5 @@ void	print_repert(t_env *env)
 		}
 		env = env->next;
 	}
-    printf("PWD not found in environment variables.\n");
+    printf("%s\n", getcwd(NULL, 0));
 }
