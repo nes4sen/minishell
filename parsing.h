@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:48:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/14 11:32:24 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 21:46:25 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ typedef struct s_cmd
 
 typedef struct s_extoken
 {
-	char	*str;
-	int		stat;         
-	struct s_extoken *next;
+	char				*str;
+	int					stat;         
+	struct s_extoken	*next;
 }t_extoken;
 
 typedef struct s_env
@@ -84,6 +84,12 @@ typedef struct s_env
 	int				index;
 	struct s_env	*next;
 }t_env;
+
+typedef struct s_lltrack
+{
+	void				*ptr;
+	struct s_lltrack	*next;
+} t_lltrack;
 
 typedef struct s_mmtrack
 {
@@ -95,7 +101,9 @@ typedef struct s_address_track
 {
 	t_mmtrack	*head; 
 	t_mmtrack	*tail;  
-	t_env		*env; 
+	t_env		*env;
+	t_lltrack	*lhead;
+	t_lltrack	*ltail;
 }t_address_track;
 
 typedef struct s_shell
@@ -183,9 +191,12 @@ t_address_track	*address_tracker(void);
 t_mmtrack		*create_mm_node(void *ptr);
 void 			*mm_alloc(size_t size);
 void			mm_free(int	which_free);
-void 			free_others(void);
+void 			free_mmtrack(void);
 void			free_env(void);
-void	init_structs_after_free(t_shell *shell);
+void			*create_llmm_node(void *ptr);
+void			*ll_alloc(size_t size);
+void			free_lltrack(void);
+void			init_structs_after_free(t_shell *shell);
 
 
 /*--- PARSING UTILS ------------------------------------------------------*/

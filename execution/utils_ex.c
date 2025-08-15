@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_ex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:18:47 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/06/22 15:10:31 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/15 19:10:52 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_strdup(const char *s1)
 
 	if (!s1)
 		return (NULL);
-	str = mm_alloc(ft_strlen((char *)s1) + 1);
+	str = malloc(ft_strlen((char *)s1) + 1);
 	if (!str)
 		return (NULL);
 	i = 0;
