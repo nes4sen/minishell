@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/14 10:47:53 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 18:45:46 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int main(int ac, char **av, char **envp)
 			signal(SIGINT, SIG_IGN);
 			signal(SIGQUIT, SIG_IGN);	
 			shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s); // Corriger signature et récupérer status
-		} //parsing function 
+		} 
 		setup_signals();
 		init_structs_after_free(&shell);
 		mm_free(FREE_ALL_EXCEPT_ENV);

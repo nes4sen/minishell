@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:47:05 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/14 10:47:42 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 18:46:50 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	init_env(char **envp, t_shell *shell)
 
 void init_structs_after_free(t_shell *shell)
 {
-	shell->cmd = NULL;
-	shell->mmtrack = NULL;
-	shell->tokens = NULL;
+	shell->line = NULL;
+    shell->tokens = NULL;
+    shell->cmd = NULL;
+    shell->mmtrack = NULL;
+    shell->exit_s = 0;
+	// shell->cmd->heredox = NULL;
 }

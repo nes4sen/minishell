@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/14 10:34:02 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 18:36:28 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void get_expand(t_shell *shell, t_extoken *exhead)
 
 void	get_substr(char **substr, t_token **subhead)
 {
+	
 	token_add_back(subhead, *substr, 0);
 	*substr = "";
 }
@@ -64,19 +65,18 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 		str = extoken->str;
 		while (*str)
 		{
-			if (white_space(*str) && extoken->stat == NO_QUOTE)
-			{
-				get_substr(&substr, &subhead);
-				while (white_space(*str) && extoken->stat == NO_QUOTE)
-					str++;
-			}
-			else
+			while (*str && white_space(*str) && extoken->stat == NO_QUOTE)
+				str++;
+			while (*str && (!white_space(*str) || extoken->stat != NO_QUOTE))
 				substr = char_join(substr, *str++, 0);
-		}
-		if (!*str && !extoken->next)
-			token_add_back(&subhead, substr, 0);
+			if (*substr)
+				get_substr(&substr, &subhead);
+		}  
 		extoken = extoken->next;
 	}
+	if (*substr)
+			get_substr(&substr, &subhead);
+	print_subtokens(subhead);
 	token->subtoken = subhead;
 }
 

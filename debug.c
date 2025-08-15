@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 12:10:00 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/14 12:14:37 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 15:51:47 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,40 +62,45 @@ void	print_extokens(t_extoken *extoken)
 
 void	print_cmd_struct(t_cmd *cmds)
 {
-	t_cmd *cmd = cmds;
 	int		i;
 	int		j;
 	t_rdr	*rdr_tmp;
 
 	i = 0;
-	if (!cmd)
+	if (!cmds)
 		return;
-	while (cmd)
+	while (cmds)
 	{
+		if (!cmds)  // Additional safety check
+		{
+			printf("Error: cmds is NULL during iteration\n");
+			break;
+		}
 		printf("---- Command %d ----\n", i + 1);
 		printf("Args: ");
 		j = 0;
-		if (cmd->arg)
+		if (cmds->arg)
 		{
-			while (cmd->arg[j])
+			while (cmds->arg[j])
 			{
-				printf("[%s] ", cmd->arg[j]);
+				printf("[%s] ", cmds->arg[j]);
 				j++;
 			}
 		}
 		printf("\n");
-		printf("Heredoc: %s\n", cmd->heredox ? cmd->heredox : "(null)");
-		rdr_tmp = cmd->rdr;
+		printf("Heredoc: %s\n", cmds->heredox ? cmds->heredox : "(null)");
+		
+		rdr_tmp = cmds->rdr;
 		j = 0;
 		while (rdr_tmp)
 		{
 			printf("  Redirection %d:\n", j + 1);
-			printf("    File: %s\n", rdr_tmp->file);
+			printf("    File: %s\n", rdr_tmp->file ? rdr_tmp->file : "(null)");
 			printf("    Type: %d\n", rdr_tmp->type);
 			rdr_tmp = rdr_tmp->next;
 			j++;
 		}
-		cmd = cmd->next;
+		cmds = cmds->next;
 		i++;
 	}
 }
