@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 20:50:49 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/16 00:05:22 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,12 @@ void get_expand(t_shell *shell, t_extoken *exhead)
 			if (var_name)
 			{
 				var_value = find_env_var(shell , var_name);
-				if (var_value)
+				if (var_value == NULL)
+				{
+					exhead->str = NULL;
+				}
 					result = str_join(result, var_value);
-				i += ft_strlen(var_name) + 1;  // Skip $VAR
+				i += ft_strlen(var_name) + 1; 
 			}
 			else
 				result = char_join(result, '$', &i);
@@ -74,9 +77,9 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 		}  
 		extoken = extoken->next;
 	}
-	if (*substr)
+	// if (*substr)
 			get_substr(&substr, &subhead);
-	// print_subtokens(subhead);
+	//print_subtokens(subhead);
 	token->subtoken = subhead;
 }
 

@@ -26,8 +26,12 @@ void	print_repert(t_env *env)
 	{
 		if(ft_strcmp("PWD", env->name) == 0)
 		{
-            printf("%s\n", env->value);
-			return;
+			if(env->value != NULL)
+            {
+				printf("%s\n", env->value);
+				return;
+			}	
+				
 		}
 		env = env->next;
 	}

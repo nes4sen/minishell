@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:18:47 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/15 19:13:11 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/15 22:48:44 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*ft_strdup(const char *s1)
 
 	if (!s1)
 		return (NULL);
-	str = malloc(ft_strlen((char *)s1) + 1);
+	str = ll_alloc(ft_strlen((char *)s1) + 1);
 	if (!str)
 		return (NULL);
 	i = 0;

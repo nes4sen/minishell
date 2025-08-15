@@ -6,9 +6,6 @@
 #include "parsing.h"
 #include "debug.h"
 
-
-
-
 typedef struct s_fd_fils
 {
 	int	infil;

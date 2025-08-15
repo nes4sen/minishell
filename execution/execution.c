@@ -82,6 +82,7 @@ int     execute_with_redirection(t_cmd *current, t_env **env, int status)
 int     open_check_file(t_cmd *cmd, t_fd_fils *fil)
 {
 	t_rdr *red = cmd->rdr;
+
     if(red->type == RDRIN)
     {
         fil->outfil = open(red->file, O_RDONLY);
@@ -142,7 +143,7 @@ int     execute_simple_command(t_cmd *cmd, t_env **env, int status)
     char    *path = NULL;
     char    **env_array = NULL;
 
-    if(!env || !cmd)
+    if(!env || !cmd || !ft_strcmp(cmd->arg[0],""))
         return(-1);
     if(is_builin_command(cmd->arg[0]))
         return (execute_builtin(cmd, env, status));

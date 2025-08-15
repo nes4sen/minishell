@@ -10,6 +10,8 @@
 		"sched.h": "c",
 		"algorithm": "c",
 		"format": "c",
-		"string.h": "c"
+		"string.h": "c",
+		"debug.h": "c",
+		"parsing.h": "c"
 	}
 }

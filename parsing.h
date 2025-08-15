@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:48:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/14 11:32:24 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/15 22:48:03 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ typedef struct s_env
 	struct s_env	*next;
 }t_env;
 
+typedef struct s_lltrack
+{
+	void				*ptr;
+	struct s_lltrack	*next;
+} t_lltrack;
+
 typedef struct s_mmtrack
 {
 	void				*ptr;
@@ -94,7 +100,9 @@ typedef struct s_mmtrack
 typedef struct s_address_track
 {
 	t_mmtrack	*head; 
-	t_mmtrack	*tail;  
+	t_mmtrack	*tail; 
+	t_lltrack	*lhead;
+	t_lltrack	*ltail; 
 	t_env		*env; 
 }t_address_track;
 
@@ -185,7 +193,10 @@ void 			*mm_alloc(size_t size);
 void			mm_free(int	which_free);
 void 			free_others(void);
 void			free_env(void);
-void	init_structs_after_free(t_shell *shell);
+void			*ll_alloc(size_t	size);
+void			*create_llmm_node(void *ptr);
+void			free_lltrack(void);
+void			init_structs_after_free(t_shell *shell);
 
 
 /*--- PARSING UTILS ------------------------------------------------------*/
