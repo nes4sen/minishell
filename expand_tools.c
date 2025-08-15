@@ -6,15 +6,68 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:16:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 14:31:59 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:31:51 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// in the fucntion bellow , i dont check if !var cuz i cant acces to this function only f the var is true
-char *find_env_var(t_env *env, char *var)
+
+static size_t	int_len(int nb)
 {
+	size_t	len;
+	long	n;
+
+	n = (long)nb;
+	len = 0;
+	if (nb <= 0)
+		len++;
+	if (n < 0)
+		n *= -1;
+	while (n > 0)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+char	*ft_itoa(int nb)
+{
+	size_t	len;
+	char	*p;
+	size_t	i;
+	long	n;
+
+	n = (long)nb;
+	len = int_len(n);
+	p = malloc(sizeof(char) * len + 1);
+	if (!p)
+		return (NULL);
+	p[len] = '\0';
+	i = 0;
+	if (n < 0)
+	{
+		p[0] = '-';
+		n *= -1;
+		i = 1;
+	}
+	while (len-- > i)
+	{
+		p[len] = (n % 10) + 48;
+		n /= 10;
+	}
+	return (p);
+}
+
+// in the fucntion bellow , i dont check if !var cuz i cant acces to this function only f the var is true
+char *find_env_var(t_shell *shell, char *var)
+{
+	t_env *env;
+
+	env = shell->env;
+	if (!ft_strcmp(var, "?"))
+		return (ft_itoa(shell->exit_s));
 	while (env)
 	{
 		if (!ft_strcmp(var, env->name))
@@ -37,7 +90,8 @@ char *extract_var_name(char *str)
 	int	i;
 
 	i = 1;
-
+	if (str[i] == '?')
+		return(ft_substr(1, 2, str));
 	if (!is_valid_env_var_name(str[i])
 		|| (str[i] >= '0' && str[i] <= '9'))
 		return (NULL);

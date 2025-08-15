@@ -8,8 +8,8 @@ CFILES= build_cmd.c env.c  is_functions.c \
 		extokenizer.c  build_cmd_list.c\
 		rdrs_list.c parsing.c expand.c    \
 		syntax.c tokenizer.c utils.c      \
-		mini_libft.c cmd_args.c \
-		mmtracker.c heredoc.c\
+		mini_libft.c cmd_args.c debug.c\
+		mmtracker.c heredoc.c  utils_init.c\
 		builtin/cd.c builtin/echo.c builtin/eenv.c builtin/exit.c builtin/export.c\
 		builtin/pwd.c builtin/unset.c builtin/utilis_export.c builtin/utils_cd.c\
 		execution/execution.c execution/pipe.c execution/segnals.c execution/split.c execution/utils_ex.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 22:46:03 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:37:03 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ char	*generate_filename(int len)
 	}
 	random[i] = '\0';
 	close (fd);
-	return (str_join("/var/tmp/",random));
+	return (str_join("/tmp/",random));
 }
 
-void	expand_heredoc(char **line, t_env *env)
+void	expand_heredoc(char **line, t_shell *shell)
 {
 	int		i;
 	char	*result;
@@ -56,7 +56,7 @@ void	expand_heredoc(char **line, t_env *env)
 			var_name = extract_var_name(line[i]);
 			if (var_name)
 			{
-				var_value = find_env_var(env, var_value);
+				var_value = find_env_var(shell, var_value);
 				if (var_value)
 					result = str_join(result, var_value);
 				i+= ft_strlen(var_name);
@@ -77,7 +77,7 @@ void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 	int		pid;
 
 	*fname = generate_filename(20);
-	fd = open(*fname, O_CREAT | O_WRONLY);
+	fd = open(*fname, O_CREAT | O_WRONLY, 0644);
 	if (fd < 0)
 		exit(1);
 	pid = fork();
@@ -96,7 +96,7 @@ void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 				exit(0);
 			}
 			if (exflag)
-				expand_heredoc(&line, shell->env);
+				expand_heredoc(&line, shell);
 			write(fd, line, ft_strlen(line));
 			write(fd, "\n", 1);
 		}

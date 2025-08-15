@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 22:50:40 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/13 11:03:05 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,3 +85,9 @@ int	syntax_error(t_shell *shell)
     }
     return (0);
 }
+/*
+step steps
+
+
+
+*/

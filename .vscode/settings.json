@@ -9,6 +9,7 @@
 		"history.h": "c",
 		"sched.h": "c",
 		"algorithm": "c",
-		"format": "c"
+		"format": "c",
+		"string.h": "c"
 	}
 }

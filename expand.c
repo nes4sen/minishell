@@ -6,14 +6,14 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 14:30:50 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/14 10:34:02 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// poor logic
-void get_expand(t_extoken *exhead, t_env *env)
+// Poor logic
+void get_expand(t_shell *shell, t_extoken *exhead)
 {
 	char *str;
 	char *result;
@@ -31,7 +31,7 @@ void get_expand(t_extoken *exhead, t_env *env)
 			var_name = extract_var_name(&str[i]);
 			if (var_name)
 			{
-				var_value = find_env_var(env, var_name);
+				var_value = find_env_var(shell , var_name);
 				if (var_value)
 					result = str_join(result, var_value);
 				i += ft_strlen(var_name) + 1;  // Skip $VAR
@@ -44,8 +44,6 @@ void get_expand(t_extoken *exhead, t_env *env)
 	}
 	exhead->str = result;
 }
-
-
 
 void	get_substr(char **substr, t_token **subhead)
 {
@@ -82,36 +80,7 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 	token->subtoken = subhead;
 }
 
-void print_exlist(t_extoken *token)
-{
-	while (token)
-	{
-		printf("x[%s] [%d]x\n", token->str, token->stat);
-		token = token->next;
-	}
-	
-}
-void print_subtoken(t_token *token)
-{
-	t_token *sub;
-	while (token)
-	{
-		if (!token->subtoken)
-		{
-			 printf("{%s}\n",token->str);	
-		}
-		else
-		{
-			sub = token->subtoken;	
-			while(sub)
-			{
-				printf("sub{%s  %d}\n", sub->str, sub->type);
-				sub = sub->next;
-			}
-		}
-		token = token->next;
-	}
-}
+
 
 void	prepare_for_expand(t_shell *shell)
 {
@@ -124,7 +93,7 @@ void	prepare_for_expand(t_shell *shell)
 	while (tmp)
 	{
 		if (tmp->stat != SINGLE_QUOTE)
-			get_expand(tmp, shell->env);
+			get_expand(shell, tmp);
 		tmp = tmp->next;
 	}
 	tmp = exhead;

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/07/31 11:07:18 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/14 12:08:45 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ void	get_type(t_token *tokens)
 	}
 	get_next_type(tmp);
 }
+
+
 
 

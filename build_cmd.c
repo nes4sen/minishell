@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/12 18:20:48 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/13 12:08:59 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void print_all_cmd(t_cmd *cmd)
 		print_arg(tmp->arg);
 		printf("\nrediractions:\n");
 		print_rdr(tmp->rdr);
+		printf("\nheredox: %s\n", cmd->heredox);
 		tmp = tmp->next;
 		len++;
 	}
@@ -87,5 +88,4 @@ void build_cmd(t_shell *shell)
 		if (token)
 			token = token->next;
 	}
-	// print_all_cmd(shell->cmd);
 }
