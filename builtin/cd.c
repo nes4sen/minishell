@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../parsing/minishell.h"
 
 int     fonc_cd(char **arg, t_env *env)
 {

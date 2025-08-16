@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../parsing/minishell.h"
 
 int     var_with_equal(char **arg, int i, t_env **env)
 {

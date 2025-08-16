@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../parsing/minishell.h"
 
 char *find_home_repert(t_env *env)
 {

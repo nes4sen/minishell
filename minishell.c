@@ -6,16 +6,16 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 18:45:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/16 11:05:53 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "parsing/minishell.h"
 
 
 int main(int ac, char **av, char **envp)
 {
-	t_shell			shell;
+	t_shell		shell;
 
 	(void)ac;
 	(void)av;
@@ -25,11 +25,11 @@ int main(int ac, char **av, char **envp)
 	while (1)
 	{
 		shell.line = readline("minishell $> ");
-		if (!shell.line) // Ctrl+D (EOF)
+		if (!shell.line)
 		{
 			write(1, "exit\n", 5);
 			mm_free(FREE_ALL);
-			exit(1);
+			exit(shell.exit_s);
 		}
 		if (shell.line && *shell.line)
 			add_history(shell.line);

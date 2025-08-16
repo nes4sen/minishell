@@ -2,14 +2,14 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -Iinclude
 # -lreadline
 
-CFILES= build_cmd.c env.c  is_functions.c \
-		token_list.c  minishell.c join.c  \
-		expand_tools.c extoken_list.c     \
-		extokenizer.c  build_cmd_list.c\
-		rdrs_list.c parsing.c expand.c    \
-		syntax.c tokenizer.c utils.c      \
-		mini_libft.c cmd_args.c debug.c\
-		mmtracker.c llmmtracker.c heredoc.c  utils_init.c\
+CFILES= parsing/build_cmd.c parsing/env.c  parsing/is_functions.c \
+		parsing/token_list.c  minishell.c parsing/join.c  \
+		parsing/expand_tools.c parsing/extoken_list.c     \
+		parsing/extokenizer.c  parsing/build_cmd_list.c\
+		parsing/rdrs_list.c parsing/parsing.c parsing/expand.c    \
+		parsing/syntax.c parsing/tokenizer.c parsing/utils.c      \
+		parsing/mini_libft.c parsing/cmd_args.c debug.c\
+		parsing/mmtracker.c parsing/llmmtracker.c parsing/heredoc.c  parsing/utils_init.c\
 		builtin/cd.c builtin/echo.c builtin/eenv.c builtin/exit.c builtin/export.c\
 		builtin/pwd.c builtin/unset.c builtin/utilis_export.c builtin/utils_cd.c\
 		execution/execution.c execution/pipe.c execution/segnals.c execution/split.c execution/utils_ex.c\

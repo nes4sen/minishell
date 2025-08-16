@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../parsing/minishell.h"
 
 int     echo_fonc(char **arg, int status)
 {

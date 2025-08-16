@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:18:47 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/15 22:48:44 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/16 10:27:34 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../parsing/minishell.h"
 
 char	*ft_strjoin(char *dest, char *src)
 {

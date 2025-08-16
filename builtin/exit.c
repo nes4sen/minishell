@@ -1,5 +1,5 @@
 
-#include "../minishell.h"
+#include "../parsing/minishell.h"
 
 int     exit_fonc(char **arg, int last_code)
 {

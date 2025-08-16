@@ -1,6 +1,6 @@
 
 
-#include "../minishell.h"
+#include "../parsing/minishell.h"
 
 int     execute_command(t_cmd *cmd, t_env **env, int status)
 {
@@ -143,7 +143,7 @@ int     execute_simple_command(t_cmd *cmd, t_env **env, int status)
     char    *path = NULL;
     char    **env_array = NULL;
 
-    if(!env || !cmd || !ft_strcmp(cmd->arg[0],""))
+    if(!env || !cmd)
         return(-1);
     if(is_builin_command(cmd->arg[0]))
         return (execute_builtin(cmd, env, status));

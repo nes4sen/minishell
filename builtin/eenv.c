@@ -1,4 +1,4 @@
-#include "../minishell.h"
+#include "../parsing/minishell.h"
 
 
 int     env_fonc(char **arg, t_env *env)
