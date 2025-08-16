@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:48:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 22:48:03 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/16 17:13:01 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	get_next_type(t_token *tokens);
 
 /*--- SYNTAX ERROR ------------------------------------------------------------*/
 int				syntax_error(t_shell *shell);
-int				syntax_err_msg(char	*err, t_shell *shell);
+int				syntax_err_msg(char	*err);
 unsigned int	def_type(char *str);
 
 

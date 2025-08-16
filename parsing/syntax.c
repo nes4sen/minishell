@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/16 16:31:57 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/16 17:15:42 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,17 @@
 
 
 
-int	syntax_err_msg(char	*err, t_shell *shell)
+int	syntax_err_msg(char	*err)
 {
 	if (!ft_strcmp(err, "operator"))
 		write(1, "minishell: syntax error, invalid operator\n", 42);
 	else if (*err)
 	{
 		write(1, "minishell: syntax error near unexpected token ", 46);
-		write(1, err, ft_strlen(err));
+		write(1, err, 1);
 		write(1, "\n", 1);
 	}
-	if (shell)
-		shell->exit_s = 2;
-	return (1);
+	return (2);
 }
 int	quote_err(char *str)
 {
@@ -45,7 +43,7 @@ int	quote_err(char *str)
 		str++;
 	}
 	if (quote)
-		return (syntax_err_msg(&quote, NULL));
+		return (syntax_err_msg(&quote));
 	return (0);
 }
 
@@ -54,7 +52,7 @@ int	symbol_err(char *str)
 	if (is_symbole(*str))
 	{
 		if (def_type(str) == 0)
-			return (syntax_err_msg("operator", NULL));
+			return (syntax_err_msg("operator"));
 	}
 	return (0);
 }
@@ -64,22 +62,22 @@ int	syntax_error(t_shell *shell)
     t_token *tokens;
 
     if (!shell || !shell->tokens) 
-        return (1);
+        return (0);
     tokens = shell->tokens;
     if (tokens->type == PIPE)
-        return (syntax_err_msg("|", shell));
+        return (syntax_err_msg("|"));
     while (tokens)
     {
         if (tokens->str && quote_err(tokens->str)) 
-            return (1);
+            return (2);
         if (tokens->str && symbol_err(tokens->str))
-            return (1);
+            return (2);
         if (tokens->str && is_oprt(tokens->str)) 
         {
             if (!tokens->next) 
-                return (syntax_err_msg("newline", shell));
+                return (syntax_err_msg("newline"));
             else if (tokens->next->str && is_oprt(tokens->next->str))
-            	return (syntax_err_msg(tokens->next->str, shell));
+            	return (syntax_err_msg(tokens->next->str));
         }
         tokens = tokens->next;
     }

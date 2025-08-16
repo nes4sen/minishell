@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/16 11:05:53 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/16 17:40:28 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ int main(int ac, char **av, char **envp)
 		{
 			signal(SIGINT, SIG_IGN);
 			signal(SIGQUIT, SIG_IGN);	
-			shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s); // Corriger signature et récupérer status
-		} 
+			shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s);
+		}
+		// Debug: print exit status
+		printf("Current exit status: %d\n", shell.exit_s);
 		setup_signals();
 		init_structs_after_free(&shell);
 		mm_free(FREE_ALL_EXCEPT_ENV);
