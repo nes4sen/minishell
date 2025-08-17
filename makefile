@@ -28,9 +28,9 @@ $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ_FILES);
+	rm -f $(OBJ_FILES)
 fclean: clean
-	rm -f $(NAME);
+	rm -f $(NAME)
 re: fclean all
 
 

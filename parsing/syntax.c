@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 12:41:42 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/17 16:10:04 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ int	syntax_err_msg(char	*err)
 		write(1, "minishell: syntax error, invalid operator\n", 42);
 	else if (!ft_strcmp(err, "newline"))
 		write(1, "minishell: syntax error near unexpected token `newline'\n", 56);
+	else if (*err && (*err == '"' || *err == '\''))
+	{
+		write(1, "minishell: syntax error, unclosed ", 34);
+		write(1, err, 1);
+		write(1, " quote \n", 8);
+	}
 	else if (*err)
 		write(1, "minishell: syntax error too many operators\n", 43);
 	return (2);
@@ -91,14 +97,3 @@ int	syntax_error(t_shell *shell)
     }
     return (0);
 }
-
-
-/*
-
-echo  < |  		--> err
-echo <     		--> err
-echo  | <  		--> err
-echo  | < file  --> valid
-echo  > |  		--> err
-
-*/

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/16 13:21:39 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/17 15:35:08 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void get_expand(t_shell *shell, t_extoken *exhead)
 	exhead->str = result;
 }
 
-void	get_substr(char **substr, t_token **subhead)
+void	get_substr(char **substr, t_token **subhead, int type)
 {
 	
-	token_add_back(subhead, *substr, 0);
+	token_add_back(subhead, *substr, type);
 	*substr = "";
 }
 
@@ -63,7 +63,7 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 	{
 		str = extoken->str;
 		if (str && !*str)
-				get_substr(&substr, &subhead);
+				get_substr(&substr, &subhead, token->type);
 		while (*str)
 		{
 			while (*str && white_space(*str) && extoken->stat == NO_QUOTE)
@@ -71,7 +71,7 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 			while (*str && (!white_space(*str) || extoken->stat != NO_QUOTE))
 				substr = char_join(substr, *str++, 0);
 			if (*substr)
-				get_substr(&substr, &subhead);
+				get_substr(&substr, &subhead, token->type);
 		}
 		extoken = extoken->next;
 	}
@@ -125,13 +125,3 @@ void	expand_env_vars(t_shell *shell)
 	}
 	shell->tokens = save_point;
 }
-
-
-/*
-			subtoken logic problem
-
-		the problem -->    $vfkfof          //valid named variable not exist in the env
-
-the get_expand returns -->  if the var_name faund 
-
-*/

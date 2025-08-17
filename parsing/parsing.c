@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:53:41 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 10:28:19 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/17 15:50:50 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	parser(t_shell *shell)
 	int		syntax_exit;
 
 	tokenizer(shell);
+	// print_tokens(shell->tokens);
 	syntax_exit = syntax_error(shell);
 	if (!syntax_exit)
 	{

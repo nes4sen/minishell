@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:26:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/16 16:24:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/17 15:32:38 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char **space_for_args(t_token *token)
 
 void 	get_args(char **args, t_token *token, int *i)
 {
-	if (token->subtoken)
+	if (token->subtoken && token->type == CMD)
 	{
 		while (token->subtoken)
 		{

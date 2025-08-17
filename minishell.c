@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 11:59:36 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/17 15:18:42 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	shell = (t_shell){0}; // compound literal
 	init_env(envp, &shell);
-	
 	setup_signals();
 	while (1)
 	{

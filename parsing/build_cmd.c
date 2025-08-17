@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 23:43:12 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/17 15:40:45 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,13 @@ void get_rdr(t_rdr **head, t_token *token, unsigned int type)
 {
 	char *file_name;
 
-
 	if (token->next &&  token->next->type == file)
-		file_name = token->next->str;
+	{
+		if (token->next->subtoken)
+			file_name = token->next->subtoken->str;
+		else
+			file_name = token->next->str;
+	}
 	if (type >= 3 && type <= 5)
 		add_back_rdr(head, file_name, type);
 }
@@ -89,3 +93,4 @@ void build_cmd(t_shell *shell)
 			token = token->next;
 	}
 }
+// cpu cash l3 
