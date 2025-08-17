@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 10:16:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/16 13:04:50 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/17 11:39:37 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ char *find_env_var(t_shell *shell, char *var)
 {
 	t_env *env;
 
+	if (g_sigint)
+	{
+		shell->exit_s = 130;
+		g_sigint = 0;
+	}
 	env = shell->env;
 	if (!ft_strcmp(var, "?"))
 		return (ft_itoa(shell->exit_s));
