@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:18:47 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/16 10:27:34 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/16 23:38:50 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,3 +237,65 @@ int     ft_strchr(char *str, char c)
     }
     return(1);
 }
+
+int     red_in_pipe(t_cmd *cmd, t_env **env)
+{
+    char    *path = NULL;
+    char    **env_array = NULL;
+
+    signal(SIGINT, SIG_DFL);
+    signal(SIGQUIT, SIG_DFL);   
+    if(!ft_strchr(cmd->arg[0], '/'))
+    {
+        struct  stat buf;
+        if(stat(cmd->arg[0], &buf) == 0)
+        {
+            if(S_ISDIR(buf.st_mode))
+            {
+                write(2, "Is a directory\n",15);
+                exit(126);
+            }
+        }
+        if(access(cmd->arg[0], F_OK) != 0)
+        {
+            printf("%s: Nosuch file or directory\n", cmd->arg[0]);
+            exit(127);
+        }
+        if(access(cmd->arg[0], X_OK) != 0)
+        {
+            printf("%s: Permission denied\n", cmd->arg[0]);
+            exit(127);
+        }
+        env_array = env_to_char_array(*env);
+        if(execve(cmd->arg[0], cmd->arg, env_array) == -1)
+        {
+            perror("");
+            exit(127);
+        }
+    }
+    else
+    {
+        path = get_path_cmd(cmd->arg[0], env);
+        if(!path)
+        {
+            fprintf(stderr, "Command not found: %s\n", cmd->arg[0]);
+            exit(127);
+        }
+        else if(!ft_strcmp(path, cmd->arg[0]))
+        {
+            fprintf(stderr, "%s: Permission denied\n", cmd->arg[0]);
+            exit(127);
+        }
+        env_array = env_to_char_array(*env);
+        if(!env_array)
+            return(free(path), -1);
+        if(execve(path, cmd->arg, env_array) == -1)
+        {
+            perror("execve");
+            // free(path);
+            // free_env_array(env_array);
+            exit(127);
+        }
+    }
+    return(0);
+}  

@@ -6,6 +6,7 @@
 #include "parsing.h"
 #include "../debug.h"
 
+
 typedef struct s_fd_fils
 {
 	int	infil;
@@ -20,6 +21,7 @@ typedef struct s_mmenv
 	struct s_mmev	*next;
 }t_mmenv;
 
+extern int g_sigint;
 
 
 /*________|---utility functions---|_________*/
@@ -88,6 +90,7 @@ int     count_nuber_cmd(t_cmd *cmd);
 void    close_other_fil(int pipe[][2], int nbr_pipe, int fd1, int fd2);
 char    *get_path(t_env **env);
 char    *get_path_cmd(char *cmd, t_env **env);
+int     red_in_pipe(t_cmd *cmd, t_env **env);
 
 /*__________SPLIT________*/
 int     word_count(char const *s, char c);
@@ -97,6 +100,7 @@ char    **f_free(char **p);
 /*__________Redirection________*/
 int     execute_with_redirection(t_cmd *current, t_env **env, int status);
 int     open_check_file(t_cmd *cmd, t_fd_fils *fil);
+void    initial_fd_fils(t_fd_fils *fil);
 
 /*__________execution________*/
 int     execute_command(t_cmd *cmd, t_env **env, int status);

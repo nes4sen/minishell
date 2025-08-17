@@ -19,14 +19,14 @@ int    cd_zero_arg(char *tmp, char *pwd_now, char *cur,t_env *env)
         if(chdir(tmp) == -1)
         {
             printf("cd: no such file or directory: %s\n", tmp);
-            return(free(pwd_now), -1);
+            return(-1);
         }
         update_env(&env, "OLDPWD", pwd_now);
         cur = getcwd(NULL, 0);
         if(!cur)
         {
             perror("getcwd");
-            return(free(pwd_now), -1);
+            return(-1);
         }
         update_env(&env, "PWD", cur);
         free(cur);
@@ -34,7 +34,7 @@ int    cd_zero_arg(char *tmp, char *pwd_now, char *cur,t_env *env)
     else
     {
         printf("cd: HOME not set\n");
-        return(free(pwd_now), -1);
+        return(-1);
     }
     return(0);
 }
@@ -88,14 +88,14 @@ int    cd_with_arg(char **arg, char *pwd_now, char *cur, t_env *env)
         if (chdir(arg[1]) == -1)
         {
             printf("cd: no such file or directory: %s\n", arg[1]);
-            return(free(pwd_now), -1);
+            return(-1);
         }
         update_env(&env, "OLDPWD", pwd_now);
         cur = getcwd(NULL, 0);
         if(!cur)
         {
             perror("getcwd");
-            return(free(pwd_now), -1);
+            return(-1);
         }
         update_env(&env, "PWD", cur);
         free(cur);

@@ -20,13 +20,12 @@ int     execute_command(t_cmd *cmd, t_env **env, int status)
                 status = execute_whith_pipe(current, env, status);
                 return(status); // <-- Ajoute ce break pour ne pas exécuter plusieurs fois la pipeline
             }
-            // Gérer les redirections
             else if((current->rdr && (current->rdr->type == RDRIN || 
-                current->rdr->type == RDROUT || 
-                current->rdr->type == APPND)) || cmd->heredox)
-                {
-                    status = execute_with_redirection(current, env, status);
-                }
+            current->rdr->type == RDROUT || 
+            current->rdr->type == APPND)) || cmd->heredox)
+            {
+                status = execute_with_redirection(current, env, status);
+            }
             else
             {
                 if(is_builin_command(current->arg[0]))
@@ -35,6 +34,13 @@ int     execute_command(t_cmd *cmd, t_env **env, int status)
                     status = execute_simple_command(current, env, status);
             }
         }
+        //Gérer les redirections
+        else if((current->rdr && (current->rdr->type == RDRIN || 
+            current->rdr->type == RDROUT || 
+            current->rdr->type == APPND)) || cmd->heredox)
+            {
+                status = execute_with_redirection(current, env, status);
+            }
         current = current->next;
     }
     return(status);
@@ -44,8 +50,8 @@ void    initial_fd_fils(t_fd_fils *fil)
 {
     fil->infil = -1;
     fil->outfil = -1;
-    fil->save_stdout = -1;
-    fil->save_strdint = -1;
+    fil->save_stdout = dup(1);
+    fil->save_strdint = dup(0);
 }
 
 void    restore_fd(t_fd_fils *fils)
@@ -58,22 +64,22 @@ void    restore_fd(t_fd_fils *fils)
 
 int     execute_with_redirection(t_cmd *current, t_env **env, int status)
 {
-    int result;
-    // int save_fd;
-    t_rdr *red;
+    int result = 0;
+    //  int save_fd;
+    // t_rdr *red;
     t_fd_fils   fils;
     
-    red = current->rdr;
+    // red = current->rdr;
     initial_fd_fils(&fils);
-    while(red)
-    {
-        if(open_check_file(current, &fils) ==  -1)
-        {
-            return(-1);
-        }
-        red = red->next;
-    }
-    result = execute_simple_command(current, env, status);
+    // while(red)
+    // {
+        result = open_check_file(current, &fils);
+        if(result == -1 || result == 1)
+            return(result);
+    //     red = red->next;
+    // }
+    if(current && current->arg)
+        result = execute_simple_command(current, env, status);
     restore_fd(&fils);
     return(result);
 }
@@ -82,58 +88,70 @@ int     execute_with_redirection(t_cmd *current, t_env **env, int status)
 int     open_check_file(t_cmd *cmd, t_fd_fils *fil)
 {
 	t_rdr *red = cmd->rdr;
+    struct stat info;
+    int fd;
 
-    if(red->type == RDRIN)
+    while (red)
     {
-        fil->outfil = open(red->file, O_RDONLY);
-        if(fil->outfil == -1)
+        if(red->type == RDRIN)
         {
-            perror("open");
-            return(-1);
+            if(stat(red->file, &info) != 0)
+                return(printf("%s :no such file or directory\n", red->file), 1);
+            fil->outfil = open(red->file, O_RDONLY);
+            if(fil->outfil == -1)
+
+            {
+                perror("open");
+                return(-1);
+            }
+            // fil->save_stdout = dup(0);
+            dup2(fil->outfil, 0);
+            close(fil->outfil);
         }
-        fil->save_stdout = dup(0);
-        dup2(fil->outfil, 0);
-        close(fil->outfil);
-    }
-    else if(red->type == RDROUT)
-    {
-        fil->infil = open(red->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-        if(fil->infil == -1)
+        else if(red->type == RDROUT)
         {
-            perror("open");
-            return(-1);
+            fil->infil = open(red->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            if(fil->infil == -1)
+            {
+                perror("open");
+                return(-1);
+            }
+            // fil->save_strdint = dup(1);
+            dup2(fil->infil, 1);
+            close(fil->infil);
         }
-        fil->save_strdint = dup(1);
-        dup2(fil->infil, 1);
-        close(fil->infil);
-    }
-    else if(red->type == APPND)
-    {
-        fil->infil = open(red->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-        if(fil->infil == -1)
+        else if(red->type == APPND)
         {
-            perror("open");
-            return(-1);
+            fil->infil = open(red->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+            if(fil->infil == -1)
+            {
+                perror("open");
+                return(-1);
+            }
+            // fil->save_strdint = dup(1);
+            dup2(fil->infil, 1);
+            close(fil->infil);
         }
-        fil->save_strdint = dup(1);
-        dup2(fil->infil, 1);
-        close(fil->infil);
+        else if(cmd->heredox)
+        {
+            if(stat(red->file, &info) != 0)
+            {
+                return(printf("%s :no such file or directory\n", red->file), 1);
+            }
+            fd = open(cmd->heredox, O_RDONLY);
+	    	if(fd == -1)
+	    	{
+	    		perror("open");
+	    		return(-1);
+	    	}
+	    	// fil->save_stdout = dup(0);
+	    	dup2(fd, 0);
+	    	close(fd);
+        }
+        else
+            return(-1);
+        red = red->next;
     }
-    else if(cmd->heredox)
-    {
-		int fd;
-		fd = open(cmd->heredox, O_RDONLY);
-		if(fd == -1)
-		{
-			perror("open");
-			return(-1);
-		}
-		fil->save_stdout = dup(0);
-		dup2(fd, 0);
-		close(fd);
-    }
-    else
-        return(-1);
     return(0);
 }
 
@@ -143,7 +161,7 @@ int     execute_simple_command(t_cmd *cmd, t_env **env, int status)
     char    *path = NULL;
     char    **env_array = NULL;
 
-    if(!env || !cmd)
+    if(!env || !cmd )
         return(-1);
     if(is_builin_command(cmd->arg[0]))
         return (execute_builtin(cmd, env, status));
@@ -217,10 +235,10 @@ int     execute_simple_command(t_cmd *cmd, t_env **env, int status)
             waitpid(pid, &status, 0);
             if(WIFEXITED(status))
                 status = WEXITSTATUS(status);
+            else if(WIFSIGNALED(status))
+                status = 128 + WTERMSIG(status);
         }
     }
-    // Note: path est alloué et libéré dans le processus enfant
-    // Le parent ne doit pas le libérer
     return(status);
 }
 

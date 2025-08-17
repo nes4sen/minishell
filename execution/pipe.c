@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:19:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/16 10:28:47 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/17 04:33:57 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
 {
     int     nbr_pipe;
     int     i = 0;
-    char    *path = NULL;
+    // char    *path = NULL;
     int     (*pipes)[2];
     pid_t   *pids;
     pid_t   id;
@@ -114,18 +114,19 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             // Gérer les redirections
             if(current->rdr)
             {
+                printf("----------1--\n");
                 // t_rdr *red = current->rdr;
-                execute_with_redirection(cmd, env, status);
-                // while(red)
-                // {
-                //     if(open_check_file(red) == -1)
-                //     {
-                //         free(pipes);
-                //         free(pids);
-                //         exit(1);
-                //     }
-                //     red = red->next;
-                // }
+                t_fd_fils fils;
+                int stus;
+
+                initial_fd_fils(&fils);
+                    stus = open_check_file(current, &fils);
+                    if( stus == -1 || stus == 1)
+                    {
+                        free(pipes);
+                        free(pids);
+                        exit(1);
+                    }
             }
             
             // Exécuter la commande
@@ -138,70 +139,11 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             }
             else
             {
-                if(!ft_strchr(current->arg[0], '/'))
+                if(red_in_pipe(current, env) != 0)
                 {
-                    struct  stat buf;
-                    if(stat(current->arg[0], &buf) == 0)
-                    {
-                        if(S_ISDIR(buf.st_mode))
-                        {
-                            write(2, "Is a directory\n",15);
-                            free(pipes);
-                            free(pids);
-                            exit(126);
-                        }
-                    }
-                    if(access(current->arg[0], F_OK) != 0)
-                    {
-                        printf("%s: Nosuch file or directory\n", current->arg[0]);
-                        free(pipes);
-                        free(pids);
-                        exit(127);
-                    }
-                    if(access(current->arg[0], X_OK) != 0)
-                    {
-                        printf("%s: Permission denied\n", current->arg[0]);
-                        free(pipes);
-                        free(pids);
-                        exit(127);
-                    }
-                    char **env_array = env_to_char_array(*env);
-                    if(execve(current->arg[0], current->arg, env_array) == -1)
-                    {
-                        perror("");
-                        free(pipes);
-                        free(pids);
-                        exit(127);
-                    }
-                }
-                else
-                {
-                    
-                    path = get_path_cmd(current->arg[0], env);
-                    if(!path)
-                    {
-                        fprintf(stderr, "Command not found: %s\n", current->arg[0]);
-                        free(pipes);
-                        free(pids);
-                        exit(127);
-                    }
-                    else if(!ft_strcmp(path, current->arg[0]))
-                    {
-                        fprintf(stderr, "%s: Permission denied\n", cmd->arg[0]);
-                        free(pipes);
-                        free(pids);
-                        exit(127);
-                    }
-                    char **env_array = env_to_char_array(*env);
-                    execve(path, current->arg, env_array);
-                    
-                    // Si on arrive ici, execve a échoué
-                    perror("execve");
-                    free(path);
-                    free_env_array(env_array);
-                    free(pipes);
-                    free(pids);
-                    exit(1);
+                    int red_status = red_in_pipe(current, env);
+                    free(pipes), free(pids);
+                    return(red_status);
                 }
             }
         }

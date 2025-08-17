@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 21:27:08 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/17 04:34:11 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,26 +70,37 @@ void	expand_heredoc(char **line, t_shell *shell)
 	*line = result;
 }
 
+void handle_segnal_herd(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	exit(130);
+}
+
 void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 {
 	char	*line;
 	int		fd;
 	int		pid;
+	// int		status;
 
 	*fname = generate_filename(20);
 	fd = open(*fname, O_CREAT | O_WRONLY, 0644);
 	if (fd < 0)
 		exit(1);
+	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid == 0)
 	{
-		// setup_signals();
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, handle_segnal_herd);
 		while (1)
 		{
-			line = readline("> ");
+			line = readline(">");
 			if (!line)
+			{
+				write(2, "warning: here-document at line 1 delimited by end-of-file\n", 58);	
 				break;
+			}
 			if (!ft_strcmp(line, dlmtr))
 			{
 				mm_free(FREE_ALL);
@@ -101,9 +112,8 @@ void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 			write(fd, line, ft_strlen(line));
 			write(fd, "\n", 1);
 		}
+		exit(shell->exit_s);
 	}
-	else if (pid)
-		wait(NULL);
 }
 
 char	*prepare_to_heredoc(char *delemetre, t_shell *shell)
@@ -137,6 +147,7 @@ void	scan_for_heredoc(t_shell *shell)
 	t_token *token;
 	t_cmd	*cmd;
 	char	*file_name;
+	int status;
 
 	token = shell->tokens;
 	cmd = shell->cmd;
@@ -147,8 +158,15 @@ void	scan_for_heredoc(t_shell *shell)
 		{
 			if (token->type == DLMTR)
 				file_name = prepare_to_heredoc(token->str, shell);
+			wait(&status); 
+			if(WEXITSTATUS(status) == 130)
+			{
+				setup_signals();
+				return ;	
+			}
 			token = token->next;
 		}
+		setup_signals();
 		if (cmd)
 			cmd->heredox = file_name;
 		if (token)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mmtracker.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:37:39 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/09 18:48:49 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/17 10:10:42 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ void	mm_free(int	which_free)
 	{
 		free_env();
 		free_others();
-		// free fd
+		
 	}
 	else if (which_free == FREE_ALL_EXCEPT_ENV)
 	{
 		free_others();
-		//free fd
+		
 	}
 }
