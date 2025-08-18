@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 13:02:31 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/18 14:31:36 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void handle_segnal_herd(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
+	get_shell(NULL)->exit_s = 130;
 	exit(130);
 }
 
@@ -128,7 +129,6 @@ char	*prepare_to_heredoc(char *delemetre, t_shell *shell)
 		delemetre = remove_quote(delemetre);
 	}
 	heredoxing(&fname ,delemetre, expand_flag, shell);
-	wait(NULL);
 	return (fname);
 }
 
@@ -148,7 +148,7 @@ char	*prepare_to_heredoc(char *delemetre, t_shell *shell)
 // 		{
 // 			if (token->type == DLMTR)
 // 				file_name = prepare_to_heredoc(token->str, shell);
-// 			wait(&status); 
+// // 			wait(&status); 
 // 			if(WEXITSTATUS(status) == 130)
 // 			{
 // 				setup_signals();

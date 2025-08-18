@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 13:18:21 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/18 14:22:23 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ void print_all_cmd(t_cmd *cmd)
 void get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 {
 	char *file_name;
-	
+	// int status;
+
 	file_name = NULL;
 	if (token->next && token->next->type == DLMTR)
 		file_name = prepare_to_heredoc(token->next->str, s);
@@ -69,6 +70,12 @@ void get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 	}
 	if (type >= 2 && type <= 5 && file_name)
 		add_back_rdr(head, file_name, type);
+	
+	// if(WEXITSTATUS(status) == 130)
+	// {
+	// 	setup_signals();
+	// 	return NULL;
+	// }
 }
 
 void build_cmd(t_shell *shell)

@@ -20,3 +20,12 @@ void setup_signals(void)
     signal(SIGINT, handler_ctrl_c);
     signal(SIGQUIT, SIG_IGN);
 }
+
+t_shell *get_shell(t_shell *shell)
+{
+    static t_shell *save;
+
+    if(shell)
+        save = shell;
+    return save;
+}

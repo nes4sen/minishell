@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:19:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/18 09:38:54 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:20:12 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,174 +31,143 @@ int     count_nuber_cmd(t_cmd *cmd)
 
 int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
 {
-    int     nbr_pipe;
-    int     i = 0;
-    // char    *path = NULL;
-    int     (*pipes)[2];
-    pid_t   *pids;
-    pid_t   id;
-
-    if(!cmd)
-        return(-1);
-    
-    nbr_pipe = count_nuber_cmd(cmd) - 1;
-    if (nbr_pipe <= 0)
-        return execute_simple_command(cmd, env, status);
-
-    // Allouer mémoire pour pipes et PIDs
-    pipes = malloc(sizeof(int[2]) * nbr_pipe);
-    pids = malloc(sizeof(pid_t) * (nbr_pipe + 1));
-    if(!pipes || !pids)
-        return(-1);
-
-    // Créer tous les pipes
-    i = 0;
-    while(i < nbr_pipe)
-    {
-        if(pipe(pipes[i]) == -1)
-        {
-            perror("pipe");
-            free(pipes);
-            free(pids);
-            return(-1);
-        }
-        i++;
-    }
-
-    // Créer tous les processus
-    i = 0;
+    int pipefd[2];         // Un seul pipe à la fois
+    int prev_pipe = -1;    // Pour stocker le descripteur de lecture du pipe précédent
+    pid_t pid;
+    int child_status;
+    int final_status = 0;
     t_cmd *current = cmd;
-    while(current && i <= nbr_pipe)
+    
+    if (!cmd)
+        return (-1);
+    
+    // Pour chaque commande dans le pipeline
+    while (current)
     {
-        id = fork();
-        if(id == -1)
+        // Créer un nouveau pipe si ce n'est pas la dernière commande
+        if (current->next)
         {
-            perror("fork");
-            free(pipes);
-            free(pids);
-            return(-1);
+            if (pipe(pipefd) == -1)
+            {
+                perror("pipe");
+                if (prev_pipe != -1)
+                    close(prev_pipe);
+                return (-1);
+            }
         }
         
-        if(id == 0) // Processus enfant
+        pid = fork();
+        if (pid == -1)
+        {
+            perror("fork");
+            if (prev_pipe != -1)
+            close(prev_pipe);
+            if (current->next)
+            {
+                close(pipefd[0]);
+                close(pipefd[1]);
+            }
+            return (-1);
+        }
+        
+        if (pid == 0) // Processus enfant
         {
             signal(SIGINT, SIG_DFL);
             signal(SIGQUIT, SIG_DFL);
             
-            if(current->rdr)
+            // 1. D'abord, configurer l'entrée depuis le pipe précédent si nécessaire
+            if (prev_pipe != -1)
             {
-                // printf("----------1--\n");
-                // t_rdr *red = current->rdr;
+                dup2(prev_pipe, STDIN_FILENO);
+                close(prev_pipe);
+            }
+            
+            // 2. Configurer la sortie vers le nouveau pipe si ce n'est pas la dernière commande
+            if (current->next)
+            {
+                dup2(pipefd[1], STDOUT_FILENO);
+                close(pipefd[0]);
+                close(pipefd[1]);
+            }
+            
+            // 3. Appliquer les redirections pour cette commande
+            if (current->rdr)
+            {
                 t_fd_fils fils;
                 int stus;
 
                 initial_fd_fils(&fils);
                 stus = open_check_file(current, &fils);
-                if( stus == -1 || stus == 1)
-                {
-                    free(pipes);
-                    free(pids);
+                if (stus == -1 || stus == 1)
                     exit(1);
-                }
-            }
-            // Configuration des pipes selon la position
-            if(i == 0) // Premier processus
-            {
-                if(nbr_pipe > 0)
-                {
-                    dup2(pipes[0][1], STDOUT_FILENO);
-                }
-            } 
-            else if(i == nbr_pipe) // Dernier processus
-            {
-                dup2(pipes[i-1][0], STDIN_FILENO);
-            }
-            else // Processus du milieu
-            {
-                dup2(pipes[i-1][0], STDIN_FILENO);
-                dup2(pipes[i][1], STDOUT_FILENO);
             }
             
-            // Fermer TOUS les descripteurs de pipes dans l'enfant
-            int j = 0;
-            while(j < nbr_pipe)
-            {
-                close(pipes[j][0]);
-                close(pipes[j][1]);
-                j++;
-            }
-            
-            // Gérer les redirections
-            
-            // Exécuter la commande
-            if(is_builin_command(current->arg[0]))
+            // 4. Exécuter la commande
+            if (is_builin_command(current->arg[0]))
             {
                 int builtin_status = execute_builtin(current, env, status);
-                free(pipes);
-                free(pids);
                 exit(builtin_status);
             }
             else
             {
-                if(red_in_pipe(current, env) != 0)
+                if (red_in_pipe(current, env) != 0)
                 {
                     int red_status = red_in_pipe(current, env);
-                    free(pipes), free(pids);
-                    return(red_status);
+                    exit(red_status);
                 }
+                // Ajouter ici le code qui exécute la commande non-builtin
+                // ...
+                exit(1); // En cas d'échec d'exécution
             }
         }
         else // Processus parent
         {
-            pids[i] = id;
+            // Fermer le descripteur de lecture du pipe précédent s'il existe
+            if (prev_pipe != -1)
+                close(prev_pipe);
+            
+            // Si ce n'est pas la dernière commande, fermer l'écriture du pipe actuel
+            // et sauvegarder la lecture pour la prochaine itération
+            if (current->next)
+            {
+                close(pipefd[1]);
+                prev_pipe = pipefd[0];
+            }
+            else
+                prev_pipe = -1;
+            
             current = current->next;
-            i++;
         }
     }
     
-    // IMPORTANT: Fermer tous les pipes dans le parent
-    i = 0;
-    while(i < nbr_pipe)
-    {
-        close(pipes[i][0]);
-        close(pipes[i][1]);
-        i++;
-    }
-    
     // Attendre tous les processus enfants
-    int final_status = 0;
-    i = 0;
-    while(i <= nbr_pipe)
+    current = cmd;
+    while (current)
     {
         signal(SIGINT, SIG_IGN);
-        int child_status;
-        waitpid(pids[i], &child_status, 0);
+        wait(&child_status);
         
-        // Le status de retour est celui du dernier processus
-        
-            if(WIFEXITED(child_status))
-                final_status = WEXITSTATUS(child_status);
-            else 
+        if (WIFEXITED(child_status))
+            final_status = WEXITSTATUS(child_status);
+        else if (WIFSIGNALED(child_status))
+        {
+            if (WTERMSIG(child_status) == SIGINT)
             {
-                if (WTERMSIG(child_status) == SIGINT)
-                { 
-                    write(2, "\n", 1);
-                    final_status = 130;
-                    setup_signals();
-                    return (final_status);
-
-                }
-                else if (WTERMSIG(child_status) == SIGQUIT)
-                {
-                    write(2, "Quit\n", 5);
-                    final_status = 131;   
-                    setup_signals();
-                    return (final_status);
-                }
+                write(2, "\n", 1);
+                final_status = 130;
             }
-        i++;
+            else if (WTERMSIG(child_status) == SIGQUIT)
+            {
+                write(2, "Quit\n", 5);
+                final_status = 131;
+            }
+        }
+        
+        current = current->next;
     }
+    
     setup_signals();
-    return(final_status);
+    return (final_status);
 }
 
 void    close_other_fil(int pipes[][2], int nbr_pipe, int fd1, int fd2)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rdrs_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:18:47 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/09 21:46:21 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/18 14:22:11 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,5 @@ void	add_back_rdr(t_rdr **head, char *file, int type)
 			ptr = ptr->next;
 		ptr->next = create_node_rdr(file, type); 
 	}
+	wait(NULL);
 }

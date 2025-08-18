@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 00:20:30 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:11:32 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int main(int ac, char **av, char **envp)
 	setup_signals();
 	while (1)
 	{
+		get_shell(&shell);
 		setup_signals();
 		shell.line = readline("minishell $> ");
 		if (!shell.line)
@@ -34,14 +35,23 @@ int main(int ac, char **av, char **envp)
 		}
 		if (shell.line && *shell.line)
 		add_history(shell.line);
+		printf("-----%d---\n", shell.exit_s);
 		if (!parser(&shell))
 		{	
 			signal(SIGINT, SIG_IGN);
 			signal(SIGQUIT, SIG_IGN);
 			shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s);
 			if(shell.exit_s == -1)
+			{
+				init_structs_after_free(&shell);	
 				continue;
+			}
 			setup_signals();
+		}
+		if (g_sigint)
+		{
+			shell.exit_s = 130;
+			g_sigint = 0;
 		}
 		mm_free(FREE_ALL_EXCEPT_ENV);
 		init_structs_after_free(&shell);

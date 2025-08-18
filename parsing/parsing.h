@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:48:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 11:23:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/18 16:18:33 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct s_address_track
 	t_mmtrack	*tail; 
 	t_lltrack	*lhead;
 	t_lltrack	*ltail; 
-	t_env		*env; 
+	t_env		*env;
 }t_address_track;
 
 typedef struct s_shell
@@ -212,4 +212,6 @@ int		is_oprt(char *op);
 int		is_quote(char c);
 int 	is_quoted_str(char *str);
 
+
+t_shell *get_shell(t_shell *shell);
 #endif
