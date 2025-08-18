@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:19:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/17 04:33:57 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 09:38:54 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,22 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             signal(SIGINT, SIG_DFL);
             signal(SIGQUIT, SIG_DFL);
             
+            if(current->rdr)
+            {
+                // printf("----------1--\n");
+                // t_rdr *red = current->rdr;
+                t_fd_fils fils;
+                int stus;
+
+                initial_fd_fils(&fils);
+                stus = open_check_file(current, &fils);
+                if( stus == -1 || stus == 1)
+                {
+                    free(pipes);
+                    free(pids);
+                    exit(1);
+                }
+            }
             // Configuration des pipes selon la position
             if(i == 0) // Premier processus
             {
@@ -91,7 +107,7 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
                 {
                     dup2(pipes[0][1], STDOUT_FILENO);
                 }
-            }
+            } 
             else if(i == nbr_pipe) // Dernier processus
             {
                 dup2(pipes[i-1][0], STDIN_FILENO);
@@ -112,22 +128,6 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             }
             
             // Gérer les redirections
-            if(current->rdr)
-            {
-                printf("----------1--\n");
-                // t_rdr *red = current->rdr;
-                t_fd_fils fils;
-                int stus;
-
-                initial_fd_fils(&fils);
-                    stus = open_check_file(current, &fils);
-                    if( stus == -1 || stus == 1)
-                    {
-                        free(pipes);
-                        free(pids);
-                        exit(1);
-                    }
-            }
             
             // Exécuter la commande
             if(is_builin_command(current->arg[0]))

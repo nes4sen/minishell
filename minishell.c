@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 15:18:42 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/18 00:20:30 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int main(int ac, char **av, char **envp)
 			signal(SIGINT, SIG_IGN);
 			signal(SIGQUIT, SIG_IGN);
 			shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s);
+			if(shell.exit_s == -1)
+				continue;
 			setup_signals();
 		}
 		mm_free(FREE_ALL_EXCEPT_ENV);

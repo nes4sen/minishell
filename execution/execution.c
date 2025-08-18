@@ -68,14 +68,15 @@ int     execute_with_redirection(t_cmd *current, t_env **env, int status)
     //  int save_fd;
     // t_rdr *red;
     t_fd_fils   fils;
-    
+
     // red = current->rdr;
     initial_fd_fils(&fils);
-    // while(red)
-    // {
-        result = open_check_file(current, &fils);
-        if(result == -1 || result == 1)
-            return(result);
+    result = open_check_file(current, &fils);
+    if(result == -1 || result == 1)
+    {
+        restore_fd(&fils);
+        return(result);
+    }
     //     red = red->next;
     // }
     if(current && current->arg)
@@ -88,9 +89,13 @@ int     execute_with_redirection(t_cmd *current, t_env **env, int status)
 int     open_check_file(t_cmd *cmd, t_fd_fils *fil)
 {
 	t_rdr *red = cmd->rdr;
+    t_cmd *tmp = cmd;
     struct stat info;
     int fd;
 
+    // printf("%s | %d\n", cmd->heredox, red->type);
+    // printf("salam\n");
+    // printf("%s\n", cmd->heredox);
     while (red)
     {
         if(red->type == RDRIN)
@@ -99,7 +104,6 @@ int     open_check_file(t_cmd *cmd, t_fd_fils *fil)
                 return(printf("%s :no such file or directory\n", red->file), 1);
             fil->outfil = open(red->file, O_RDONLY);
             if(fil->outfil == -1)
-
             {
                 perror("open");
                 return(-1);
@@ -132,26 +136,39 @@ int     open_check_file(t_cmd *cmd, t_fd_fils *fil)
             dup2(fil->infil, 1);
             close(fil->infil);
         }
-        else if(cmd->heredox)
-        {
-            if(stat(red->file, &info) != 0)
-            {
-                return(printf("%s :no such file or directory\n", red->file), 1);
-            }
-            fd = open(cmd->heredox, O_RDONLY);
-	    	if(fd == -1)
-	    	{
-	    		perror("open");
-	    		return(-1);
-	    	}
-	    	// fil->save_stdout = dup(0);
-	    	dup2(fd, 0);
-	    	close(fd);
-        }
+        // else if(tmp->heredox)
+        // {
+        //     fd = open(tmp->heredox, O_RDONLY);
+        //     printf("test\n");
+	    // 	if(fd == -1)
+	    // 	{
+	    // 		perror("open");
+	    // 		return(-1);
+	    // 	}
+        //     printf("fd = %d\n", fd);
+	    // 	// fil->save_stdout = dup(0);
+	    // 	dup2(fd, 0);
+	    // 	close(fd);
+        // }
         else
             return(-1);
         red = red->next;
     }
+    if (tmp->heredox)
+    {
+        fd = open(tmp->heredox, O_RDONLY);
+        // printf("test\n");
+	    if(fd == -1)
+	    {
+	    	perror("open");
+	    	return(-1);
+	    }
+        // printf("fd = %d\n", fd);
+	    // fil->save_stdout = dup(0);
+	    dup2(fd, 0);
+	    close(fd);
+    }
+    
     return(0);
 }
 

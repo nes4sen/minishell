@@ -1,0 +1,13 @@
+builtin
+debug.c
+debug.h
+debug.o
+execution
+makefile
+minishell
+minishell.c
+minishell.o
+parsing
+readline.supp
+tt
+yy
