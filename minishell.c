@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 16:11:32 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 19:11:39 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	shell = (t_shell){0}; // compound literal
 	init_env(envp, &shell);
-	setup_signals();
 	while (1)
 	{
-		get_shell(&shell);
+		// get_shell(&shell);
 		setup_signals();
 		shell.line = readline("minishell $> ");
 		if (!shell.line)
@@ -34,8 +33,7 @@ int main(int ac, char **av, char **envp)
 			exit(shell.exit_s);
 		}
 		if (shell.line && *shell.line)
-		add_history(shell.line);
-		printf("-----%d---\n", shell.exit_s);
+			add_history(shell.line);
 		if (!parser(&shell))
 		{	
 			signal(SIGINT, SIG_IGN);

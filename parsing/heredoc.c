@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 14:31:36 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 19:28:34 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,16 @@ void handle_segnal_herd(int sig)
 	(void)sig;
 	write(1, "\n", 1);
 	get_shell(NULL)->exit_s = 130;
+	mm_free(FREE_ALL);
 	exit(130);
 }
 
-void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
+int		heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 {
 	char	*line;
 	int		fd;
 	int		pid;
-	// int		status;
+	int		status;
 
 	*fname = generate_filename(20);
 	fd = open(*fname, O_CREAT | O_WRONLY, 0644);
@@ -115,6 +116,15 @@ void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 		}
 		exit(shell->exit_s);
 	}
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+		return(mm_free(FREE_ALL_EXCEPT_ENV), shell->exit_s = 130, 130);
+	if (WEXITSTATUS(status) == 130)
+		return(mm_free(FREE_ALL_EXCEPT_ENV), shell->exit_s = 130, 130);
+	else if (WIFEXITED(status))
+		shell->exit_s = WEXITSTATUS(status);
+	setup_signals();
+	return (0);
 }
 
 char	*prepare_to_heredoc(char *delemetre, t_shell *shell)
@@ -128,7 +138,8 @@ char	*prepare_to_heredoc(char *delemetre, t_shell *shell)
 		expand_flag = 1;
 		delemetre = remove_quote(delemetre);
 	}
-	heredoxing(&fname ,delemetre, expand_flag, shell);
+	if (heredoxing(&fname ,delemetre, expand_flag, shell) == 130)
+		return (NULL);
 	return (fname);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:48:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 16:18:33 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 18:59:47 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ t_extoken	*create_extoken_list(char *str, int stat);
 
 
 /*--- COMMAND -----------------------------------------------------------------*/
-void	build_cmd(t_shell *shell);
+int		build_cmd(t_shell *shell);
 void	add_back_cmd(t_cmd **head, char **cmd, t_rdr *rdr);
 t_cmd 	*create_node_cmd(char **cmd, t_rdr *rdr);
 
@@ -174,13 +174,13 @@ void	get_args(char **args, t_token *token, int *arg_i);
 /*--- COMMAND RDRS-------------------------------------------------------------*/
 t_rdr	*create_node_rdr(char *file, int type);
 void	add_back_rdr(t_rdr **head, char *file, int type);
-void 	get_rdr(t_rdr **rdr,t_shell *s, t_token *t, unsigned int type);
+int 	get_rdr(t_rdr **rdr,t_shell *s, t_token *t, unsigned int type);
 
 
 /*--- HEREDOC -----------------------------------------------------------------*/
-void	scan_for_heredoc(t_shell *shell);
+// int	scan_for_heredoc(t_shell *shell);
 char	*prepare_to_heredoc(char *delemetre, t_shell *shell);
-void	heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell);
+int		heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell);
 void	expand_heredoc(char **line, t_shell *shell);
 char	*generate_filename(int len);
 

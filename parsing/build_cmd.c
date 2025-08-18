@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 14:22:23 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 19:22:31 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,18 @@ void print_all_cmd(t_cmd *cmd)
 	printf("->>>%d\n",len);
 }
 
-void get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
+int get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 {
 	char *file_name;
 	// int status;
 
 	file_name = NULL;
 	if (token->next && token->next->type == DLMTR)
+	{
 		file_name = prepare_to_heredoc(token->next->str, s);
+		if (!file_name)
+			return (130);
+	}
 	else if (token->next &&  token->next->type == file)
 	{
 		if (token->next->subtoken)
@@ -76,9 +80,10 @@ void get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 	// 	setup_signals();
 	// 	return NULL;
 	// }
+	return (0);
 }
 
-void build_cmd(t_shell *shell)
+int build_cmd(t_shell *shell)
 {
 	t_rdr	*rdr;
 	t_token	*token;	
@@ -93,7 +98,8 @@ void build_cmd(t_shell *shell)
 		arg_i = 0;
 		while (token && token->type != 1)
 		{
-			get_rdr(&rdr,shell, token, token->type);
+			if (get_rdr(&rdr,shell, token, token->type))
+				return (130);
 			get_args(args, token, &arg_i);
 			token = token->next;
 		}
@@ -102,6 +108,7 @@ void build_cmd(t_shell *shell)
 			token = token->next;
 	}
 	// print_all_cmd(shell->cmd);
+	return (0);
 }
 // cpu cash l3 
 // [<] [<] [ <<] [> ] [|]  [<<] [<] [ <<] [> ]
