@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 12:10:00 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/15 15:51:47 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/18 10:00:52 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void	print_cmd_struct(t_cmd *cmds)
 			}
 		}
 		printf("\n");
-		printf("Heredoc: %s\n", cmds->heredox ? cmds->heredox : "(null)");
 		
+	
 		rdr_tmp = cmds->rdr;
 		j = 0;
 		while (rdr_tmp)

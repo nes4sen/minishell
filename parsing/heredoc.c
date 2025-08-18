@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 04:34:11 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 11:38:38 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,50 +128,40 @@ char	*prepare_to_heredoc(char *delemetre, t_shell *shell)
 		delemetre = remove_quote(delemetre);
 	}
 	heredoxing(&fname ,delemetre, expand_flag, shell);
+	wait(NULL);
 	return (fname);
 }
 
-void	scan_for_heredoc(t_shell *shell)
-{
+// void	scan_for_heredoc(t_shell *shell)
+// {
+// 	t_token *token;
+// 	t_cmd	*cmd;
+// 	char	*file_name;
+// 	int		status;
 
-	/*
-	loop through the tokens until the end
-		loop through the token until thw pipe is found
-			if the token is a delemetere the function prepare_for_heredoc() is called
-				prepare_for_heredoc() --> 1_ flag the delemetre with expand_flag
-										  2_ remove the quotes from delemetre
-										  3_ heredoxing(&fname , delemetre, expand_flag, shell) --> 1_ generate a randome file name and open it
-										  															2_ create a child , why ? 	
-		
-	*/
-	t_token *token;
-	t_cmd	*cmd;
-	char	*file_name;
-	int status;
+// 	token = shell->tokens;
+// 	cmd = shell->cmd;
+// 	file_name = NULL;
+// 	while (token)
+// 	{
+// 		while (token && token->type != PIPE)
+// 		{
+// 			if (token->type == DLMTR)
+// 				file_name = prepare_to_heredoc(token->str, shell);
+// 			wait(&status); 
+// 			if(WEXITSTATUS(status) == 130)
+// 			{
+// 				setup_signals();
+// 				return ;
+// 			}
+// 			token = token->next;
+// 		}
+// 		setup_signals();
+// 		if (file_name)
+// 			add_back_rdr(&(cmd->rdr), file_name, HEREDOC);
+// 		if (token)
+// 			token = token->next;
+// 		cmd = cmd->next;
+// 	}
+// }
 
-	token = shell->tokens;
-	cmd = shell->cmd;
-	file_name = NULL;
-	while (token)
-	{
-		while (token && token->type != PIPE)
-		{
-			if (token->type == DLMTR)
-				file_name = prepare_to_heredoc(token->str, shell);
-			wait(&status); 
-			if(WEXITSTATUS(status) == 130)
-			{
-				setup_signals();
-				return ;	
-			}
-			token = token->next;
-		}
-		setup_signals();
-		if (cmd)
-			cmd->heredox = file_name;
-		if (token)
-			token = token->next;
-		cmd = cmd->next;
-	}
-}
- 

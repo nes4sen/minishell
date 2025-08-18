@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:48:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 06:04:49 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/18 11:23:46 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ typedef struct s_cmd
 {
 	char			**arg;
 	t_rdr			*rdr;
-	char			*heredox;
 	struct s_cmd	*next;
 } t_cmd;
 
@@ -175,7 +174,7 @@ void	get_args(char **args, t_token *token, int *arg_i);
 /*--- COMMAND RDRS-------------------------------------------------------------*/
 t_rdr	*create_node_rdr(char *file, int type);
 void	add_back_rdr(t_rdr **head, char *file, int type);
-void 	get_rdr(t_rdr **rdr, t_token *token, unsigned int type);
+void 	get_rdr(t_rdr **rdr,t_shell *s, t_token *t, unsigned int type);
 
 
 /*--- HEREDOC -----------------------------------------------------------------*/

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 15:40:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/18 12:14:30 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void print_arg(char **arg)
 	int i;
 
 	i = 0;
-	while (arg[i])
+	while (arg && arg[i])
 	{
 		printf("	Arg[%d]: %s\n", i, arg[i]);
 		i++;
@@ -47,25 +47,27 @@ void print_all_cmd(t_cmd *cmd)
 		print_arg(tmp->arg);
 		printf("\nrediractions:\n");
 		print_rdr(tmp->rdr);
-		printf("\nheredox: %s\n", cmd->heredox);
 		tmp = tmp->next;
 		len++;
 	}
 	printf("->>>%d\n",len);
 }
 
-void get_rdr(t_rdr **head, t_token *token, unsigned int type)
+void get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 {
 	char *file_name;
-
-	if (token->next &&  token->next->type == file)
+	
+	file_name = NULL;
+	if (token->next && token->next->type == DLMTR)
+		file_name = prepare_to_heredoc(token->next->str, s);
+	else if (token->next &&  token->next->type == file)
 	{
 		if (token->next->subtoken)
 			file_name = token->next->subtoken->str;
 		else
 			file_name = token->next->str;
 	}
-	if (type >= 3 && type <= 5)
+	if (type >= 2 && type <= 5 && file_name)
 		add_back_rdr(head, file_name, type);
 }
 
@@ -76,15 +78,15 @@ void build_cmd(t_shell *shell)
 	char	**args;
 	int		arg_i;
 
-	rdr = NULL;
 	token = shell->tokens;
 	while (token)
 	{
+		rdr = NULL;
 		args = space_for_args(token);
 		arg_i = 0;
 		while (token && token->type != 1)
 		{
-			get_rdr(&rdr, token, token->type);
+			get_rdr(&rdr,shell, token, token->type);
 			get_args(args, token, &arg_i);
 			token = token->next;
 		}
@@ -92,5 +94,8 @@ void build_cmd(t_shell *shell)
 		if (token)
 			token = token->next;
 	}
+	// print_all_cmd(shell->cmd);
 }
 // cpu cash l3 
+// [<] [<] [ <<] [> ] [|]  [<<] [<] [ <<] [> ]
+// [cmd]  | [cmd]
