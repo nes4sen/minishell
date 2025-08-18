@@ -22,7 +22,7 @@ int     execute_command(t_cmd *cmd, t_env **env, int status)
             }
             else if((current->rdr && (current->rdr->type == RDRIN || 
             current->rdr->type == RDROUT || 
-            current->rdr->type == APPND)) || current->rdr->type == HEREDOC)
+            current->rdr->type == APPND || current->rdr->type == HEREDOC)))
             {
                 status = execute_with_redirection(current, env, status);
             }
@@ -37,7 +37,7 @@ int     execute_command(t_cmd *cmd, t_env **env, int status)
         //Gérer les redirections
         else if((current->rdr && (current->rdr->type == RDRIN || 
             current->rdr->type == RDROUT || 
-            current->rdr->type == APPND)) || current->rdr->type == HEREDOC)
+            current->rdr->type == APPND || current->rdr->type == HEREDOC)))
             {
                 status = execute_with_redirection(current, env, status);
             }
