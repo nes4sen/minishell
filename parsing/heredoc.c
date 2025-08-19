@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 19:28:34 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/19 10:07:57 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 			line = readline(">");
 			if (!line)
 			{
-				write(2, "warning: here-document at line 1 delimited by end-of-file\n", 58);	
+				write(2, "warning: here-document delimited by end-of-file\n", 48);	
 				break;
 			}
 			if (!ft_strcmp(line, dlmtr))
