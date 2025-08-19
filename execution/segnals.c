@@ -6,7 +6,7 @@ void    handler_ctrl_c(int sig)
 {
     if(sig == SIGINT)
     {
-        g_sigint = 1;
+        g_sigint = SIGINT;
         rl_on_new_line();
         write(2, "\n", 1);
 		rl_replace_line("", 0);

@@ -8,7 +8,7 @@ CFILES= parsing/build_cmd.c parsing/env.c  parsing/is_functions.c \
 		parsing/extokenizer.c  parsing/build_cmd_list.c\
 		parsing/rdrs_list.c parsing/parsing.c parsing/expand.c    \
 		parsing/syntax.c parsing/tokenizer.c parsing/utils.c      \
-		parsing/mini_libft.c parsing/cmd_args.c debug.c\
+		parsing/mini_libft.c parsing/cmd_args.c \
 		parsing/mmtracker.c parsing/llmmtracker.c parsing/heredoc.c  parsing/utils_init.c\
 		builtin/cd.c builtin/echo.c builtin/eenv.c builtin/exit.c builtin/export.c\
 		builtin/pwd.c builtin/unset.c builtin/utilis_export.c builtin/utils_cd.c\

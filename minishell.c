@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/19 09:40:52 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/19 10:28:30 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	shell = (t_shell){0}; // compound literal
 	init_env(envp, &shell);
+	setup_signals();
 	while (1)
 	{
 		// get_shell(&shell);
-		setup_signals();
 		shell.line = readline("minishell $> ");
-		if (g_sigint)
+		if (g_sigint == SIGINT)
 		{
 			shell.exit_s = 130;
 			g_sigint = 0;
@@ -45,13 +45,13 @@ int main(int ac, char **av, char **envp)
 			signal(SIGQUIT, SIG_IGN);
 			shell.exit_s = execute_command(shell.cmd, &shell.env, shell.exit_s);
 			if(shell.exit_s == -1)
-			{
-				init_structs_after_free(&shell);	
+			{ 
+				init_structs_after_free(&shell);
 				continue;
 			}
 			setup_signals();
 		}
-		if (g_sigint)
+		if (g_sigint == SIGINT)
 		{
 			shell.exit_s = 130;
 			g_sigint = 0;

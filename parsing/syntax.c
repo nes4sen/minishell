@@ -6,12 +6,11 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 16:10:04 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/19 11:20:03 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 
 int	syntax_err_msg(char	*err)
@@ -30,6 +29,7 @@ int	syntax_err_msg(char	*err)
 		write(1, "minishell: syntax error too many operators\n", 43);
 	return (2);
 }
+
 int	quote_err(char *str)
 {
 	char	quote;

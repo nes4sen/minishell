@@ -4,8 +4,6 @@
 
 
 #include "parsing.h"
-#include "../debug.h"
-
 
 typedef struct s_fd_fils
 {
@@ -22,7 +20,6 @@ typedef struct s_mmenv
 }t_mmenv;
 
 extern int g_sigint;
-
 
 /*________|---utility functions---|_________*/
 char	*ft_strjoin(char *dest, char *src);

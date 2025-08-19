@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 19:22:31 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/19 13:38:27 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,11 @@ void print_all_cmd(t_cmd *cmd)
 	printf("->>>%d\n",len);
 }
 
+
+// cat << huhu
 int get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 {
 	char *file_name;
-	// int status;
 
 	file_name = NULL;
 	if (token->next && token->next->type == DLMTR)
@@ -74,12 +75,6 @@ int get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 	}
 	if (type >= 2 && type <= 5 && file_name)
 		add_back_rdr(head, file_name, type);
-	
-	// if(WEXITSTATUS(status) == 130)
-	// {
-	// 	setup_signals();
-	// 	return NULL;
-	// }
 	return (0);
 }
 

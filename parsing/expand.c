@@ -6,13 +6,12 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:46:42 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 15:35:08 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/19 13:36:12 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Poor logic
 void get_expand(t_shell *shell, t_extoken *exhead)
 {
 	char *str;
@@ -20,7 +19,7 @@ void get_expand(t_shell *shell, t_extoken *exhead)
 	int i;
 	char *var_name;
 	char *var_value;
-	
+
 	str = exhead->str;
 	result = "";
 	i = 0;
@@ -46,7 +45,6 @@ void get_expand(t_shell *shell, t_extoken *exhead)
 
 void	get_substr(char **substr, t_token **subhead, int type)
 {
-	
 	token_add_back(subhead, *substr, type);
 	*substr = "";
 }
@@ -56,7 +54,7 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 	t_token *subhead;
 	char	*substr;
 	char	*str;
-	
+
 	substr = "";
 	subhead = NULL;
 	while (extoken)
@@ -75,11 +73,8 @@ void	fill_subtoken(t_token *token, t_extoken *extoken)
 		}
 		extoken = extoken->next;
 	}
-	// print_subtokens(subhead);
 	token->subtoken = subhead;
 }
-
-
 
 void	prepare_for_expand(t_shell *shell)
 {
@@ -113,14 +108,17 @@ int is_quoted_str(char *str)
 void	expand_env_vars(t_shell *shell)
 {
 	t_token *save_point;
-	
+
 	save_point = shell->tokens;
 	while (shell->tokens)
 	{
-		if (is_expandable(shell->tokens->str)) 
-			prepare_for_expand(shell);
-		else if (is_quoted_str(shell->tokens->str)) 
-			shell->tokens->str = remove_quote(shell->tokens->str);
+		if (shell->tokens->type != DLMTR)
+		{
+			if (is_expandable(shell->tokens->str)) 
+				prepare_for_expand(shell);
+			else if (is_quoted_str(shell->tokens->str)) 
+				shell->tokens->str = remove_quote(shell->tokens->str);
+		}
 		shell->tokens = shell->tokens->next;
 	}
 	shell->tokens = save_point;

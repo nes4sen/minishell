@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/19 10:07:57 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/19 13:38:44 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,19 +53,19 @@ void	expand_heredoc(char **line, t_shell *shell)
 	{
 		if ((*line)[i] == '$')
 		{
-			var_name = extract_var_name(line[i]);
+			var_name = extract_var_name(*line + i);
 			if (var_name)
 			{
-				var_value = find_env_var(shell, var_value);
+				var_value = find_env_var(shell, var_name);
 				if (var_value)
 					result = str_join(result, var_value);
-				i+= ft_strlen(var_name);
+				i += ft_strlen(var_name) + 1;
 			}
 			else
 				result = char_join(result, '$', &i);
 		}
 		else
-			result =  char_join(result, (*line)[i], &i);
+			result = char_join(result, (*line)[i], &i);
 	}
 	*line = result;
 }
@@ -110,20 +110,23 @@ int		heredoxing(char **fname, char *dlmtr,int exflag, t_shell *shell)
 				exit(0);
 			}
 			if (exflag)
+			{
+				// printf("[%d]\n", exflag);
 				expand_heredoc(&line, shell);
+			}
 			write(fd, line, ft_strlen(line));
 			write(fd, "\n", 1);
 		}
 		exit(shell->exit_s);
 	}
 	waitpid(pid, &status, 0);
+	setup_signals();
 	if (WIFSIGNALED(status))
 		return(mm_free(FREE_ALL_EXCEPT_ENV), shell->exit_s = 130, 130);
 	if (WEXITSTATUS(status) == 130)
 		return(mm_free(FREE_ALL_EXCEPT_ENV), shell->exit_s = 130, 130);
 	else if (WIFEXITED(status))
 		shell->exit_s = WEXITSTATUS(status);
-	setup_signals();
 	return (0);
 }
 
@@ -132,10 +135,10 @@ char	*prepare_to_heredoc(char *delemetre, t_shell *shell)
 	char		*fname;
 	int			expand_flag;
 
-	expand_flag = 0;
+	expand_flag = 1;
 	if (is_quoted_str(delemetre))
 	{
-		expand_flag = 1;
+		expand_flag = 0;
 		delemetre = remove_quote(delemetre);
 	}
 	if (heredoxing(&fname ,delemetre, expand_flag, shell) == 130)

@@ -7,7 +7,7 @@ int     execute_command(t_cmd *cmd, t_env **env, int status)
     t_cmd   *current = NULL;
 
     if(!cmd || !env)
-        return(-1);
+        return(status);
     current = cmd;
     while(current)
     {
