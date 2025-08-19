@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 19:11:39 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/19 09:40:52 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int main(int ac, char **av, char **envp)
 		// get_shell(&shell);
 		setup_signals();
 		shell.line = readline("minishell $> ");
+		if (g_sigint)
+		{
+			shell.exit_s = 130;
+			g_sigint = 0;
+		}
 		if (!shell.line)
 		{
 			write(1, "exit\n", 5);
