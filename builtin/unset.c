@@ -47,9 +47,6 @@ void	delete_var_env(char *name, t_env **env)
             else
             {
                 rev->next = env_temp->next;
-                // free(env_temp->name);
-                // free(env_temp->value);
-                // free(env_temp);
                 break;
             }
 		}
@@ -61,13 +58,7 @@ void	delete_var_env(char *name, t_env **env)
 
 void    delete_first_node(t_env **env)
 {
-    // t_env   *temp;
-
-    // temp = *env;
     *env = (*env)->next;
-    // free(temp->name);
-    // free(temp->value);
-    // free(temp);
     indx_nods(env);
     return ;
 }

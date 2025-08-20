@@ -6,10 +6,10 @@ int     exit_fonc(char **arg, int last_code)
     int exit_code;
 
     exit_code = last_code;
-    printf("exit\n");
+    ft_putstr_fd("exit\n", 1);
     if(arg[1] && arg[2])
     {
-        printf("exit: too many arguments\n");
+        ft_putstr_fd("exit: too many arguments\n", 2);
         return(1);
     }
     if(arg[1])
@@ -25,14 +25,16 @@ int    help_exit_fonc(char **arg, int exit_code)
             i++;
     if(!arg[1][i])
     {
-        printf("exit: %s: numeric argument required\n", arg[1]);
+        ft_putstr_fd("exit: ", 2), ft_putstr_fd(arg[1], 2);
+        ft_putstr_fd(": numeric argument required\n", 2);
         exit(2);
     }
     while(arg[1][i])
     {
         if(!ft_isdigit(arg[1][i]))
         {
-            printf("exit: %s: numeric argument required\n", arg[1]);
+            ft_putstr_fd("exit: ", 2), ft_putstr_fd(arg[1], 2);
+            ft_putstr_fd(": numeric argument required\n", 2);
             exit(2);
         }
         i++;
@@ -43,6 +45,5 @@ int    help_exit_fonc(char **arg, int exit_code)
         exit_code = 256 + (exit_code % 256);
     else
         exit_code = exit_code % 256;
-    
     return(exit_code);
 }

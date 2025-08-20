@@ -1,0 +1,47 @@
+#include "../parsing/minishell.h"
+
+int     rdrin(t_rdr *red, t_fd_fils *fil)
+{
+    struct stat info;
+
+    if(stat(red->file, &info) != 0)
+    {
+        char *tmp = ft_strjoin(red->file, ": No such file or directory\n");
+        write(2, tmp, ft_strlen(tmp));
+        return(1);
+    }
+    fil->outfil = open(red->file, O_RDONLY);
+    if(fil->outfil == -1)
+        return(perror("open"), -1);
+    dup2(fil->outfil, 0), close(fil->outfil);
+    return(0);
+}
+
+int    rdrrout(t_rdr *red, t_fd_fils *fil)
+{
+    fil->infil = open(red->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if(fil->infil == -1)
+        return(perror("open"), -1);
+    dup2(fil->infil, 1), close(fil->infil);
+    return(0);
+}
+
+int    appnd(t_rdr *red, t_fd_fils *fil)
+{
+    fil->infil = open(red->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    if(fil->infil == -1)
+        return(perror("open"), -1);
+    dup2(fil->infil, 1), close(fil->infil);
+    return(0);
+}
+
+int    heredoc(t_rdr *red)
+{
+    int fd;
+
+    fd = open(red->file, O_RDONLY);
+    if(fd == -1)
+        return(perror("open"), -1);
+    dup2(fd, 0), close(fd);
+    return(0);
+}

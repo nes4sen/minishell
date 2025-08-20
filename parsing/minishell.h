@@ -42,7 +42,8 @@ int    cd_zero_arg(char *tmp, char *pwd_now, char *cur,t_env *env);
 int    cd_whith_1p(char *pwd_now, char *cur, t_env *env);
 int    cd_whith_2p(char *pwd_now, char *cur, t_env *env);
 int    cd_with_arg(char **arg, char *pwd_now, char *cur, t_env *env);
-char   *find_home_repert(t_env *env);
+char   *find_home_repert(t_env *env, char *str);
+void    ft_putstr_fd(char *s, int fd);
 
 // echo 
 int     echo_fonc(char **arg, int status);
@@ -88,6 +89,8 @@ void    close_other_fil(int pipe[][2], int nbr_pipe, int fd1, int fd2);
 char    *get_path(t_env **env);
 char    *get_path_cmd(char *cmd, t_env **env);
 int     red_in_pipe(t_cmd *cmd, t_env **env);
+int    help2_red_in_pipe(t_cmd *cmd, t_env **env);
+int   help1_red_in_pipe(t_cmd *cmd, t_env **env);
 
 /*__________SPLIT________*/
 int     word_count(char const *s, char c);
@@ -98,6 +101,10 @@ char    **f_free(char **p);
 int     execute_with_redirection(t_cmd *current, t_env **env, int status);
 int     open_check_file(t_cmd *cmd, t_fd_fils *fil);
 void    initial_fd_fils(t_fd_fils *fil);
+int     rdrin(t_rdr *red, t_fd_fils *fil);
+int     rdrrout(t_rdr *red, t_fd_fils *fil);
+int     appnd(t_rdr *red, t_fd_fils *fil);
+int     heredoc(t_rdr *red);
 
 /*__________execution________*/
 int     execute_command(t_cmd *cmd, t_env **env, int status);
@@ -106,6 +113,7 @@ int     execute_builtin(t_cmd *cmd, t_env **env , int last_code);
 int     is_builin_command(char *cmd);
 char    **env_to_char_array(t_env *env);
 void    free_env_array(char **env_array);
+int    command_args(t_cmd *current, t_env **env, int status);
 
 /*__________signal handlers________*/
 void    handler_ctrl_c(int sig);

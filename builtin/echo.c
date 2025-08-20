@@ -5,8 +5,10 @@ int     echo_fonc(char **arg, int status)
     int i = 1;
     int flag_newline = 1;
 
-    if(!arg || !arg[0] || !arg[i] || status > 10000000)
+    if(!arg || !arg[0])
         return(-1);
+    if(!arg[i])
+        return(write(1, "\n", 1), 0);
     // vérifier s'il y a flag -n ou plusieurs -nn ou -n -n
     i = echo_check_n(arg, &flag_newline, i);
   
@@ -20,7 +22,7 @@ int     echo_fonc(char **arg, int status)
     if(flag_newline)
         printf("\n");
     status = 0;
-    return(0);
+    return(status);
 }
 
 int    echo_check_n(char **arg, int *flag_newline, int i)

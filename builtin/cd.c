@@ -11,17 +11,16 @@ int     fonc_cd(char **arg, t_env *env)
     if(!arg)
         return(-1);
     nombre_arg = get_nbr_arg(arg);
-    pwd_now = getcwd(NULL, 0);
+    pwd_now = find_home_repert(env, "PWD");
     if(nombre_arg == 1)
         status = cd_zero_arg(tmp, pwd_now, current_getcwd, env);
     else if(nombre_arg == 2)
         status = cd_with_arg(arg, pwd_now, current_getcwd, env);
     else
     {
-        printf("cd: too many arguments\n");
-        return(free(pwd_now), -1);
+        ft_putstr_fd("cd: too many arguments\n", 2);
+        return(-1);
     }
-    free(pwd_now);
     return(status);
 }
 

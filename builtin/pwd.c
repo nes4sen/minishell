@@ -8,7 +8,7 @@ int		fonc_pwd(char **arg, t_env *env)
     }
 	if(arg[1])
 	{
-		printf("pwd: too many arguments\n");
+		ft_putstr_fd("pwd: too many arguments\n", 2);
 		return(1);
 	}
 	print_repert(env);
@@ -17,23 +17,19 @@ int		fonc_pwd(char **arg, t_env *env)
 
 void	print_repert(t_env *env)
 {
+	char	*result;
+
     if(!env)
     {
-        printf("No environment variables set.\n");
+        ft_putstr_fd("No environment variables set.\n", 2);
         return;
     }
-	while (env)
+	result = getcwd(NULL, 0);
+	if(!result)
 	{
-		if(ft_strcmp("PWD", env->name) == 0)
-		{
-			if(env->value != NULL)
-            {
-				printf("%s\n", env->value);
-				return;
-			}	
-				
-		}
-		env = env->next;
+		perror("getcwd");
+		return;
 	}
-    printf("%s\n", getcwd(NULL, 0));
+	ft_putstr_fd(result, 1), ft_putstr_fd("\n", 1);
+	free(result);
 }

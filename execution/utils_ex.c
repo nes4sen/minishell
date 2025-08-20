@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_ex.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdelhak <abdelhak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:18:47 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/16 23:38:50 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/20 19:19:33 by abdelhak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,42 +139,29 @@ char **env_to_char_array(t_env *env)
     
     if (!env)
         return NULL;
-    
-    // Compter le nombre de variables
     while (temp)
     {
         count++;
         temp = temp->next;
     }
-    
-    // Allouer le tableau
     env_array = mm_alloc(sizeof(char *) * (count + 1));
     if (!env_array)
         return NULL;
-    
-    // Remplir le tableau
     temp = env;
     while (temp)
     {
         // Calculer la taille nécessaire: name + "=" + value + '\0'
         int len = ft_strlen(temp->name) + 1 + ft_strlen(temp->value) + 1;
-        env_array[i] = malloc(len);
+        env_array[i] = mm_alloc(len);
         if (!env_array[i])
-        {
-            // free_env_array(env_array);
             return NULL;
-        }
-        
-        // Construire la chaîne "NAME=VALUE"
         ft_strcpy(env_array[i], temp->name);
         ft_strcat(env_array[i], "=");
         ft_strcat(env_array[i], temp->value);
-        
         i++;
         temp = temp->next;
     }
     env_array[i] = NULL;
-    
     return env_array;
 }
 
@@ -191,6 +178,18 @@ void free_env_array(char **env_array)
         i++;
     }
     free(env_array);
+}
+
+
+void    ft_putstr_fd(char *s, int fd)
+{
+    if (!s)
+        return;
+    while (*s)
+    {
+        write(fd, s, 1);
+        s++;
+    }
 }
 
 char *ft_strcat(char *dest, const char *src)
@@ -240,62 +239,20 @@ int     ft_strchr(char *str, char c)
 
 int     red_in_pipe(t_cmd *cmd, t_env **env)
 {
-    char    *path = NULL;
-    char    **env_array = NULL;
-
     signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);   
+    signal(SIGQUIT, SIG_DFL);
+    if(!cmd || !env || !cmd->arg || !cmd->arg[0])
+        return(-1);   
     if(!ft_strchr(cmd->arg[0], '/'))
     {
-        struct  stat buf;
-        if(stat(cmd->arg[0], &buf) == 0)
-        {
-            if(S_ISDIR(buf.st_mode))
-            {
-                write(2, "Is a directory\n",15);
-                exit(126);
-            }
-        }
-        if(access(cmd->arg[0], F_OK) != 0)
-        {
-            printf("%s: Nosuch file or directory\n", cmd->arg[0]);
-            exit(127);
-        }
-        if(access(cmd->arg[0], X_OK) != 0)
-        {
-            printf("%s: Permission denied\n", cmd->arg[0]);
-            exit(127);
-        }
-        env_array = env_to_char_array(*env);
-        if(execve(cmd->arg[0], cmd->arg, env_array) == -1)
-        {
-            perror("");
-            exit(127);
-        }
+        if(help1_red_in_pipe(cmd, env) == -1)
+            return (-1);
     }
     else
     {
-        path = get_path_cmd(cmd->arg[0], env);
-        if(!path)
-        {
-            fprintf(stderr, "Command not found: %s\n", cmd->arg[0]);
-            exit(127);
-        }
-        else if(!ft_strcmp(path, cmd->arg[0]))
-        {
-            fprintf(stderr, "%s: Permission denied\n", cmd->arg[0]);
-            exit(127);
-        }
-        env_array = env_to_char_array(*env);
-        if(!env_array)
-            return(free(path), -1);
-        if(execve(path, cmd->arg, env_array) == -1)
-        {
-            perror("execve");
-            // free(path);
-            // free_env_array(env_array);
-            exit(127);
-        }
+       if(help2_red_in_pipe(cmd, env) == -1)
+           return (-1);
     }
     return(0);
-}  
+}
+

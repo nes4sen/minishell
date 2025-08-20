@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abdelhak <abdelhak@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:19:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/18 16:20:12 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/20 18:06:22 by abdelhak         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,21 @@ int     count_nuber_cmd(t_cmd *cmd)
 
 int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
 {
-    int pipefd[2];         // Un seul pipe à la fois
-    int prev_pipe = -1;    // Pour stocker le descripteur de lecture du pipe précédent
+    int pipefd[2];
+    int prev_pipe = -1;
     pid_t pid;
     int child_status;
     int final_status = 0;
     t_cmd *current = cmd;
     
+    
+    int nb_cmd = count_nuber_cmd(cmd);
+    pid_t pids[nb_cmd];
+    int i = 0;
     if (!cmd)
         return (-1);
-    
-    // Pour chaque commande dans le pipeline
     while (current)
     {
-        // Créer un nouveau pipe si ce n'est pas la dernière commande
         if (current->next)
         {
             if (pipe(pipefd) == -1)
@@ -69,40 +70,31 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             }
             return (-1);
         }
-        
-        if (pid == 0) // Processus enfant
+        if (pid == 0) 
         {
             signal(SIGINT, SIG_DFL);
             signal(SIGQUIT, SIG_DFL);
-            
-            // 1. D'abord, configurer l'entrée depuis le pipe précédent si nécessaire
             if (prev_pipe != -1)
             {
                 dup2(prev_pipe, STDIN_FILENO);
                 close(prev_pipe);
             }
-            
-            // 2. Configurer la sortie vers le nouveau pipe si ce n'est pas la dernière commande
             if (current->next)
             {
                 dup2(pipefd[1], STDOUT_FILENO);
                 close(pipefd[0]);
                 close(pipefd[1]);
             }
-            
-            // 3. Appliquer les redirections pour cette commande
             if (current->rdr)
             {
                 t_fd_fils fils;
                 int stus;
-
+                
                 initial_fd_fils(&fils);
                 stus = open_check_file(current, &fils);
                 if (stus == -1 || stus == 1)
                     exit(1);
             }
-            
-            // 4. Exécuter la commande
             if (is_builin_command(current->arg[0]))
             {
                 int builtin_status = execute_builtin(current, env, status);
@@ -115,19 +107,14 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
                     int red_status = red_in_pipe(current, env);
                     exit(red_status);
                 }
-                // Ajouter ici le code qui exécute la commande non-builtin
-                // ...
-                exit(1); // En cas d'échec d'exécution
+                exit(1);
             }
         }
-        else // Processus parent
+        else
         {
-            // Fermer le descripteur de lecture du pipe précédent s'il existe
+            pids[i++] = pid;
             if (prev_pipe != -1)
                 close(prev_pipe);
-            
-            // Si ce n'est pas la dernière commande, fermer l'écriture du pipe actuel
-            // et sauvegarder la lecture pour la prochaine itération
             if (current->next)
             {
                 close(pipefd[1]);
@@ -139,33 +126,27 @@ int execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
             current = current->next;
         }
     }
-    
-    // Attendre tous les processus enfants
-    current = cmd;
-    while (current)
+    i = 0;
+    while (i < nb_cmd) 
     {
-        signal(SIGINT, SIG_IGN);
-        wait(&child_status);
-        
-        if (WIFEXITED(child_status))
-            final_status = WEXITSTATUS(child_status);
-        else if (WIFSIGNALED(child_status))
+        waitpid(pids[i], &child_status, 0);
+        if (i == nb_cmd - 1) 
         {
-            if (WTERMSIG(child_status) == SIGINT)
+            if (WIFEXITED(child_status)) 
             {
-                write(2, "\n", 1);
-                final_status = 130;
-            }
-            else if (WTERMSIG(child_status) == SIGQUIT)
+                final_status = WEXITSTATUS(child_status);
+            } 
+            else if (WIFSIGNALED(child_status)) 
             {
-                write(2, "Quit\n", 5);
-                final_status = 131;
+                if (WTERMSIG(child_status) == SIGINT)
+                    write(2, "\n", 1);
+                else if (WTERMSIG(child_status) == SIGQUIT)
+                    write(2, "Quit\n", 5);
+                final_status = 128 + WTERMSIG(child_status);
             }
         }
-        
-        current = current->next;
+        i++;
     }
-    
     setup_signals();
     return (final_status);
 }
@@ -182,10 +163,6 @@ void    close_other_fil(int pipes[][2], int nbr_pipe, int fd1, int fd2)
         i++;
     }
 }
-
-// pour pipe mais la methode de cree chaque pipe 
-
-
 
 char    *get_path(t_env **env)
 {
@@ -214,7 +191,7 @@ char   *get_path_cmd(char *cmd, t_env **env)
     path = get_path(env);
     if(!path || !*path)
     {
-        printf("%s: No such file or directory\n", cmd);
+        ft_putstr_fd(cmd, 2), ft_putstr_fd(": No such file or directory\n", 2);
         exit(127);
     }
     arg = ft_split(path, ':');
@@ -230,9 +207,7 @@ char   *get_path_cmd(char *cmd, t_env **env)
         if(access(full_path, F_OK) == 0)
         {
             if(access(full_path, X_OK) == 0)
-            {
-                return (full_path);
-            }
+                return (full_path);            
             else
                 save = cmd;
             // f_free(arg);

@@ -71,23 +71,14 @@ char    *get_var_value(char *str)
 int     mak_as_export(t_env **env, char *str)
 {
     char    *name;
-    // char    *value;
 
     name = get_var_name(str);
     if (!name)
         return (-1);
-    // value = get_var_value(str);
-    // if (!value)
-    // {
-    //     free(name);
-    //     return (-1);
-    // }
     if (check_var_exist_env(*env, name) == -1)
         add_back_env(env, name, NULL, (idx_nod(*env) + 1));
     else
         updat_env(env, name, NULL);
-    // free(name);
-    // free(value);
     return (0);
 }
 
@@ -95,7 +86,9 @@ void    export_error(char *str)
 {
     if (!str)
         return;
-    printf("export: `%s': No such file or directory\n", str);
+    ft_putstr_fd("export: `", 2);
+    ft_putstr_fd(str, 2);
+    ft_putstr_fd("': No such file or directory\n", 2);
 }
 
 int     is_valid_name(char *str)
@@ -162,20 +155,14 @@ void    add_double_quotes(char *value, char *name, t_env *env)
     new_str = mm_alloc(ft_strlen(value) + 1);
     if (!new_str)
         return;
-    // new_str[0] = '"';
     (1) &&(i = 1, j = 0);
     while (value[j])
         new_str[i++] = value[j++];
-    // new_str[i++] = '"';
     new_str[i] = '\0';
     while (env)
     {
         if (ft_strcmp(name, env->name) == 0)
-        {
-            // free(env->value);
-            // env->value = new_str;
             return;
-        }
         env = env->next;
     }
     free(new_str);
@@ -189,12 +176,15 @@ void    print_env(t_env *env)
             env = env->next;
         else if(env->value == NULL)
         {
-            printf("declare -x %s\n", env->name);
+            ft_putstr_fd("declare -x ", 1);
+            ft_putstr_fd(env->name, 1), ft_putstr_fd("\n", 1);
             env = env->next;
         }
         else
         {
-            printf("declare -x %s=\"%s\"\n", env->name, env->value);
+            ft_putstr_fd("declare -x ", 1);
+            ft_putstr_fd(env->name, 1), ft_putstr_fd("=\"", 1);
+            ft_putstr_fd(env->value, 1), ft_putstr_fd("\"\n", 1);
             env = env->next;
         }
     }
