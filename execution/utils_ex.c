@@ -12,45 +12,6 @@
 
 #include "../parsing/minishell.h"
 
-char	*ft_strjoin(char *dest, char *src)
-{
-	char	*p;
-	size_t	i;
-	size_t	j;
-
-	if (!dest || !src)
-		return (NULL);
-	i = 0;
-	j = 0;
-	p = mm_alloc(ft_strlen((char *)dest) + ft_strlen((char *)src) + 1);
-	if (!p)
-		return (NULL);
-	while (dest[i] != '\0')
-	{
-		p[i] = dest[i];
-		i++;
-	}
-	while (src[j] != '\0')
-	{
-		p[i + j] = src[j];
-		j++;
-	}
-	p[i + j] = '\0';
-	return (p);
-}
-
-void    print_str(char *str)
-{
-    int     i;
-
-    i = 0;
-    while (str[i])
-    {
-        write(1, &str[i], 1);
-        i++;
-    }
-}
-
 int	ft_isalnum(int c)
 {
 	return (((c >= '0') && (c <= '9')) || ((c >= 'A') && (c <= 'Z'))
@@ -87,172 +48,30 @@ char	*ft_strdup(const char *s1)
 	return (str);
 }
 
-int ft_strncmp(char *s1, char *s2, size_t n)
+int	ft_atoi(const char *str)
 {
-    size_t i;
+	int	i;
+	int	sign;
+	int	result;
 
-	if (!s1 || !s2)
-		return (1);
-    i = 0;
-    while (i < n && s1[i] && s2[i])
-    {
-        if (s1[i] != s2[i])
-            return (1);
-        i++;
-    }
-    if (i < n)
-        return (s1[i] != s2[i]);
-    return (0);
+	i = 0;
+	sign = 1;
+	result = 0;
+	if (!str)
+		return (0);
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r')
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		result = result * 10 + (str[i] - '0');
+		i++;
+	}
+	return (result * sign);
 }
-
-int ft_atoi(const char *str)
-{
-    int i = 0;
-    int sign = 1;
-    int result = 0;
-
-    if (!str)
-        return (0);
-    while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || 
-           str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
-        i++;
-    if (str[i] == '-' || str[i] == '+')
-    {
-        if (str[i] == '-')
-            sign = -1;
-        i++;
-    }
-    while (str[i] >= '0' && str[i] <= '9')
-    {
-        result = result * 10 + (str[i] - '0');
-        i++;
-    }
-    return (result * sign);
-}
-
-char **env_to_char_array(t_env *env)
-{
-    int count = 0;
-    t_env *temp = env;
-    char **env_array;
-    int i = 0;
-    
-    if (!env)
-        return NULL;
-    while (temp)
-    {
-        count++;
-        temp = temp->next;
-    }
-    env_array = mm_alloc(sizeof(char *) * (count + 1));
-    if (!env_array)
-        return NULL;
-    temp = env;
-    while (temp)
-    {
-        // Calculer la taille nécessaire: name + "=" + value + '\0'
-        int len = ft_strlen(temp->name) + 1 + ft_strlen(temp->value) + 1;
-        env_array[i] = mm_alloc(len);
-        if (!env_array[i])
-            return NULL;
-        ft_strcpy(env_array[i], temp->name);
-        ft_strcat(env_array[i], "=");
-        ft_strcat(env_array[i], temp->value);
-        i++;
-        temp = temp->next;
-    }
-    env_array[i] = NULL;
-    return env_array;
-}
-
-void free_env_array(char **env_array)
-{
-    int i = 0;
-    
-    if (!env_array)
-        return;
-    
-    while (env_array[i])
-    {
-        free(env_array[i]);
-        i++;
-    }
-    free(env_array);
-}
-
-
-void    ft_putstr_fd(char *s, int fd)
-{
-    if (!s)
-        return;
-    while (*s)
-    {
-        write(fd, s, 1);
-        s++;
-    }
-}
-
-char *ft_strcat(char *dest, const char *src)
-{
-    int i = 0;
-    int j = 0;
-    
-    while (dest[i])
-        i++;
-    while (src[j])
-    {
-        dest[i + j] = src[j];
-        j++;
-    }
-    dest[i + j] = '\0';
-    return dest;
-}
-
-int		idx_nod(t_env *env)
-{
-    int i;
-
-    i = 0;
-    while (env)
-    {
-        env->index = i++;
-        env = env->next;
-    }
-    return(i);
-}
-
-int     ft_strchr(char *str, char c)
-{
-    int     i;
-
-    if(!str)
-        return(1);
-    i = 0;
-    while(str[i])
-    {
-        if(str[i] == c)
-            return(0);
-        i++;
-    }
-    return(1);
-}
-
-int     red_in_pipe(t_cmd *cmd, t_env **env)
-{
-    signal(SIGINT, SIG_DFL);
-    signal(SIGQUIT, SIG_DFL);
-    if(!cmd || !env || !cmd->arg || !cmd->arg[0])
-        return(-1);   
-    if(!ft_strchr(cmd->arg[0], '/'))
-    {
-        if(help1_red_in_pipe(cmd, env) == -1)
-            return (-1);
-    }
-    else
-    {
-       if(help2_red_in_pipe(cmd, env) == -1)
-           return (-1);
-    }
-    return(0);
-}
-

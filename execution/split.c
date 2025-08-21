@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../parsing/minishell.h"
-
 
 int	word_count(char const *s, char c)
 {
@@ -72,9 +70,9 @@ char	**f_free(char **p)
 
 char	**ft_split(char const *s, char c)
 {
-	char	**p;
-	int		i;
-	int		flag;
+	char **p;
+	int i;
+	int flag;
 
 	if (!s)
 		return (NULL);

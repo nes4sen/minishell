@@ -5,6 +5,15 @@
 
 #include "parsing.h"
 
+typedef struct s_pipe_data
+{
+    int *prev_pipe;
+    int pipefd[2];
+    pid_t *pids;
+    int *cmd_index;
+} t_pipe_data;
+
+
 typedef struct s_fd_fils
 {
 	int	infil;
@@ -77,20 +86,24 @@ void	print_repert(t_env *env);
 
 //unset
 int     unset_fonc(char **arg, t_env **env);
-int     find_idex_var_env(char *str, t_env *env);
 void     indx_nods(t_env **env);
 void	delete_var_env(char *name, t_env **env);
 void    delete_first_node(t_env **env);
 
 /*__________PIPE________*/
 int     execute_whith_pipe(t_cmd *cmd, t_env **env, int status);
-int     count_nuber_cmd(t_cmd *cmd);
+int     count_number_cmd(t_cmd *cmd);
 void    close_other_fil(int pipe[][2], int nbr_pipe, int fd1, int fd2);
 char    *get_path(t_env **env);
 char    *get_path_cmd(char *cmd, t_env **env);
 int     red_in_pipe(t_cmd *cmd, t_env **env);
 int    help2_red_in_pipe(t_cmd *cmd, t_env **env);
 int   help1_red_in_pipe(t_cmd *cmd, t_env **env);
+int create_pipe_if_needed(t_cmd *current, int pipefd[2], int prev_pipe);
+void setup_child_redirections(t_cmd *current, int prev_pipe, int pipefd[2]);
+void execute_child_command(t_cmd *current, t_env **env, int status);
+int     child_process(t_cmd *cmd, t_env **env);
+
 
 /*__________SPLIT________*/
 int     word_count(char const *s, char c);
@@ -112,8 +125,8 @@ int     execute_simple_command(t_cmd *cmd, t_env **env, int status);
 int     execute_builtin(t_cmd *cmd, t_env **env , int last_code);
 int     is_builin_command(char *cmd);
 char    **env_to_char_array(t_env *env);
-void    free_env_array(char **env_array);
 int    command_args(t_cmd *current, t_env **env, int status);
+void    restore_fd(t_fd_fils *fils);
 
 /*__________signal handlers________*/
 void    handler_ctrl_c(int sig);
@@ -123,4 +136,4 @@ void    setup_signals(void);
 
 int     ft_strchr(char *str, char c);
 
-#endif  
+#endif
