@@ -53,6 +53,7 @@ int    cd_whith_2p(char *pwd_now, char *cur, t_env *env);
 int    cd_with_arg(char **arg, char *pwd_now, char *cur, t_env *env);
 char   *find_home_repert(t_env *env, char *str);
 void    ft_putstr_fd(char *s, int fd);
+int 	count_len(t_env *temp);
 
 // echo 
 int     echo_fonc(char **arg, int status);
@@ -125,8 +126,9 @@ int     execute_simple_command(t_cmd *cmd, t_env **env, int status);
 int     execute_builtin(t_cmd *cmd, t_env **env , int last_code);
 int     is_builin_command(char *cmd);
 char    **env_to_char_array(t_env *env);
-int    command_args(t_cmd *current, t_env **env, int status);
+int		command_args(t_cmd *current, t_env **env, int status);
 void    restore_fd(t_fd_fils *fils);
+int		part_parent(int pid, int status);
 
 /*__________signal handlers________*/
 void    handler_ctrl_c(int sig);

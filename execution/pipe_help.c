@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_help.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:33:56 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 16:30:28 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
-// 4. Fonction pour attendre les processus et récupérer le statut final
 static int	wait_and_get_final_status(pid_t pids[], int nb_cmd)
 {
 	int	i;
@@ -81,26 +92,26 @@ static int	process_command(t_cmd *current, t_pipe_data *data, t_env **env,
 // Fonction principale refactorisée (maintenant 24 lignes)
 int	execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
 {
-	int prev_pipe = -1;
-	t_cmd *current = cmd;
-	int nb_cmd = count_number_cmd(cmd);
-	pid_t pids[nb_cmd];
-	int i = 0;
-	t_pipe_data data;
+	int			prev_pipe;
+	t_cmd		*current;
+	pid_t		*pids;
+	int			i;
+	t_pipe_data	data;
 
-	if (!cmd)
+	pids = mm_alloc (count_number_cmd (cmd) * sizeof(pid_t));
+	if (!pids)
 		return (-1);
-
+	prev_pipe = -1;
+	current = cmd;
+	i = 0;
 	data.prev_pipe = &prev_pipe;
 	data.pids = pids;
 	data.cmd_index = &i;
-
 	while (current)
 	{
 		if (process_command(current, &data, env, status) == -1)
 			return (-1);
 		current = current->next;
 	}
-
-	return (wait_and_get_final_status(pids, nb_cmd));
+	return (wait_and_get_final_status(pids, count_number_cmd(cmd)));
 }

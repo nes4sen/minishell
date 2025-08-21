@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution_builtin.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:25:09 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 15:13:17 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 int	execute_builtin(t_cmd *cmd, t_env **env, int last_code)
 {
-	int status; //
-	status = last_code; // initialiser le status avec le dernier code de sortie
+	int	status;
+
+	status = last_code;
 	if (!cmd->arg || !env || !cmd->arg[0])
 		return (-1);
 	if (ft_strcmp(cmd->arg[0], "echo") == 0)
@@ -47,4 +60,14 @@ void	restore_fd(t_fd_fils *fils)
 	dup2(fils->save_strdint, 1);
 	close(fils->save_stdout);
 	close(fils->save_strdint);
+}
+
+int	part_parent(int pid, int status)
+{
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		status = 128 + WTERMSIG(status);
+	return (status);
 }

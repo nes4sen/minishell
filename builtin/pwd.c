@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pwd.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:43 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:20:13 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 int	fonc_pwd(char **arg, t_env *env)
@@ -30,13 +42,14 @@ void	print_repert(t_env *env)
 		perror("getcwd");
 		return ;
 	}
-	ft_putstr_fd(result, 1), ft_putstr_fd("\n", 1);
+	ft_putstr_fd(result, 1);
+	ft_putstr_fd("\n", 1);
 	free(result);
 }
 
 int	ft_strncmp(char *s1, char *s2, size_t n)
 {
-	size_t i;
+	size_t	i;
 
 	if (!s1 || !s2)
 		return (1);

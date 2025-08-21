@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export_help.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:32 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:17:58 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 char	*get_var_value(char *str)
@@ -40,7 +52,7 @@ void	export_error(char *str)
 
 int	has_equal_sign(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

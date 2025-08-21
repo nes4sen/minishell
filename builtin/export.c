@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:36 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:48:27 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 int	fonc_export(char **arg, t_env **env)
@@ -18,9 +30,7 @@ int	fonc_export(char **arg, t_env **env)
 	while (arg[i])
 	{
 		if (has_equal_sign(arg[i]))
-		{
 			status = var_with_equal(arg, i, env);
-		}
 		else
 			status = var_no_value(arg, i, env);
 		if (status != 0)
@@ -64,11 +74,9 @@ void	updat_env(t_env **env, char *name, char *value)
 	{
 		if (ft_strcmp(name, current->name) == 0)
 		{
-			// free(current->value);
 			if (value)
-				current->value = ft_strdup(value); // Allouer nouvelle mémoire
-			// Pour les variables sans valeur
-			return ; // Sortir après avoir trouvé et mis à jour
+				current->value = ft_strdup(value);
+			return ;
 		}
 		current = current->next;
 	}
@@ -78,7 +86,7 @@ void	add_double_quotes(char *value, char *name, t_env *env)
 {
 	char	*new_str;
 
-	int i, j;
+	int (i), (j);
 	if (!value || !name || !env)
 		return ;
 	new_str = mm_alloc(ft_strlen(value) + 1);

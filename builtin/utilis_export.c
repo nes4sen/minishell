@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utilis_export.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:52 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:21:24 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 void	print_env(t_env *env)
@@ -9,14 +21,17 @@ void	print_env(t_env *env)
 		else if (env->value == NULL)
 		{
 			ft_putstr_fd("declare -x ", 1);
-			ft_putstr_fd(env->name, 1), ft_putstr_fd("\n", 1);
+			ft_putstr_fd(env->name, 1);
+			ft_putstr_fd("\n", 1);
 			env = env->next;
 		}
 		else
 		{
 			ft_putstr_fd("declare -x ", 1);
-			ft_putstr_fd(env->name, 1), ft_putstr_fd("=\"", 1);
-			ft_putstr_fd(env->value, 1), ft_putstr_fd("\"\n", 1);
+			ft_putstr_fd(env->name, 1);
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(env->value, 1);
+			ft_putstr_fd("\"\n", 1);
 			env = env->next;
 		}
 	}
@@ -50,7 +65,6 @@ int	is_valid_name(char *str)
 	if (!str || !str[0])
 		return (0);
 	if (!ft_isalpha(str[0]) && str[0] != '_')
-		// premier caractere doit etre une lettre
 		return (0);
 	i = 1;
 	while (str[i])

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:12 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:13:37 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 int	fonc_cd(char **arg, t_env *env)
@@ -46,8 +58,9 @@ void	update_env(t_env **env, const char *name, const char *value)
 
 int	get_nbr_arg(char **arg)
 {
-	int i = 0;
+	int	i;
 
+	i = 0;
 	while (arg[i])
 		i++;
 	return (i);

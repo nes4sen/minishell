@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   echo.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:16 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:14:36 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 int	echo_fonc(char **arg, int status)
@@ -27,8 +39,8 @@ int	echo_fonc(char **arg, int status)
 
 int	echo_check_n(char **arg, int *flag_newline, int i)
 {
-	int j;
-	int flag_valid;
+	int	j;
+	int	flag_valid;
 
 	while (arg[i] && arg[i][0] == '-' && arg[i][1] && arg[i][1] == 'n')
 	{
@@ -43,13 +55,13 @@ int	echo_check_n(char **arg, int *flag_newline, int i)
 			}
 			j++;
 		}
-		if (flag_valid && j > 1) // on a plusieurs n et aussi que n
+		if (flag_valid && j > 1)
 		{
 			*flag_newline = 0;
 			i++;
 		}
 		else
-			break ; // on va traiter comme un argument normal
+			break ;
 	}
 	return (i);
 }

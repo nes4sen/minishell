@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdelhak <abdelhak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 15:19:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/20 18:06:22 by abdelhak         ###   ########.fr       */
+/*   Updated: 2025/08/21 14:45:03 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,9 @@ char	*get_path_cmd(char *cmd, t_env **env)
 	return (search_cmd_in_path(cmd, arg));
 }
 
-int	count_number_cmd(t_cmd *cmd) // Corrigé de count_nuber_cmd
+int	count_number_cmd(t_cmd *cmd)
 {
-	int count;
+	int	count;
 
 	if (!cmd)
 		return (0);

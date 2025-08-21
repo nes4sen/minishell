@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils_cd.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:56 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:24:15 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 char	*find_home_repert(t_env *env, char *str)
@@ -19,7 +31,8 @@ int	cd_zero_arg(char *tmp, char *pwd_now, char *cur, t_env *env)
 		if (chdir(tmp) == -1)
 		{
 			ft_putstr_fd("cd: no such file or directory: ", 2);
-			ft_putstr_fd(tmp, 2), ft_putstr_fd("\n", 2);
+			ft_putstr_fd(tmp, 2);
+			ft_putstr_fd("\n", 2);
 			return (-1);
 		}
 		if (pwd_now)
@@ -39,7 +52,6 @@ int	cd_zero_arg(char *tmp, char *pwd_now, char *cur, t_env *env)
 
 int	cd_whith_1p(char *pwd_now, char *cur, t_env *env)
 {
-	// Pas besoin de chdir(pwd_now);
 	if (pwd_now)
 		update_env(&env, "OLDPWD", pwd_now);
 	else
@@ -87,7 +99,7 @@ int	cd_with_arg(char **arg, char *pwd_now, char *cur, t_env *env)
 	if (chdir(arg[1]) == -1)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", 2);
-		ft_putstr_fd(arg[1], 2), ft_putstr_fd("\n", 2);
+		(ft_putstr_fd(arg[1], 2)), (ft_putstr_fd("\n", 2));
 		return (-1);
 	}
 	if (pwd_now)

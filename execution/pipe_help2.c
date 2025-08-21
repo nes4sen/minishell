@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_help2.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:40:45 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:44:29 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
 int	create_pipe_if_needed(t_cmd *current, int pipefd[2], int prev_pipe)
@@ -36,15 +48,14 @@ void	setup_child_redirections(t_cmd *current, int prev_pipe, int pipefd[2])
 // 3. Fonction pour exécuter la commande dans le processus enfant
 void	execute_child_command(t_cmd *current, t_env **env, int status)
 {
-		t_fd_fils fils;
-		int stus;
-	int	builtin_status;
-	int	red_status;
+	t_fd_fils	fils;
+	int			stus;
+	int			builtin_status;
+	int			red_status;
 
 	if (current->rdr)
 	{
-		initial_fd_fils(&fils);
-		stus = open_check_file(current, &fils);
+		(initial_fd_fils(&fils)), (stus = open_check_file(current, &fils));
 		if (stus == -1 || stus == 1)
 			exit(1);
 	}
@@ -84,9 +95,9 @@ char	*ft_strcat(char *dest, const char *src)
 
 char	*ft_strjoin(char *dest, char *src)
 {
-	char *p;
-	size_t i;
-	size_t j;
+	char	*p;
+	size_t	i;
+	size_t	j;
 
 	if (!dest || !src)
 		return (NULL);

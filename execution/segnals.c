@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   segnals.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:39:49 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:46:04 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../parsing/minishell.h"
 
-int		g_sigint = 0;
+int	g_sigint = 0;
 
 void	handler_ctrl_c(int sig)
 {
@@ -45,7 +57,7 @@ int	idx_nod(t_env *env)
 
 int	ft_strchr(char *str, char c)
 {
-	int i;
+	int	i;
 
 	if (!str)
 		return (1);

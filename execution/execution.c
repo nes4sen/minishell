@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execution.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:26:11 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 15:18:53 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
@@ -74,7 +84,7 @@ int	open_check_file(t_cmd *cmd, t_fd_fils *fil)
 
 int	child_process(t_cmd *cmd, t_env **env)
 {
-	if (!cmd || !env)
+	if (!cmd || !env || !cmd->arg || !cmd->arg[0])
 		return (-1);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
@@ -104,18 +114,14 @@ int	execute_simple_command(t_cmd *cmd, t_env **env, int status)
 		pid = fork();
 		if (pid == -1)
 			return (perror("fork"), -1);
-		if (pid == 0) // partie d'enfant
+		if (pid == 0)
 		{
 			if (child_process(cmd, env) == -1)
 				return (-1);
 		}
-		else if (pid > 0) // parent
+		else if (pid > 0)
 		{
-			waitpid(pid, &status, 0);
-			if (WIFEXITED(status))
-				status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				status = 128 + WTERMSIG(status);
+			status = part_parent(pid, status);
 		}
 	}
 	return (status);

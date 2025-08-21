@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:24 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 14:17:26 by aait-laf         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../parsing/minishell.h"
 
@@ -19,29 +30,29 @@ int	exit_fonc(char **arg, int last_code)
 
 int	help_exit_fonc(char **arg, int exit_code)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (arg[1][i] == '-' || arg[1][i] == '+')
 		i++;
 	if (!arg[1][i])
 	{
-		ft_putstr_fd("exit: ", 2), ft_putstr_fd(arg[1], 2);
-		ft_putstr_fd(": numeric argument required\n", 2), exit(2);
+		ft_putstr_fd("exit: ", 2);
+		ft_putstr_fd(arg[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		exit(2);
 	}
 	while (arg[1][i])
 	{
 		if (!ft_isdigit(arg[1][i]))
 		{
-			ft_putstr_fd("exit: ", 2), ft_putstr_fd(arg[1], 2);
-			ft_putstr_fd(": numeric argument required\n", 2), exit(2);
+			ft_putstr_fd("exit: ", 2);
+			ft_putstr_fd(arg[1], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
+			exit(2);
 		}
 		i++;
 	}
 	exit_code = ft_atoi(arg[1]);
-	if (exit_code < 0)
-		exit_code = 256 + (exit_code % 256);
-	else
-		exit_code = exit_code % 256;
-	return (exit_code);
+	return ((unsigned char)exit_code);
 }
