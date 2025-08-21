@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 21:34:10 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 23:50:53 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,3 +79,10 @@ int	main(int ac, char **av, char **envp)
 	}
 	return (shell.exit_s);
 }
+
+/*
+test cases : 
+
+$a | cat 
+
+*/
