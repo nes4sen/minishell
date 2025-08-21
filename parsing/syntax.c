@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 23:43:39 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 23:47:11 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,6 @@ int	symbol_err(char *str)
 	{
 		if (def_type(str) == 0)
 			return (syntax_err_msg("operator"));
-	}
-	return (0);
-}
-
-int	close_up_operatores(t_token *token)
-{
-	if (token->str && is_oprt(token->str))
-	{
-		if (!token->next)
-			return (syntax_err_msg("newline"));
-		if (token->type != PIPE && is_oprt(token->next->str))
-			return (syntax_err_msg("P"));
 	}
 	return (0);
 }
