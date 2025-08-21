@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 18:44:13 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:02:30 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	herechild(char *dlmtr, t_shell *shell, int exflag, int fd)
 		{
 			free(line);
 			write(2, "warning: here-document delimited by end-of-file\n", 48);
-			break;
+			break ;
 		}
 		if (!ft_strcmp(line, dlmtr))
 		{

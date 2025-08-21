@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_help2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:40:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 18:46:54 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:01:00 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,21 @@ void	execute_child_command(t_cmd *current, t_env **env, int status)
 	{
 		(initial_fd_fils(&fils)), (stus = open_check_file(current, &fils));
 		if (stus == -1 || stus == 1)
-			mm_free(FREE_ALL),exit(1);
+			(mm_free(FREE_ALL)), (exit(1));
 	}
 	if (is_builin_command(current->arg[0]))
 	{
 		builtin_status = execute_builtin(current, env, status);
-		mm_free(FREE_ALL), exit(builtin_status);
+		(mm_free(FREE_ALL)), (exit(builtin_status));
 	}
 	else
 	{
 		if (red_in_pipe(current, env) != 0)
 		{
 			red_status = red_in_pipe(current, env);
-			mm_free(FREE_ALL), exit(red_status);
+			(mm_free(FREE_ALL)), (exit(red_status));
 		}
-		mm_free(FREE_ALL), exit(1);
+		(mm_free(FREE_ALL)), (exit(1));
 	}
 }
 

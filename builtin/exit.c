@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:11:24 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 18:48:30 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:57:03 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	help_exit_fonc(char **arg, int exit_code)
 		ft_putstr_fd("exit: ", 2);
 		ft_putstr_fd(arg[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
-		mm_free(FREE_ALL), exit(2);
+		(mm_free(FREE_ALL)), (exit(2));
 	}
 	while (arg[1][i])
 	{
@@ -50,7 +50,7 @@ int	help_exit_fonc(char **arg, int exit_code)
 			ft_putstr_fd("exit: ", 2);
 			ft_putstr_fd(arg[1], 2);
 			ft_putstr_fd(": numeric argument required\n", 2);
-			mm_free(FREE_ALL), exit(2);
+			(mm_free(FREE_ALL)), (exit(2));
 		}
 		i++;
 	}

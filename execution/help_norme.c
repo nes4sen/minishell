@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_norme.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:27:35 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:06:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:59:16 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int	help1_red_in_pipe(t_cmd *cmd, t_env **env)
 	if (access(cmd->arg[0], X_OK) != 0)
 	{
 		tmp = ft_strjoin(cmd->arg[0], " : Permission denied\n");
-		(write(2, tmp, ft_strlen(tmp))), (mm_free(FREE_ALL)),(exit(127));
+		(write(2, tmp, ft_strlen(tmp))), (mm_free(FREE_ALL)), (exit(127));
 	}
 	env_array = env_to_char_array(*env);
 	if (execve(cmd->arg[0], cmd->arg, env_array) == -1)
-		(perror("execve")), (mm_free(FREE_ALL)),(exit(127));
+		(perror("execve")), (mm_free(FREE_ALL)), (exit(127));
 	return (0);
 }
 
@@ -72,9 +72,7 @@ int	help2_red_in_pipe(t_cmd *cmd, t_env **env)
 	char	**env_array;
 	char	*tmp;
 
-	path = NULL;
-	env_array = NULL;
-	tmp = NULL;
+	(1) && (path = NULL), (env_array = NULL), (tmp = NULL);
 	if (!cmd || !env || cmd->arg[0] == NULL)
 		return (-1);
 	path = get_path_cmd(cmd->arg[0], env);
@@ -86,13 +84,13 @@ int	help2_red_in_pipe(t_cmd *cmd, t_env **env)
 	else if (!ft_strcmp(path, cmd->arg[0]))
 	{
 		tmp = ft_strjoin(cmd->arg[0], " : Permission denied\n");
-		(write(2, tmp, ft_strlen(tmp))), (mm_free(FREE_ALL)),(exit(127));
+		(write(2, tmp, ft_strlen(tmp))), (mm_free(FREE_ALL)), (exit(127));
 	}
 	env_array = env_to_char_array(*env);
 	if (!env_array)
 		return (free(path), -1);
 	if (execve(path, cmd->arg, env_array) == -1)
-		(perror("execve")), (mm_free(FREE_ALL)),(exit(127));
+		(perror("execve")), (mm_free(FREE_ALL)), (exit(127));
 	return (0);
 }	
 

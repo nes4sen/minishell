@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:47:05 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 18:02:06 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 20:03:09 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_structs_after_free(t_shell *shell)
 	shell->mmtrack = NULL;
 }
 
-void handle_segnal_herd(int sig)
+void	handle_segnal_herd(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
