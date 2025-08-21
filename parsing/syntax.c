@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 17:52:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 17:18:13 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 23:43:39 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	syntax_err_msg(char *err)
 		write(2, err, 1);
 		write(2, " quote \n", 8);
 	}
+	else if (!ft_strcmp(err, "|"))
+		write(2, "minishell: syntax error near unexpected token `|'\n", 50);
 	else if (*err)
 		write(2, "minishell: syntax error too many operators\n", 43);
 	return (2);
@@ -77,10 +79,8 @@ int	syntax_error(t_shell *shell)
 {
 	t_token	*tokens;
 
-	if (!shell || !shell->tokens)
-		return (0);
 	tokens = shell->tokens;
-	if (tokens->type == PIPE)
+	if (tokens && tokens->type == PIPE)
 		return (syntax_err_msg("|"));
 	while (tokens)
 	{
@@ -92,7 +92,10 @@ int	syntax_error(t_shell *shell)
 		{
 			if (!tokens->next)
 				return (syntax_err_msg("newline"));
-			if (tokens->type != PIPE && is_oprt(tokens->next->str))
+			if (def_type(tokens->str) != 1 && is_oprt(tokens->next->str))
+				return (syntax_err_msg("too many"));
+			else if (def_type(tokens->str) == 1
+				&& def_type(tokens->next->str) == 1)
 				return (syntax_err_msg("|"));
 		}
 		tokens = tokens->next;
