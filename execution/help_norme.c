@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:27:35 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 18:56:24 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 19:06:45 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ int	help2_red_in_pipe(t_cmd *cmd, t_env **env)
 	char	**env_array;
 	char	*tmp;
 
-	(1) && (path = NULL), (env_array = NULL), (tmp = NULL);
+	path = NULL;
+	env_array = NULL;
+	tmp = NULL;
 	if (!cmd || !env || cmd->arg[0] == NULL)
 		return (-1);
 	path = get_path_cmd(cmd->arg[0], env);
