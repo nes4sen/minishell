@@ -10,38 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
-
-char *str_join(char *old, char *new)
+char	*str_join(char *old, char *new)
 {
-    char *result;
-    int old_len;
-    int new_len;
-    
-    if (!old && !new)
-        return (NULL);
-    old_len = ft_strlen(old);
-    new_len = ft_strlen(new);
-    result = mm_alloc(old_len + new_len + 1);
-    ft_strcpy(result, old);
-    ft_strcpy(result + old_len, new);
-    return (result);
+	char	*result;
+	int		old_len;
+	int		new_len;
+
+	if (!old && !new)
+		return (NULL);
+	old_len = ft_strlen(old);
+	new_len = ft_strlen(new);
+	result = mm_alloc(old_len + new_len + 1);
+	ft_strcpy(result, old);
+	ft_strcpy(result + old_len, new);
+	return (result);
 }
 
-char *char_join(char *old, char c, int *index)
+char	*char_join(char *old, char c, int *index)
 {
-    char *result;
-    int old_len;
+	char	*result;
+	int		old_len;
 
-    if (!old)
-        return (NULL);
-    old_len = ft_strlen(old);
-    result = mm_alloc(old_len + 2);
-    ft_strcpy(result, old);
-    result[old_len] = c;
-    result[old_len + 1] = '\0';
+	if (!old)
+		return (NULL);
+	old_len = ft_strlen(old);
+	result = mm_alloc(old_len + 2);
+	ft_strcpy(result, old);
+	result[old_len] = c;
+	result[old_len + 1] = '\0';
 	if (index)
 		*index += 1;
-    return (result);
+	return (result);
 }

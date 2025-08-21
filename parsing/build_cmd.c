@@ -6,58 +6,15 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 10:22:45 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/19 13:38:27 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 12:38:48 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
-void print_arg(char **arg)
+int	get_rdr(t_rdr **head, t_shell *s, t_token *token, unsigned int type)
 {
-	int i;
-
-	i = 0;
-	while (arg && arg[i])
-	{
-		printf("	Arg[%d]: %s\n", i, arg[i]);
-		i++;
-	}
-}
-
-void print_rdr(t_rdr *rdr)
-{
-	t_rdr *tmp;
-
-	tmp = rdr;
-	while (tmp)
-	{
-		printf("	Rdr file: %s\n	type: %d\n", tmp->file, tmp->type);
-		tmp = tmp->next;
-	}
-}
-
-void print_all_cmd(t_cmd *cmd)
-{
-	t_cmd *tmp;
-	int len = 0;
-	tmp = cmd;
-	while (tmp)
-	{
-		printf("\nCommand:\n");
-		print_arg(tmp->arg);
-		printf("\nrediractions:\n");
-		print_rdr(tmp->rdr);
-		tmp = tmp->next;
-		len++;
-	}
-	printf("->>>%d\n",len);
-}
-
-
-// cat << huhu
-int get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
-{
-	char *file_name;
+	char	*file_name;
 
 	file_name = NULL;
 	if (token->next && token->next->type == DLMTR)
@@ -66,7 +23,7 @@ int get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 		if (!file_name)
 			return (130);
 	}
-	else if (token->next &&  token->next->type == file)
+	else if (token->next && token->next->type == file)
 	{
 		if (token->next->subtoken)
 			file_name = token->next->subtoken->str;
@@ -78,10 +35,10 @@ int get_rdr(t_rdr **head,t_shell *s, t_token *token, unsigned int type)
 	return (0);
 }
 
-int build_cmd(t_shell *shell)
+int	build_cmd(t_shell *shell)
 {
 	t_rdr	*rdr;
-	t_token	*token;	
+	t_token	*token;
 	char	**args;
 	int		arg_i;
 
@@ -93,18 +50,14 @@ int build_cmd(t_shell *shell)
 		arg_i = 0;
 		while (token && token->type != 1)
 		{
-			if (get_rdr(&rdr,shell, token, token->type))
+			if (get_rdr(&rdr, shell, token, token->type))
 				return (130);
 			get_args(args, token, &arg_i);
 			token = token->next;
 		}
-		add_back_cmd(&(shell->cmd), args, rdr); // check if i should pass * or **
+		add_back_cmd(&(shell->cmd), args, rdr);
 		if (token)
 			token = token->next;
 	}
-	// print_all_cmd(shell->cmd);
 	return (0);
 }
-// cpu cash l3 
-// [<] [<] [ <<] [> ] [|]  [<<] [<] [ <<] [> ]
-// [cmd]  | [cmd]

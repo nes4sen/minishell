@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abdelhak <abdelhak@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/20 17:56:29 by abdelhak         ###   ########.fr       */
+/*   Updated: 2025/08/21 18:20:24 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing/minishell.h"
+#include "headers/minishell.h"
 
 
 int main(int ac, char **av, char **envp)
@@ -19,12 +19,12 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	shell = (t_shell){0}; // compound literal
+	shell = (t_shell){0};
 	init_env(envp, &shell);
 	setup_signals();
 	while (1)
 	{
-		// get_shell(&shell);
+
 		shell.line = readline("minishell $> ");
 		if (g_sigint == SIGINT)
 		{
@@ -35,8 +35,11 @@ int main(int ac, char **av, char **envp)
 		{
 			write(1, "exit\n", 5);
 			mm_free(FREE_ALL);
+			free(shell.line);
 			exit(shell.exit_s);
 		}
+		else
+			address_tracker()->line =shell.line;
 		if (shell.line && *shell.line)
 			add_history(shell.line);
 		if (!parser(&shell))

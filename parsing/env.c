@@ -6,91 +6,47 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:54:23 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/09 18:47:48 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 16:58:46 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-
-int	ft_strlen(char *str)
-{
-	int i;
-	
-	if(!str)
-		return (0);
-	i = 0;
-	while(str[i])
-		i++;
-	return (i);
-}
-
-void	ft_strcpy(char *dst, char *src)
-{
-	int i;
-	
-	if (!dst || !src)
-		return ;
-	i = 0;
-	while (src[i])
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	dst[i] = '\0';
-}
+#include "../headers/minishell.h"
 
 t_env	*creat_node_env(char *name, char *value, int i)
 {
-	t_env  *env;
-	
-	// if name or value is null
-	if(!name)
-		return(NULL);
+	t_env	*env;
 
 	env = malloc(sizeof(t_env));
 	if (!env)
-		return(NULL);
-
-	// Initialiser tous les champs
-    env->next = NULL;
-    env->name = NULL;
-    env->value = NULL;
-    env->index = i;
-	
+		alloc_faild_cleanup();
 	env->next = NULL;
-
+	env->name = NULL;
+	env->value = NULL;
+	env->index = i;
+	env->next = NULL;
 	env->name = malloc(ft_strlen(name) + 1);
 	if (!env->name)
-	{
-		// free(env);
-		// return(NULL);
-	}
+		alloc_faild_cleanup();
 	ft_strcpy(env->name, name);
-	if(value == NULL)
+	if (value == NULL)
 		env->value = NULL;
 	else
 	{
 		env->value = malloc(ft_strlen(value) + 1);
 		if (!env->value)
-		{
-			// free(env->name);
-			// free(env);
-		}
+			alloc_faild_cleanup();
 		ft_strcpy(env->value, value);
 	}
 	return (env);
 }
 
-void	add_back_env(t_env **head, char *name,char *value, int i)
+void	add_back_env(t_env **head, char *name, char *value, int i)
 {
-	t_env *tmp;
-	
+	t_env	*tmp;
+
 	if (!*head)
-	{
 		*head = creat_node_env(name, value, i);
-	}
-	else 
+	else
 	{
 		tmp = *head;
 		while (tmp->next)
@@ -99,9 +55,9 @@ void	add_back_env(t_env **head, char *name,char *value, int i)
 	}
 }
 
-char *get_env_name(char *str)
+char	*get_env_name(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)
@@ -110,13 +66,14 @@ char *get_env_name(char *str)
 		i++;
 	return (ft_substr(0, i, str));
 }
+
 char	*get_env_value(char *str)
 {
-	int i;
-	
+	int	i;
+
 	if (!str)
 		return (NULL);
-	while(*str != '=')
+	while (*str != '=')
 		str++;
 	i = 0;
 	while (str[i])
@@ -124,36 +81,21 @@ char	*get_env_value(char *str)
 	return (ft_substr(1, i, str));
 }
 
-t_env *get_env(char **envp)
+t_env	*get_env(char **envp)
 {
-	int i;
-	char *name;
-	char *value;
-	t_env *head;
-	
+	int		i;
+	char	*name;
+	char	*value;
+	t_env	*head;
+
 	head = NULL;
 	i = 0;
 	while (envp[i])
 	{
 		name = get_env_name(envp[i]);
 		value = get_env_value(envp[i]);
-		add_back_env(&head,name, value, i);
+		add_back_env(&head, name, value, i);
 		i++;
 	}
-	
-	return head;
+	return (head);
 }
-
-
-// int main()
-// {
-// 	t_env *env;
-	
-	
-// 	env = get_env(__environ);
-// 	while (env)
-// 	{
-// 		printf("name = [%s]\nvakue = [%s]\nindex = [%d]\n",env->name, env->value, env->index);
-// 		env = env->next;
-// 	}
-// }

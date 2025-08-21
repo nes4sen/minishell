@@ -6,14 +6,20 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:42:26 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/14 12:08:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:19:13 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
+void	alloc_faild_cleanup(void)
+{
+	write(2, "minishell: cannot allocate memory\n", 34);
+	mm_free(FREE_ALL);
+	exit(2);
+}
 
-int white_space(char c)
+int	white_space(char c)
 {
 	if (c == ' ' || c == '\n' || c == '\t')
 		return (c);
@@ -35,8 +41,9 @@ void	get_next_type(t_token *tokens)
 				tokens->next->type = DLMTR;
 		}
 		tokens = tokens->next;
-	}	
+	}
 }
+
 unsigned int	def_type(char *str)
 {
 	unsigned int	tmp;
@@ -54,9 +61,10 @@ unsigned int	def_type(char *str)
 		tmp = 4;
 	return (tmp);
 }
+
 void	get_type(t_token *tokens)
 {
-	t_token *tmp;
+	t_token	*tmp;
 
 	tmp = tokens;
 	while (tokens)
@@ -66,7 +74,3 @@ void	get_type(t_token *tokens)
 	}
 	get_next_type(tmp);
 }
-
-
-
-

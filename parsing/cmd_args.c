@@ -6,29 +6,28 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 11:26:52 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/17 15:32:38 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:09:58 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
-
-char *alloc_word(char *str)
+char	*alloc_word(char *str)
 {
-	char *arg;
+	char	*arg;
 
 	arg = mm_alloc(ft_strlen(str) + 1);
 	ft_strcpy(arg, str);
 	return (arg);
 }
 
-int args_len(t_token *token)
+int	args_len(t_token *token)
 {
-	int len;
-	t_token *tmp;
+	int		len;
+	t_token	*tmp;
 
 	len = 0;
-	while (token)
+	while (token && token->type != PIPE)
 	{
 		if (token->subtoken)
 		{
@@ -37,9 +36,10 @@ int args_len(t_token *token)
 			{
 				if (*(tmp->str))
 					len++;
-				tmp = tmp->next;	
+				tmp = tmp->next;
 			}
-		}else if (token->type == CMD)
+		}
+		else if (token->type == CMD)
 		{
 			if (*(token->str))
 				len++;
@@ -49,11 +49,11 @@ int args_len(t_token *token)
 	return (len);
 }
 
-char **space_for_args(t_token *token)
+char	**space_for_args(t_token *token)
 {
-	int len;
-	char **args;
-	int i;
+	int		len;
+	char	**args;
+	int		i;
 
 	len = args_len(token);
 	if (len == 0)
@@ -68,7 +68,7 @@ char **space_for_args(t_token *token)
 	return (args);
 }
 
-void 	get_args(char **args, t_token *token, int *i)
+void	get_args(char **args, t_token *token, int *i)
 {
 	if (token->subtoken && token->type == CMD)
 	{
@@ -77,7 +77,7 @@ void 	get_args(char **args, t_token *token, int *i)
 			if (*(token->subtoken->str))
 			{
 				args[*i] = alloc_word(token->subtoken->str);
-					(*i)++;
+				(*i)++;
 			}
 			token->subtoken = token->subtoken->next;
 		}

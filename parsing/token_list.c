@@ -6,29 +6,27 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/24 15:43:28 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/05 19:26:43 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 10:27:06 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../headers/minishell.h"
 
-#include "minishell.h"
-
-
-t_token *create_token(char *token, t_type type)
+t_token	*create_token(char *token, t_type type)
 {
-	t_token *p;
+	t_token	*p;
 
 	p = mm_alloc(sizeof(t_token));
 	p->str = token;
 	p->type = type;
-	p->subtoken = NULL; // if the token have no quotes nor variables in it 
+	p->subtoken = NULL;
 	p->next = NULL;
 	return (p);
 }
 
-void token_add_back(t_token **head, char *token, t_type type)
+void	token_add_back(t_token **head, char *token, t_type type)
 {
-	t_token *ptr;
+	t_token	*ptr;
 
 	ptr = *head;
 	if (!*head)

@@ -1,64 +1,76 @@
-#include "../parsing/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   unset.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/21 14:11:47 by aait-laf          #+#    #+#             */
+/*   Updated: 2025/08/21 17:50:27 by nosahimi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int     unset_fonc(char **arg, t_env **env)
+#include "../headers/minishell.h"
+
+int	unset_fonc(char **arg, t_env **env)
 {
-    int     i;
+	int	i;
 
-	if(arg[1] == NULL)
-		return(0);
-    i = 1;
-    while (arg[i])
-    {
-            delete_var_env(arg[i], env);
-        i++;
-    }
-    return(0);
+	if (arg[1] == NULL)
+		return (0);
+	i = 1;
+	while (arg[i])
+	{
+		delete_var_env(arg[i], env);
+		i++;
+	}
+	return (0);
 }
 
-
-
-void     indx_nods(t_env **env)
+void	indx_nods(t_env **env)
 {
-    t_env *temp;
-    int     i = 0;
+	t_env	*temp;
+	int		i;
 
-    if(!env || !*env)
-        return;
-    temp = *env;
-    while (temp != NULL)
-    {
-        temp->index = i++;
-        temp = temp->next;
-    }
+	i = 0;
+	if (!env || !*env)
+		return ;
+	temp = *env;
+	while (temp != NULL)
+	{
+		temp->index = i++;
+		temp = temp->next;
+	}
 }
 
 void	delete_var_env(char *name, t_env **env)
 {
-    t_env *env_temp;
-    t_env *rev = NULL;
+	t_env	*env_temp;
+	t_env	*rev;
 
-    env_temp = *env;
+	rev = NULL;
+	env_temp = *env;
 	while (env_temp != NULL)
 	{
-		if(ft_strcmp(name, env_temp->name) == 0)
+		if (ft_strcmp(name, env_temp->name) == 0)
 		{
-            if(rev == NULL)
-                delete_first_node(env);
-            else
-            {
-                rev->next = env_temp->next;
-                break;
-            }
+			if (rev == NULL)
+				delete_first_node(env);
+			else
+			{
+				rev->next = env_temp->next;
+				break ;
+			}
 		}
-        rev = env_temp;
+		rev = env_temp;
 		env_temp = env_temp->next;
 	}
-    indx_nods(env);
+	indx_nods(env);
 }
 
-void    delete_first_node(t_env **env)
+void	delete_first_node(t_env **env)
 {
-    *env = (*env)->next;
-    indx_nods(env);
-    return ;
+	*env = (*env)->next;
+	indx_nods(env);
+	return ;
 }

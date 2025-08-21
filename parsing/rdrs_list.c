@@ -3,30 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   rdrs_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 11:18:47 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/18 14:22:11 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:17:49 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
-t_rdr *create_node_rdr(char *str, int type)
+t_rdr	*create_node_rdr(char *str, int type)
 {
-	t_rdr *ptr;
+	t_rdr	*ptr;
 	char	*file;
-	
+
 	ptr = mm_alloc(sizeof(t_rdr));
-	if (!ptr)
-	{
-		//free
-	}
 	file = mm_alloc(ft_strlen(str) + 1);
-	if (!file)
-	{
-		//free;
-	}
 	ft_strcpy(file, str);
 	ptr->next = NULL;
 	ptr->file = file;
@@ -36,7 +28,7 @@ t_rdr *create_node_rdr(char *str, int type)
 
 void	add_back_rdr(t_rdr **head, char *file, int type)
 {
-	t_rdr *ptr;
+	t_rdr	*ptr;
 
 	if (!*head)
 		*head = create_node_rdr(file, type);
@@ -45,7 +37,7 @@ void	add_back_rdr(t_rdr **head, char *file, int type)
 		ptr = *head;
 		while (ptr->next)
 			ptr = ptr->next;
-		ptr->next = create_node_rdr(file, type); 
+		ptr->next = create_node_rdr(file, type);
 	}
 	wait(NULL);
 }

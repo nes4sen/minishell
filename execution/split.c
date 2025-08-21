@@ -6,13 +6,11 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 16:18:44 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/16 10:28:45 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:50:35 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../parsing/minishell.h"
-
+#include "../headers/minishell.h"
 
 int	word_count(char const *s, char c)
 {

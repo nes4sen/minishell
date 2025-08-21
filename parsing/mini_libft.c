@@ -6,25 +6,42 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 11:20:46 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/06 21:44:44 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/21 17:17:27 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../headers/minishell.h"
 
-
-int	is_alpha(char c)
+int	ft_strlen(char *str)
 {
-	return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+	int	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
 }
 
-int is_digit(char c)
+void	ft_strcpy(char *dst, char *src)
 {
-	return ((c >= '0' && c <= '9'));
+	int	i;
+
+	if (!dst || !src)
+		return ;
+	i = 0;
+	while (src[i])
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
 }
-char *ft_substr(int start, int end, char *str)
+
+char	*ft_substr(int start, int end, char *str)
 {
-	int 	len;
+	int		len;
 	char	*s;
 	int		i;
 
@@ -40,12 +57,48 @@ char *ft_substr(int start, int end, char *str)
 	s[i] = '\0';
 	return (s);
 }
-int ft_strcmp(char *s1, char *s2)
+
+static size_t	int_len(int nb)
 {
-	while (*s1 && (*s1 == *s2))
+	size_t	len;
+	long	n;
+
+	n = (long)nb;
+	len = 0;
+	if (nb <= 0)
+		len++;
+	if (n < 0)
+		n *= -1;
+	while (n > 0)
 	{
-		s1++;
-		s2++;
+		n /= 10;
+		len++;
 	}
-	return (*s1 - *s2);
+	return (len);
+}
+
+char	*ft_itoa(int nb)
+{
+	size_t	len;
+	char	*p;
+	size_t	i;
+	long	n;
+
+	n = (long)nb;
+	len = int_len(n);
+	p = ll_alloc(sizeof(char) * len + 1);
+	p[len] = '\0';
+	i = 0;
+	if (n < 0)
+	{
+		p[0] = '-';
+		n *= -1;
+		i = 1;
+	}
+	while (len-- > i)
+	{
+		p[len] = (n % 10) + 48;
+		n /= 10;
+	}
+	return (p);
 }
