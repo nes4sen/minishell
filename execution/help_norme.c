@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:27:35 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:59:16 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:06:43 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,13 @@ int	command_args(t_cmd *current, t_env **env, int status)
 	int	result;
 
 	result = status;
-	if (current->next)
-	{
-		result = execute_whith_pipe(current, env, status);
-		return (result);
-	}
-	else if ((current->rdr && (current->rdr->type == RDRIN
+	if ((current->rdr && (current->rdr->type == RDRIN
 				|| current->rdr->type == RDROUT || current->rdr->type == APPND
 				|| current->rdr->type == HEREDOC)))
 	{
 		result = execute_with_redirection(current, env, status);
 	}
-	else
+	else if(current->arg)
 	{
 		if (is_builin_command(current->arg[0]))
 			result = execute_builtin(current, env, status);

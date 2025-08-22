@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:11:52 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:54:25 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:21:10 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	var_with_equal(char **arg, int i, t_env **env)
 	if (!is_valid_name(name))
 	{
 		export_error(arg[1]);
-		return (127);
+		return (1);
 	}
 	if (check_var_exist_env(*env, name) == -1)
 		add_back_env(env, name, value, (idx_nod(*env) + 1));
@@ -83,7 +83,7 @@ int	var_no_value(char **arg, int i, t_env **env)
 	if (!is_valid_name(arg[i]))
 	{
 		export_error(arg[i]);
-		return (-1);
+		return (1);
 	}
 	name = get_var_name(arg[i]);
 	if (check_var_exist_env(*env, name) == -1)

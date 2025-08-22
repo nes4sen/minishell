@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:11:56 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:54:29 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:25:58 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	cd_with_arg(char **arg, char *pwd_now, char *cur, t_env *env)
 	{
 		ft_putstr_fd("cd: no such file or directory: ", 2);
 		(ft_putstr_fd(arg[1], 2)), (ft_putstr_fd("\n", 2));
-		return (-1);
+		return (1);
 	}
 	if (pwd_now)
 		update_env(&env, "OLDPWD", pwd_now);

@@ -6,7 +6,7 @@
 /*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 19:53:36 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:55:58 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 16:24:50 by aait-laf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	fonc_cd(char **arg, t_env *env)
 	else
 	{
 		ft_putstr_fd("cd: too many arguments\n", 2);
-		return (-1);
+		return (1);
 	}
 	return (status);
 }
