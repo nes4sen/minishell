@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/18 10:56:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 23:50:53 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:46:29 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static int	read_and_handle_input(t_shell *shell)
 	{
 		write(1, "exit\n", 5);
 		mm_free(FREE_ALL);
-		free(shell->line);
 		exit(shell->exit_s);
 	}
 	address_tracker()->line = shell->line;
@@ -77,7 +76,6 @@ int	main(int ac, char **av, char **envp)
 			continue ;
 		cleanup_and_reset(&shell);
 	}
-	return (shell.exit_s);
 }
 
 /*

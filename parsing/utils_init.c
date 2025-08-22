@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:47:05 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 20:03:09 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:06:43 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	init_env(char **envp, t_shell *shell)
 	t_address_track	*track;
 
 	track = address_tracker();
-	track->env = get_env(envp);
-	shell->env = track->env;
+	shell->env = get_env(envp);
 }
 
 void	init_structs_after_free(t_shell *shell)

@@ -6,16 +6,31 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/15 20:31:05 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 17:17:08 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:52:08 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-/*
-ll stands for long life,
-this memory allocater used when something related to env is allocated
-*/
+char	*ll_substr(int start, int end, char *str)
+{
+	int		len;
+	char	*s;
+	int		i;
+
+	len = (end - start);
+	s = ll_alloc(len + 1);
+	i = 0;
+	while (start < end)
+	{
+		s[i] = str[start];
+		i++;
+		start++;
+	}
+	s[i] = '\0';
+	return (s);
+}
+
 void	*create_llmm_node(void *ptr)
 {
 	t_lltrack	*new_node;
@@ -54,18 +69,19 @@ void	free_lltrack(void)
 {
 	t_address_track	*track;
 	t_lltrack		*head;
-	void			*tmp_next;
+	t_lltrack		*tmp_next;
 
 	track = address_tracker();
 	head = track->lhead;
+	if (!head)
+		return ;
 	while (head)
 	{
-		tmp_next = head->ptr;
+		tmp_next = head->next;
 		free(head->ptr);
 		free(head);
 		head = tmp_next;
 	}
-	track->head = NULL;
-	track->tail = NULL;
-	track = NULL;
+	track->lhead = NULL;
+	track->ltail = NULL;
 }

@@ -1,6 +1,17 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2025/08/22 23:53:04 by nosahimi          #+#    #+#              #
+#    Updated: 2025/08/22 23:53:33 by nosahimi         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -Iinclude
-# -lreadline
+CFLAGS = -Wall -Wextra -Werror -Iinclude
 
 CFILES= parsing/build_cmd.c parsing/env.c  parsing/is_functions.c \
 		parsing/token_list.c  minishell.c parsing/join.c  \
@@ -29,9 +40,5 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 re: fclean all
-
-push:
-	git add . && git commit -m "$(commit)" && git push
-
 
 .PHONY: clean

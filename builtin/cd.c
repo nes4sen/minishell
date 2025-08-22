@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 19:53:36 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/22 16:24:50 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 22:30:30 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	update_env(t_env **env, const char *name, const char *value)
 	{
 		if (ft_strcmp(current->name, (char *)name) == 0)
 		{
-			free(current->value);
 			current->value = ft_strdup(value);
 			return ;
 		}

@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/22 17:14:57 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/22 22:12:51 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,13 @@ void	herechild(char *dlmtr, t_shell *shell, int exflag, int fd)
 		line = readline(">");
 		if (!line)
 		{
-			(free(line), close(fd));
+			close(fd);
 			write(2, "warning: here-document delimited by end-of-file\n", 48);
 			break ;
 		}
 		if (!ft_strcmp(line, dlmtr))
 		{
 			mm_free(FREE_ALL);
-			free(line);
 			(close(fd)), (exit(0));
 		}
 		if (exflag)

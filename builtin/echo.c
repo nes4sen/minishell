@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:11:16 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:53:50 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:39:03 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ int	echo_fonc(char **arg, int status)
 	i = echo_check_n(arg, &flag_newline, i);
 	while (arg[i])
 	{
-		printf("%s", arg[i]);
+		ft_putstr_fd(arg[i], 1);
 		if (arg[i + 1])
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (flag_newline)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	status = 0;
 	return (status);
 }

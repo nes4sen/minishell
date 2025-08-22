@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 19:53:20 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:53:21 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 19:23:58 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void				export_error(char *str);
 int					is_valid_name(char *str);
 int					has_equal_sign(char *str);
 void				updat_env(t_env **env, char *name, char *value);
-void				add_double_quotes(char *value, char *name, t_env *env);
 void				print_env(t_env *env);
 int					var_with_equal(char **arg, int i, t_env **env);
 int					var_no_value(char **arg, int i, t_env **env);

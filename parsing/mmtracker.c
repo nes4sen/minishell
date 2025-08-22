@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 12:37:39 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 18:32:33 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:52:15 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,30 +46,11 @@ void	*mm_alloc(size_t size)
 	return (ptr);
 }
 
-void	free_env(void)
-{
-	t_address_track	*track;
-	t_env			*head;
-	t_env			*tmp;
-
-	track = address_tracker();
-	head = track->env;
-	while (head)
-	{
-		tmp = head->next;
-		free(head->value);
-		free(head->name);
-		free(head);
-		head = tmp;
-	}
-	track->env = NULL;
-}
-
 void	free_others(void)
 {
 	t_address_track	*track;
 	t_mmtrack		*head;
-	void			*tmp_next;
+	t_mmtrack		*tmp_next;
 
 	track = address_tracker();
 	head = track->head;
@@ -84,18 +65,16 @@ void	free_others(void)
 	track->line = NULL;
 	track->head = NULL;
 	track->tail = NULL;
-	track = NULL;
+	track->line = NULL;
 }
 
 void	mm_free(int which_free)
 {
 	if (which_free == FREE_ALL)
 	{
-		free_env();
+		free_lltrack();
 		free_others();
 	}
 	else if (which_free == FREE_ALL_EXCEPT_ENV)
-	{
 		free_others();
-	}
 }

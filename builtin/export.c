@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:11:36 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:54:13 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:48:40 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,4 @@ void	updat_env(t_env **env, char *name, char *value)
 		}
 		current = current->next;
 	}
-}
-
-void	add_double_quotes(char *value, char *name, t_env *env)
-{
-	char	*new_str;
-
-	int (i), (j);
-	if (!value || !name || !env)
-		return ;
-	new_str = mm_alloc(ft_strlen(value) + 1);
-	if (!new_str)
-		return ;
-	(1) && (i = 1, j = 0);
-	while (value[j])
-		new_str[i++] = value[j++];
-	new_str[i] = '\0';
-	while (env)
-	{
-		if (ft_strcmp(name, env->name) == 0)
-			return ;
-		env = env->next;
-	}
-	free(new_str);
 }

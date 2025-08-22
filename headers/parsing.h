@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 10:48:18 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 18:13:56 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:51:42 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ typedef struct s_address_track
 	t_mmtrack			*tail;
 	t_lltrack			*lhead;
 	t_lltrack			*ltail;
-	t_env				*env;
 	char				*line;
 }						t_address_track;
 
@@ -118,6 +117,7 @@ char					*get_env_value(char *str);
 void					init_env(char **envp, t_shell *shell);
 int						idx_nod(t_env *env);
 char					is_valid_env_var_name(char c);
+char					*ll_substr(int start, int end, char *str);
 
 /*--- TOKENIZER ------------------------------------------*/
 t_token					*create_token(char *token, t_type type);

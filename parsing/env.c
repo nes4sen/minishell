@@ -6,7 +6,7 @@
 /*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/13 10:54:23 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 16:58:46 by nosahimi         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:51:03 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,19 @@ t_env	*creat_node_env(char *name, char *value, int i)
 {
 	t_env	*env;
 
-	env = malloc(sizeof(t_env));
-	if (!env)
-		alloc_faild_cleanup();
+	env = ll_alloc(sizeof(t_env));
 	env->next = NULL;
 	env->name = NULL;
 	env->value = NULL;
 	env->index = i;
 	env->next = NULL;
-	env->name = malloc(ft_strlen(name) + 1);
-	if (!env->name)
-		alloc_faild_cleanup();
+	env->name = ll_alloc(ft_strlen(name) + 1);
 	ft_strcpy(env->name, name);
 	if (value == NULL)
 		env->value = NULL;
 	else
 	{
-		env->value = malloc(ft_strlen(value) + 1);
-		if (!env->value)
-			alloc_faild_cleanup();
+		env->value = ll_alloc(ft_strlen(value) + 1);
 		ft_strcpy(env->value, value);
 	}
 	return (env);
@@ -64,7 +58,7 @@ char	*get_env_name(char *str)
 		return (NULL);
 	while (str[i] && str[i] != '=')
 		i++;
-	return (ft_substr(0, i, str));
+	return (ll_substr(0, i, str));
 }
 
 char	*get_env_value(char *str)
@@ -78,7 +72,7 @@ char	*get_env_value(char *str)
 	i = 0;
 	while (str[i])
 		i++;
-	return (ft_substr(1, i, str));
+	return (ll_substr(1, i, str));
 }
 
 t_env	*get_env(char **envp)

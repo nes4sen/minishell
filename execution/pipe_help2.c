@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_help2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:40:45 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 20:01:00 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 23:49:33 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ char	*ft_strcat(char *dest, const char *src)
 	int	i;
 	int	j;
 
+	if (!src || !dest)
+		return (dest);
 	i = 0;
 	j = 0;
 	while (dest[i])
