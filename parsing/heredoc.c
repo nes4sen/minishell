@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:01:13 by nosahimi          #+#    #+#             */
-/*   Updated: 2025/08/21 20:02:30 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:14:57 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	herechild(char *dlmtr, t_shell *shell, int exflag, int fd)
 		line = readline(">");
 		if (!line)
 		{
-			free(line);
+			(free(line), close(fd));
 			write(2, "warning: here-document delimited by end-of-file\n", 48);
 			break ;
 		}
@@ -111,6 +111,7 @@ int	heredoxing(char **fname, char *dlmtr, int exflag, t_shell *shell)
 	pid = fork();
 	if (pid == 0)
 		herechild(dlmtr, shell, exflag, fd);
+	close(fd);
 	waitpid(pid, &status, 0);
 	setup_signals();
 	if (WIFSIGNALED(status))

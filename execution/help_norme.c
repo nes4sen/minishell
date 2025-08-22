@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   help_norme.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:27:35 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/22 16:06:43 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:53:40 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	command_args(t_cmd *current, t_env **env, int status)
 	{
 		result = execute_with_redirection(current, env, status);
 	}
-	else if(current->arg)
+	else if (current->arg)
 	{
 		if (is_builin_command(current->arg[0]))
 			result = execute_builtin(current, env, status);

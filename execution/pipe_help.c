@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_help.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aait-laf <aait-laf@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nosahimi <nosahimi@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/21 14:33:56 by aait-laf          #+#    #+#             */
-/*   Updated: 2025/08/21 19:54:53 by aait-laf         ###   ########.fr       */
+/*   Updated: 2025/08/22 17:09:11 by nosahimi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static int	handle_fork_error(int prev_pipe, t_cmd *current, int pipefd[2])
 	return (-1);
 }
 
-// Fonction pour gérer le processus parent
 static void	handle_parent_process(pid_t pid, t_pipe_data *data, t_cmd *current)
 {
 	data->pids[(*(data->cmd_index))++] = pid;
@@ -68,7 +67,6 @@ static void	handle_parent_process(pid_t pid, t_pipe_data *data, t_cmd *current)
 		*(data->prev_pipe) = -1;
 }
 
-// Fonction pour traiter une commande complète
 static int	process_command(t_cmd *current, t_pipe_data *data, t_env **env,
 		int status)
 {
@@ -89,7 +87,6 @@ static int	process_command(t_cmd *current, t_pipe_data *data, t_env **env,
 	return (0);
 }
 
-// Fonction principale refactorisée (maintenant 24 lignes)
 int	execute_whith_pipe(t_cmd *cmd, t_env **env, int status)
 {
 	int			prev_pipe;
